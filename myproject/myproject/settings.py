@@ -10,6 +10,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
+csrf_trusted_origins_env = os.environ.get("CSRF_TRUSTED_ORIGINS", "")
+CSRF_TRUSTED_ORIGINS = (
+    csrf_trusted_origins_env.split(",") if csrf_trusted_origins_env else [
+        "https://raise-i8gm.onrender.com",
+        "https://localhost",
+        "http://localhost",
+    ]
+)
 
 # -------------------------------
 # APPLICATIONS
