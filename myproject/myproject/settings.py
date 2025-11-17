@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,10 +71,9 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 # DATABASE (SQLite)
 # -------------------------------
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('postgresql://raise_database_user:FFwsFP3Blwllo1amBMcvZJnxwj0jbYSn@dpg-d4dkauf5r7bs73b1qqm0-a/raise_database')
+    )
 }
 
 # -------------------------------
