@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+pip install --upgrade pip setuptools wheel
+
 # Install dependencies (Render also does this automatically, but explicit is safer)
 pip install -r requirements.txt
 
