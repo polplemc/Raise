@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
+# Upgrade pip, setuptools, wheel
 pip install --upgrade pip setuptools wheel
 
-# Install dependencies (Render also does this automatically, but explicit is safer)
+# Install dependencies
 pip install -r requirements.txt
 
-# Collect static files for production
-python manage.py collectstatic --noinput
+# Collect static files
+python myproject/manage.py collectstatic --noinput
 
-# Apply database migrations
-python manage.py migrate --noinput
+# Apply migrations
+python myproject/manage.py migrate --noinput
