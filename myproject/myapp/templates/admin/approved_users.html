@@ -1,0 +1,356 @@
+{% extends 'admin/base_new.html' %}
+{% load static %}
+
+{% block title %}Approved Users{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, var(--yellow) 0%, #e6ab1f 100%);
+        color: var(--black);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(255, 191, 49, 0.3);
+    }
+    
+    .page-header h2 {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .page-header p {
+        margin-bottom: 0;
+        opacity: 0.8;
+    }
+    
+    .approved-badge {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+    }
+    
+    .role-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .role-owner {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #bbdefb;
+    }
+    
+    .role-supplier {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #e1bee7;
+    }
+    
+    .user-card {
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 12px;
+    }
+    
+    .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #6c757d;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .empty-state i {
+        font-size: 5rem;
+        color: #dee2e6;
+        margin-bottom: 20px;
+    }
+    
+    .empty-state h4 {
+        color: var(--black);
+        margin-bottom: 15px;
+    }
+    
+    .stats-card {
+        background: linear-gradient(135deg, var(--yellow) 0%, #e6ab1f 100%);
+        color: var(--black);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(255, 191, 49, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(255, 191, 49, 0.4);
+    }
+    
+    .stats-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .table thead th {
+        background: var(--black);
+        color: var(--white);
+        border: none;
+        font-weight: 600;
+        padding: 15px;
+    }
+    
+    .table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+    
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .table tbody td {
+        padding: 15px;
+        border-color: #eee;
+        vertical-align: middle;
+    }
+    
+    .btn-outline-warning {
+        border-color: var(--yellow);
+        color: var(--black);
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-warning:hover {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+        transform: translateY(-1px);
+    }
+    
+    .btn-outline-primary {
+        border-color: var(--yellow);
+        color: var(--black);
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-primary:hover {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+    }
+    
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    
+    .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 2px solid var(--yellow);
+        font-weight: 600;
+        color: var(--black);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2><i class="bi bi-people-fill"></i> Approved Users</h2>
+            <p>Users who have been approved and can access the system</p>
+        </div>
+        <div>
+            <a href="{% url 'admin_pending_users' %}" class="btn btn-outline-warning">
+                <i class="bi bi-clock"></i> View Pending Users
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            
+            <!-- Stats -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number">{{ approved_users|length }}</div>
+                        <div>Total Approved Users</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number">
+                            {% with owners=approved_users|dictsort:"role" %}
+                                {{ owners|length }}
+                            {% endwith %}
+                        </div>
+                        <div>Business Owners</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card">
+                        <div class="stats-number">
+                            {% with suppliers=approved_users|dictsort:"role" %}
+                                {{ suppliers|length }}
+                            {% endwith %}
+                        </div>
+                        <div>Suppliers</div>
+                    </div>
+                </div>
+            </div>
+            
+            {% if approved_users %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="bi bi-check-circle"></i> Approved User List</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>User</th>
+                                        <th>Role</th>
+                                        <th>Contact</th>
+                                        <th>Registration Date</th>
+                                        <th>Approved By</th>
+                                        <th>Approval Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for profile in approved_users %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="me-3">
+                                                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                                                         style="width: 40px; height: 40px;">
+                                                        <i class="bi bi-person"></i>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold">{{ profile.user.first_name|default:profile.user.username }}</div>
+                                                    <small class="text-muted">{{ profile.user.username }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span class="role-badge role-{{ profile.role }}">
+                                                {{ profile.get_role_display }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <div>{{ profile.user.email }}</div>
+                                            {% if profile.phone %}
+                                                <small class="text-muted">{{ profile.phone }}</small>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <div>{{ profile.user.date_joined|date:"M d, Y" }}</div>
+                                            <small class="text-muted">{{ profile.user.date_joined|date:"g:i A" }}</small>
+                                        </td>
+                                        <td>
+                                            {% if profile.approved_by %}
+                                                <div>{{ profile.approved_by.first_name|default:profile.approved_by.username }}</div>
+                                                <small class="text-muted">{{ profile.approved_by.username }}</small>
+                                            {% else %}
+                                                <span class="text-muted">System</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if profile.approved_at %}
+                                                <div>{{ profile.approved_at|date:"M d, Y" }}</div>
+                                                <small class="text-muted">{{ profile.approved_at|date:"g:i A" }}</small>
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="approved-badge">
+                                                <i class="bi bi-check-circle"></i> ACTIVE
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-people"></i>
+                    <h4>No Approved Users Yet</h4>
+                    <p>Approved users will appear here once you start processing registrations.</p>
+                    <a href="{% url 'admin_pending_users' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-clock"></i> Check Pending Users
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add search functionality
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.className = 'form-control mb-3';
+    searchInput.placeholder = 'Search users...';
+    
+    const tableContainer = document.querySelector('.table-responsive');
+    if (tableContainer) {
+        tableContainer.parentNode.insertBefore(searchInput, tableContainer);
+        
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

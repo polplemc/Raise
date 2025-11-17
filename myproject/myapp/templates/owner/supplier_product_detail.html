@@ -1,0 +1,396 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">{{ product.name }}</h2>
+  <a href="{% url 'browse_supplier_products' %}" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left"></i> Back to Products
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <!-- Product Information -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Product Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h4 class="mb-3">{{ product.name }}</h4>
+            
+            {% if product.description %}
+            <div class="mb-3">
+              <h6>Description</h6>
+              <p class="text-muted">{{ product.description }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="mb-3">
+              <h6>Supplier</h6>
+              <p class="mb-0">
+                <strong>{{ product.supplier.first_name|default:product.supplier.username }}</strong>
+                <br><small class="text-muted">{{ product.supplier.email }}</small>
+              </p>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="row text-center">
+              <div class="col-6 mb-3">
+                <div class="card bg-success text-white">
+                  <div class="card-body">
+                    <h4 class="mb-1">₱{{ product.unit_price|floatformat:2 }}</h4>
+                    <small>per {{ product.unit }}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 mb-3">
+                <div class="card {% if product.is_low_stock %}bg-warning{% else %}bg-info{% endif %} text-white">
+                  <div class="card-body">
+                    <h4 class="mb-1">{{ product.available_stock }}</h4>
+                    <small>{{ product.unit }} available</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <strong>Minimum Order:</strong> {{ product.minimum_order_quantity }} {{ product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Status:</strong>
+              {% if product.is_out_of_stock %}
+                <span class="badge bg-danger">Out of Stock</span>
+              {% elif product.is_low_stock %}
+                <span class="badge bg-warning">Low Stock</span>
+              {% else %}
+                <span class="badge bg-success">In Stock</span>
+              {% endif %}
+            </div>
+            
+            <!-- Product Date Information -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <strong>Manufactured Date:</strong>
+                {% if product.manufactured_date %}
+                  <br><span class="text-muted">{{ product.manufactured_date|date:"F d, Y" }}</span>
+                {% else %}
+                  <br><span class="text-muted">Not specified</span>
+                {% endif %}
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Expiration Date:</strong>
+                {% if product.expiration_date %}
+                  <br>
+                  {% if product.is_expired %}
+                    <span class="badge bg-danger">Expired {{ product.expiration_date|date:"F d, Y" }}</span>
+                  {% elif product.is_near_expiration %}
+                    <span class="badge bg-warning text-dark">
+                      Expires {{ product.expiration_date|date:"F d, Y" }}
+                      <br><small>({{ product.days_until_expiration }} days left)</small>
+                    </span>
+                  {% else %}
+                    <span class="text-muted">{{ product.expiration_date|date:"F d, Y" }}</span>
+                  {% endif %}
+                {% else %}
+                  <br><span class="text-muted">Not specified</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Orders -->
+    {% if recent_orders %}
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Your Recent Orders for This Product</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Order Status</th>
+                <th>Delivery Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in recent_orders %}
+              <tr>
+                <td><a href="{% url 'owner_supplier_order_detail' order.pk %}">#{{ order.id }}</a></td>
+                <td>{{ order.quantity }} {{ product.unit }}</td>
+                <td>₱{{ order.total_amount|floatformat:2 }}</td>
+                <td>
+                  {% if order.order_status == 'pending' %}
+                    <span class="badge bg-warning">Pending</span>
+                  {% elif order.order_status == 'confirmed' %}
+                    <span class="badge bg-info">Confirmed</span>
+                  {% elif order.order_status == 'processing' %}
+                    <span class="badge bg-primary">Processing</span>
+                  {% elif order.order_status == 'completed' %}
+                    <span class="badge bg-success">Completed</span>
+                  {% elif order.order_status == 'cancelled' %}
+                    <span class="badge bg-danger">Cancelled</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if order.delivery_status == 'not_shipped' %}
+                    <span class="badge bg-secondary">Not Shipped</span>
+                  {% elif order.delivery_status == 'out_for_delivery' %}
+                    <span class="badge bg-info">Out for Delivery</span>
+                  {% elif order.delivery_status == 'delivered' %}
+                    <span class="badge bg-success">Delivered</span>
+                  {% elif order.delivery_status == 'returned' %}
+                    <span class="badge bg-warning">Returned</span>
+                  {% endif %}
+                </td>
+                <td>{{ order.created_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Place Order -->
+    {% if product.available_stock > 0 %}
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Place Order</h5>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          
+          <div class="mb-3">
+            <label for="{{ form.quantity.id_for_label }}" class="form-label">{{ form.quantity.label }}</label>
+            {{ form.quantity }}
+            <div class="form-text">
+              Available: {{ product.available_stock }} {{ product.unit }}<br>
+              Minimum: {{ product.minimum_order_quantity }} {{ product.unit }}
+            </div>
+            {% if form.quantity.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.quantity.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.payment_method.id_for_label }}" class="form-label">{{ form.payment_method.label }}</label>
+            {{ form.payment_method }}
+            {% if form.payment_method.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.payment_method.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Supplier Payment Information -->
+          {% if product.supplier.supplier_payment_info %}
+          <div class="alert alert-info" id="payment-info-section">
+            <h6><i class="bi bi-wallet2"></i> Supplier Payment Details</h6>
+            <small class="text-muted">Use these details to send payment to the supplier:</small>
+            
+            <div class="mt-2" id="gcash-info" style="display: none;">
+              <div class="card border-primary">
+                <div class="card-body p-2">
+                  <strong><i class="bi bi-phone"></i> GCash:</strong>
+                  <p class="mb-0 text-primary"><strong>{{ product.supplier.supplier_payment_info.gcash_number }}</strong></p>
+                  <small>{{ product.supplier.supplier_payment_info.gcash_account_name }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2" id="paymaya-info" style="display: none;">
+              <div class="card border-primary">
+                <div class="card-body p-2">
+                  <strong><i class="bi bi-phone"></i> PayMaya:</strong>
+                  <p class="mb-0 text-primary"><strong>{{ product.supplier.supplier_payment_info.paymaya_number }}</strong></p>
+                  <small>{{ product.supplier.supplier_payment_info.paymaya_account_name }}</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2" id="bank-info" style="display: none;">
+              <div class="card border-primary">
+                <div class="card-body p-2">
+                  <strong><i class="bi bi-bank"></i> Bank Transfer:</strong>
+                  <p class="mb-1"><strong>{{ product.supplier.supplier_payment_info.bank_name }}</strong></p>
+                  <p class="mb-0"><small>Account Name: {{ product.supplier.supplier_payment_info.bank_account_name }}</small></p>
+                  <p class="mb-0 text-primary"><strong>{{ product.supplier.supplier_payment_info.bank_account_number }}</strong></p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2" id="cod-info" style="display: none;">
+              <div class="alert alert-warning mb-0 p-2">
+                <small><i class="bi bi-cash"></i> <strong>Cash on Delivery:</strong> Payment will be made upon delivery.</small>
+              </div>
+            </div>
+
+            <div class="mt-2" id="no-payment-info" style="display: none;">
+              <div class="alert alert-warning mb-0 p-2">
+                <small><i class="bi bi-exclamation-triangle"></i> Supplier hasn't set up this payment method yet. Please contact them.</small>
+              </div>
+            </div>
+
+            {% if product.supplier.supplier_payment_info.payment_notes %}
+            <div class="mt-2">
+              <small><strong>Note:</strong> {{ product.supplier.supplier_payment_info.payment_notes }}</small>
+            </div>
+            {% endif %}
+          </div>
+          {% else %}
+          <div class="alert alert-warning" id="payment-info-section">
+            <small><i class="bi bi-exclamation-triangle"></i> <strong>Note:</strong> Supplier hasn't added payment information yet. You may need to contact them directly for payment details.</small>
+          </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label for="{{ form.payment_status.id_for_label }}" class="form-label">{{ form.payment_status.label }}</label>
+            {{ form.payment_status }}
+            {% if form.payment_status.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.payment_status.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.notes.id_for_label }}" class="form-label">{{ form.notes.label }}</label>
+            {{ form.notes }}
+            {% if form.notes.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.notes.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Order Summary -->
+          <div class="bg-light p-3 rounded mb-3">
+            <h6>Order Summary</h6>
+            <div class="d-flex justify-content-between">
+              <span>Unit Price:</span>
+              <strong>₱{{ product.unit_price|floatformat:2 }}</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Quantity:</span>
+              <strong id="order-quantity">{{ product.minimum_order_quantity }}</strong>
+            </div>
+            <hr class="my-2">
+            <div class="d-flex justify-content-between">
+              <span><strong>Total:</strong></span>
+              <strong id="order-total">₱{{ product.unit_price|floatformat:2 }}</strong>
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-warning">
+              <i class="bi bi-cart-plus"></i> Place Order
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    {% else %}
+    <div class="card mb-3">
+      <div class="card-body text-center">
+        <i class="bi bi-x-circle text-danger" style="font-size: 2rem;"></i>
+        <h6 class="mt-2">Out of Stock</h6>
+        <p class="text-muted small">This product is currently out of stock. Please check back later.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+// Update order total when quantity changes
+document.addEventListener('DOMContentLoaded', function() {
+    const quantityInput = document.getElementById('{{ form.quantity.id_for_label }}');
+    const orderQuantitySpan = document.getElementById('order-quantity');
+    const orderTotalSpan = document.getElementById('order-total');
+    const unitPrice = {{ product.unit_price }};
+    
+    function updateTotal() {
+        const quantity = parseInt(quantityInput.value) || {{ product.minimum_order_quantity }};
+        const total = quantity * unitPrice;
+        
+        orderQuantitySpan.textContent = quantity + ' {{ product.unit }}';
+        orderTotalSpan.textContent = '₱' + total.toFixed(2);
+    }
+    
+    quantityInput.addEventListener('input', updateTotal);
+    updateTotal(); // Initial calculation
+
+    // Show/hide payment information based on selected payment method
+    const paymentMethodSelect = document.getElementById('{{ form.payment_method.id_for_label }}');
+    const gcashInfo = document.getElementById('gcash-info');
+    const paymayaInfo = document.getElementById('paymaya-info');
+    const bankInfo = document.getElementById('bank-info');
+    const codInfo = document.getElementById('cod-info');
+    const noPaymentInfo = document.getElementById('no-payment-info');
+
+    // Check if supplier has payment info configured
+    const hasGcash = {{ product.supplier.supplier_payment_info.has_gcash|yesno:"true,false" }};
+    const hasPaymaya = {{ product.supplier.supplier_payment_info.has_paymaya|yesno:"true,false" }};
+    const hasBankTransfer = {{ product.supplier.supplier_payment_info.has_bank_transfer|yesno:"true,false" }};
+
+    function updatePaymentInfo() {
+        // Hide all payment info sections first
+        if (gcashInfo) gcashInfo.style.display = 'none';
+        if (paymayaInfo) paymayaInfo.style.display = 'none';
+        if (bankInfo) bankInfo.style.display = 'none';
+        if (codInfo) codInfo.style.display = 'none';
+        if (noPaymentInfo) noPaymentInfo.style.display = 'none';
+
+        const selectedMethod = paymentMethodSelect.value;
+
+        // Show relevant payment info based on selection
+        if (selectedMethod === 'gcash') {
+            if (hasGcash && gcashInfo) {
+                gcashInfo.style.display = 'block';
+            } else if (noPaymentInfo) {
+                noPaymentInfo.style.display = 'block';
+            }
+        } else if (selectedMethod === 'paymaya') {
+            if (hasPaymaya && paymayaInfo) {
+                paymayaInfo.style.display = 'block';
+            } else if (noPaymentInfo) {
+                noPaymentInfo.style.display = 'block';
+            }
+        } else if (selectedMethod === 'bank_transfer') {
+            if (hasBankTransfer && bankInfo) {
+                bankInfo.style.display = 'block';
+            } else if (noPaymentInfo) {
+                noPaymentInfo.style.display = 'block';
+            }
+        } else if (selectedMethod === 'cod') {
+            if (codInfo) codInfo.style.display = 'block';
+        }
+    }
+
+    if (paymentMethodSelect) {
+        paymentMethodSelect.addEventListener('change', updatePaymentInfo);
+        updatePaymentInfo(); // Show initial payment info
+    }
+});
+</script>
+{% endblock %}

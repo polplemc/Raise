@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration - Admin Notification</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ffbf31;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .notification-icon {
+            font-size: 48px;
+            color: #007bff;
+            margin: 20px 0;
+        }
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #cce5ff;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .user-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #ffbf31;
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .urgent {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">RAISE</div>
+            <div style="color: #666;">Admin Notification System</div>
+        </div>
+        
+        <div style="text-align: center;">
+            <div class="notification-icon">🔔</div>
+            <h1>New User Registration</h1>
+        </div>
+        
+        <p>Dear Admin,</p>
+        
+        <p>A new user has registered for the Raise Inventory Management System and is awaiting approval.</p>
+        
+        <div class="highlight">
+            <strong>Action Required:</strong> Please review and approve or reject this registration.
+        </div>
+        
+        <div class="user-details">
+            <h3 style="margin-top: 0; color: #333;">Registration Details</h3>
+            
+            <div class="detail-row">
+                <span class="detail-label">Full Name:</span>
+                <span>{{ full_name }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Username:</span>
+                <span>{{ user.username }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span>{{ user.email }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Account Type:</span>
+                <span>{{ profile.get_role_display }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Phone:</span>
+                <span>{{ profile.phone|default:"Not provided" }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Registration Date:</span>
+                <span>{{ user.date_joined|date:"F d, Y g:i A" }}</span>
+            </div>
+        </div>
+        
+        <div class="urgent">
+            <h3 style="margin-top: 0;">⏰ Pending Approval</h3>
+            <p>This user cannot access the system until their account is approved. Please review their information and take appropriate action.</p>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ admin_url }}" class="button">Review Registration</a>
+        </div>
+        
+        <p><strong>Next Steps:</strong></p>
+        <ul>
+            <li>Click the "Review Registration" button above</li>
+            <li>Examine the user's profile and uploaded documents (if any)</li>
+            <li>Approve or reject the registration with appropriate feedback</li>
+            <li>The user will be automatically notified of your decision</li>
+        </ul>
+        
+        <p>Thank you for maintaining the quality and security of our platform.</p>
+        
+        <p>Best regards,<br>
+        <strong>Raise System</strong></p>
+        
+        <div class="footer">
+            <p>This is an automated admin notification.</p>
+            <p>Raise Inventory Management System</p>
+        </div>
+    </div>
+</body>
+</html>

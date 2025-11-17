@@ -1,0 +1,232 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}Payment Information{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h2 class="mb-1"><i class="bi bi-wallet2 text-success"></i> Payment Information</h2>
+  <p class="text-muted mb-0">Manage your payment receiving details for store owners</p>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Payment Receiving Details</h5>
+      </div>
+      <div class="card-body">
+        {% if not has_payment_info %}
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle"></i>
+          <strong>No payment information set up yet.</strong> Please add at least one payment method so store owners know where to send payments.
+        </div>
+        {% else %}
+        <div class="alert alert-success">
+          <i class="bi bi-check-circle"></i>
+          <strong>Payment information configured.</strong> Store owners can now see your payment details when placing orders.
+        </div>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              {% for error in form.non_field_errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <!-- GCash Section -->
+          <div class="card mb-3">
+            <div class="card-header bg-light">
+              <h6 class="mb-0"><i class="bi bi-phone"></i> GCash</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="{{ form.gcash_number.id_for_label }}" class="form-label">{{ form.gcash_number.label }}</label>
+                  {{ form.gcash_number }}
+                  {% if form.gcash_number.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.gcash_number.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                  <div class="form-text">{{ form.gcash_number.help_text }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="{{ form.gcash_account_name.id_for_label }}" class="form-label">{{ form.gcash_account_name.label }}</label>
+                  {{ form.gcash_account_name }}
+                  {% if form.gcash_account_name.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.gcash_account_name.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PayMaya Section -->
+          <div class="card mb-3">
+            <div class="card-header bg-light">
+              <h6 class="mb-0"><i class="bi bi-phone"></i> PayMaya</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="{{ form.paymaya_number.id_for_label }}" class="form-label">{{ form.paymaya_number.label }}</label>
+                  {{ form.paymaya_number }}
+                  {% if form.paymaya_number.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.paymaya_number.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                  <div class="form-text">{{ form.paymaya_number.help_text }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="{{ form.paymaya_account_name.id_for_label }}" class="form-label">{{ form.paymaya_account_name.label }}</label>
+                  {{ form.paymaya_account_name }}
+                  {% if form.paymaya_account_name.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.paymaya_account_name.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bank Transfer Section -->
+          <div class="card mb-3">
+            <div class="card-header bg-light">
+              <h6 class="mb-0"><i class="bi bi-bank"></i> Bank Transfer</h6>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="{{ form.bank_name.id_for_label }}" class="form-label">{{ form.bank_name.label }}</label>
+                {{ form.bank_name }}
+                {% if form.bank_name.errors %}
+                  <div class="text-danger small mt-1">
+                    {% for error in form.bank_name.errors %}{{ error }}{% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.bank_account_name.id_for_label }}" class="form-label">{{ form.bank_account_name.label }}</label>
+                {{ form.bank_account_name }}
+                {% if form.bank_account_name.errors %}
+                  <div class="text-danger small mt-1">
+                    {% for error in form.bank_account_name.errors %}{{ error }}{% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+              <div class="mb-3">
+                <label for="{{ form.bank_account_number.id_for_label }}" class="form-label">{{ form.bank_account_number.label }}</label>
+                {{ form.bank_account_number }}
+                {% if form.bank_account_number.errors %}
+                  <div class="text-danger small mt-1">
+                    {% for error in form.bank_account_number.errors %}{{ error }}{% endfor %}
+                  </div>
+                {% endif %}
+                <div class="form-text">{{ form.bank_account_number.help_text }}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Notes Section -->
+          <div class="card mb-3">
+            <div class="card-header bg-light">
+              <h6 class="mb-0"><i class="bi bi-info-circle"></i> Additional Instructions</h6>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <label for="{{ form.payment_notes.id_for_label }}" class="form-label">{{ form.payment_notes.label }}</label>
+                {{ form.payment_notes }}
+                {% if form.payment_notes.errors %}
+                  <div class="text-danger small mt-1">
+                    {% for error in form.payment_notes.errors %}{{ error }}{% endfor %}
+                  </div>
+                {% endif %}
+                <div class="form-text">{{ form.payment_notes.help_text }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">
+              <i class="bi bi-save"></i> Save Payment Information
+            </button>
+            <a href="{% url 'supplier_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <!-- Current Payment Methods -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h6 class="mb-0">Available Payment Methods</h6>
+      </div>
+      <div class="card-body">
+        {% if payment_info.has_gcash %}
+          <div class="mb-2">
+            <span class="badge bg-success"><i class="bi bi-check-circle"></i> GCash</span>
+            <p class="small text-muted mb-0">{{ payment_info.gcash_number }}</p>
+          </div>
+        {% else %}
+          <div class="mb-2">
+            <span class="badge bg-secondary"><i class="bi bi-x-circle"></i> GCash</span>
+            <p class="small text-muted mb-0">Not configured</p>
+          </div>
+        {% endif %}
+
+        {% if payment_info.has_paymaya %}
+          <div class="mb-2">
+            <span class="badge bg-success"><i class="bi bi-check-circle"></i> PayMaya</span>
+            <p class="small text-muted mb-0">{{ payment_info.paymaya_number }}</p>
+          </div>
+        {% else %}
+          <div class="mb-2">
+            <span class="badge bg-secondary"><i class="bi bi-x-circle"></i> PayMaya</span>
+            <p class="small text-muted mb-0">Not configured</p>
+          </div>
+        {% endif %}
+
+        {% if payment_info.has_bank_transfer %}
+          <div class="mb-2">
+            <span class="badge bg-success"><i class="bi bi-check-circle"></i> Bank Transfer</span>
+            <p class="small text-muted mb-0">{{ payment_info.bank_name }}</p>
+          </div>
+        {% else %}
+          <div class="mb-2">
+            <span class="badge bg-secondary"><i class="bi bi-x-circle"></i> Bank Transfer</span>
+            <p class="small text-muted mb-0">Not configured</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Security Notice -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="mb-0"><i class="bi bi-shield-check"></i> Security & Privacy</h6>
+      </div>
+      <div class="card-body">
+        <p class="small text-muted mb-2">
+          <i class="bi bi-lock"></i> Your payment information is securely stored and only visible to store owners when they place orders with you.
+        </p>
+        <p class="small text-muted mb-2">
+          <i class="bi bi-eye"></i> Store owners will only see the payment method details relevant to their selected payment option.
+        </p>
+        <p class="small text-muted mb-0">
+          <i class="bi bi-pencil"></i> You can update your payment information anytime.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

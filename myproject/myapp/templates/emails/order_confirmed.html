@@ -1,0 +1,27 @@
+{% extends 'emails/base_email.html' %}
+
+{% block title %}Order Confirmed{% endblock %}
+
+{% block content %}
+<h2>✅ Your Order Has Been Confirmed!</h2>
+
+<p>Hello {{ owner.first_name }},</p>
+
+<p>Great news! Your order has been confirmed by <strong>{{ supplier.first_name }}</strong>.</p>
+
+<div class="info-box">
+    <strong>Order Details:</strong><br>
+    Order ID: #{{ order.id }}<br>
+    Product: {{ order.supplier_product.name }}<br>
+    Quantity: {{ order.quantity }} {{ order.supplier_product.unit }}<br>
+    Total Amount: ₱{{ order.total_amount }}<br>
+    Payment Method: {{ order.get_payment_method_display }}<br>
+    Status: {{ order.get_order_status_display }}
+</div>
+
+<p>Your order is now being processed and will be delivered soon.</p>
+
+<a href="{{ request.scheme }}://{{ request.get_host }}/owner/supplier-orders/{{ order.id }}/" class="button">Track Your Order</a>
+
+<p>Thank you for your order!</p>
+{% endblock %}

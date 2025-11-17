@@ -1,0 +1,65 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Delete Supplier{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card border-danger">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirm Deletion</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle"></i>
+          <strong>Warning:</strong> This action cannot be undone!
+        </div>
+        
+        <p>Are you sure you want to {% if supplier.supplier_profile %}remove your connection with{% else %}delete{% endif %} the supplier:</p>
+        <div class="bg-light p-3 rounded mb-3">
+          <strong>{{ supplier.name }}</strong><br>
+          <small class="text-muted">Contact: {{ supplier.contact_person }}</small><br>
+          {% if supplier.email %}
+            <small class="text-muted">Email: {{ supplier.email }}</small><br>
+          {% endif %}
+          <small class="text-muted">
+            Status: 
+            {% if supplier.is_active %}
+              <span class="badge bg-success">Active</span>
+            {% else %}
+              <span class="badge bg-secondary">Inactive</span>
+            {% endif %}
+          </small>
+        </div>
+        
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle"></i>
+          <strong>What will happen:</strong>
+          <ul class="mb-0 mt-2">
+            {% if supplier.supplier_profile %}
+            <li>Your connection with this supplier will be removed</li>
+            <li>You will no longer be able to order from this supplier</li>
+            <li>Previous orders and history will be preserved</li>
+            <li>You can reconnect by sending a new connection request</li>
+            {% else %}
+            <li>The supplier record will be permanently deleted</li>
+            <li>All associated products will be removed</li>
+            <li>Order history will be preserved for audit purposes</li>
+            {% endif %}
+          </ul>
+        </div>
+        
+        <form method="POST">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-trash"></i> Yes, {% if supplier.supplier_profile %}Remove Connection{% else %}Delete Supplier{% endif %}
+            </button>
+            <a href="{% url 'owner_supplier_list' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

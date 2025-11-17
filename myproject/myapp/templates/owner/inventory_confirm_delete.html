@@ -1,0 +1,48 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Delete Inventory Item{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-danger text-white">
+        <h5 class="mb-0"><i class="bi bi-trash"></i> Confirm Delete</h5>
+      </div>
+      <div class="card-body">
+        <div class="text-center mb-4">
+          <i class="bi bi-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+        </div>
+        
+        <h5 class="text-center mb-3">Are you sure you want to delete this inventory item?</h5>
+        
+        <div class="alert alert-warning">
+          <strong>Product:</strong> {{ inventory.product.name }}<br>
+          <strong>Current Quantity:</strong> <span class="badge bg-danger">{{ inventory.quantity }} {{ inventory.product.unit }}</span><br>
+          <strong>Supplier:</strong> {{ inventory.product.supplier.name }}
+        </div>
+        
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle"></i> <strong>Note:</strong> Only products with zero quantity (out of stock) can be deleted.
+        </div>
+        
+        <p class="text-muted text-center small">
+          This action cannot be undone. The product will be removed from your inventory list.
+        </p>
+        
+        <form method="POST" class="mt-4">
+          {% csrf_token %}
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-danger btn-lg">
+              <i class="bi bi-trash"></i> Yes, Delete
+            </button>
+            <a href="{% url 'owner_inventory_list' %}" class="btn btn-secondary btn-lg">
+              <i class="bi bi-x-circle"></i> Cancel
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

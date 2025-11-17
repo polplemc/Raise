@@ -1,0 +1,488 @@
+{% extends 'admin/base_new.html' %}
+{% load static %}
+
+{% block title %}Review User Registration - {{ user.username }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-header {
+        background: linear-gradient(135deg, var(--yellow) 0%, #e6ab1f 100%);
+        color: var(--black);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(255, 191, 49, 0.3);
+    }
+    
+    .profile-avatar {
+        width: 80px;
+        height: 80px;
+        background-color: rgba(0,0,0,0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        border: 3px solid rgba(0,0,0,0.1);
+    }
+    
+    .info-card {
+        border: none;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        margin-bottom: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    
+    .info-card .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 2px solid var(--yellow);
+        font-weight: 600;
+        color: var(--black);
+    }
+    
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.2s ease;
+    }
+    
+    .detail-row:hover {
+        background-color: #f8f9fa;
+        margin: 0 -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+    
+    .detail-label {
+        font-weight: 600;
+        color: #495057;
+        min-width: 140px;
+    }
+    
+    .detail-value {
+        flex: 1;
+        text-align: right;
+        color: var(--black);
+    }
+    
+    .approval-form {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 30px;
+        border-radius: 12px;
+        border-left: 5px solid var(--yellow);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .approval-form h4 {
+        color: var(--black);
+        margin-bottom: 20px;
+    }
+    
+    .btn-approve {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    }
+    
+    .btn-approve:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        background: linear-gradient(135deg, #218838 0%, #1e7e34 100%);
+    }
+    
+    .btn-reject {
+        background: linear-gradient(135deg, var(--red) 0%, #dc3545 100%);
+        border: none;
+        color: white;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(255, 87, 87, 0.3);
+    }
+    
+    .btn-reject:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 87, 87, 0.4);
+        background: linear-gradient(135deg, #e64545 0%, #c82333 100%);
+    }
+    
+    .btn-outline-secondary {
+        border-color: #6c757d;
+        color: #6c757d;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-secondary:hover {
+        background: #6c757d;
+        border-color: #6c757d;
+        transform: translateY(-1px);
+    }
+    
+    .btn-outline-primary {
+        border-color: var(--yellow);
+        color: var(--black);
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-primary:hover {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+    }
+    
+    .file-preview {
+        max-width: 100%;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 15px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    }
+    
+    .role-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .role-owner {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #bbdefb;
+    }
+    
+    .role-supplier {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #e1bee7;
+    }
+    
+    .form-check-input:checked {
+        background-color: var(--yellow);
+        border-color: var(--yellow);
+    }
+    
+    .form-control:focus {
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 0.2rem rgba(255, 191, 49, 0.25);
+    }
+    
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .timeline-item:last-child {
+        border-bottom: none;
+    }
+    
+    .timeline-item i {
+        font-size: 1.2rem;
+        color: var(--yellow);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <!-- Back Button -->
+            <div class="mb-3">
+                <a href="{% url 'admin_pending_users' %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Pending Users
+                </a>
+            </div>
+            
+            <!-- Profile Header -->
+            <div class="profile-header">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <div class="profile-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <h2>{{ user.first_name|default:user.username }}</h2>
+                        <p class="mb-2">
+                            <span class="role-badge role-{{ profile.role }}">
+                                {{ profile.get_role_display }}
+                            </span>
+                        </p>
+                        <p class="mb-0">
+                            <i class="bi bi-envelope"></i> {{ user.email }} &nbsp;&nbsp;
+                            <i class="bi bi-calendar"></i> Registered {{ user.date_joined|date:"M d, Y" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- User Information -->
+                <div class="col-lg-8">
+                    <!-- Basic Information -->
+                    <div class="card info-card">
+                        <div class="card-header">
+                            <i class="bi bi-person-circle"></i> Basic Information
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-row">
+                                <span class="detail-label">Full Name:</span>
+                                <span class="detail-value">{{ user.first_name|default:"Not provided" }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Username:</span>
+                                <span class="detail-value">{{ user.username }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">{{ user.email }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Phone:</span>
+                                <span class="detail-value">{{ profile.phone|default:"Not provided" }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value">{{ profile.address|default:"Not provided" }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Account Type:</span>
+                                <span class="detail-value">{{ profile.get_role_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Role-Specific Information -->
+                    {% if business_owner_profile %}
+                    <div class="card info-card">
+                        <div class="card-header">
+                            <i class="bi bi-shop"></i> Business Owner Details
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-row">
+                                <span class="detail-label">Store Name:</span>
+                                <span class="detail-value">{{ business_owner_profile.store_name }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Store Type:</span>
+                                <span class="detail-value">{{ business_owner_profile.get_store_type_display }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Store Address:</span>
+                                <span class="detail-value">{{ business_owner_profile.store_address }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Contact Person:</span>
+                                <span class="detail-value">{{ business_owner_profile.contact_person }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Contact Phone:</span>
+                                <span class="detail-value">{{ business_owner_profile.contact_phone }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Contact Email:</span>
+                                <span class="detail-value">{{ business_owner_profile.contact_email }}</span>
+                            </div>
+                            {% if business_owner_profile.business_permit %}
+                            <div class="detail-row">
+                                <span class="detail-label">Business Permit:</span>
+                                <span class="detail-value">
+                                    <a href="{{ business_owner_profile.business_permit.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-text"></i> View Document
+                                    </a>
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if supplier_profile %}
+                    <div class="card info-card">
+                        <div class="card-header">
+                            <i class="bi bi-truck"></i> Supplier Details
+                        </div>
+                        <div class="card-body">
+                            <div class="detail-row">
+                                <span class="detail-label">Business Name:</span>
+                                <span class="detail-value">{{ supplier_profile.business_name }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Products Supplied:</span>
+                                <span class="detail-value">{{ supplier_profile.get_products_supplied_display }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Contact Person:</span>
+                                <span class="detail-value">{{ supplier_profile.contact_person }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Business Email:</span>
+                                <span class="detail-value">{{ supplier_profile.email }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Business Phone:</span>
+                                <span class="detail-value">{{ supplier_profile.phone }}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Business Address:</span>
+                                <span class="detail-value">{{ supplier_profile.business_address }}</span>
+                            </div>
+                            {% if supplier_profile.business_permit %}
+                            <div class="detail-row">
+                                <span class="detail-label">Business Permit:</span>
+                                <span class="detail-value">
+                                    <a href="{{ supplier_profile.business_permit.url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-file-earmark-text"></i> View Document
+                                    </a>
+                                </span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Approval Form -->
+                <div class="col-lg-4">
+                    <div class="approval-form">
+                        <h4><i class="bi bi-check-circle"></i> Review Registration</h4>
+                        <p class="text-muted">Approve or reject this user registration. The user will be notified via email.</p>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Decision:</label>
+                                {% for radio in form.action %}
+                                    <div class="form-check">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label" for="{{ radio.id_for_label }}">
+                                            {% if radio.choice_value == 'approve' %}
+                                                <i class="bi bi-check-circle text-success"></i> {{ radio.choice_label }}
+                                            {% else %}
+                                                <i class="bi bi-x-circle text-danger"></i> {{ radio.choice_label }}
+                                            {% endif %}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                                {% if form.action.errors %}
+                                    <div class="text-danger small">{{ form.action.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="mb-4" id="rejection-reason-field" style="display: none;">
+                                <label for="{{ form.rejection_reason.id_for_label }}" class="form-label fw-bold">
+                                    Rejection Reason <span class="text-danger">*</span>
+                                </label>
+                                {{ form.rejection_reason }}
+                                <div class="form-text">Provide a clear reason for rejection to help the user understand what needs to be corrected.</div>
+                                {% if form.rejection_reason.errors %}
+                                    <div class="text-danger small">{{ form.rejection_reason.errors }}</div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-lg" id="submit-btn">
+                                    <i class="bi bi-check"></i> Process Registration
+                                </button>
+                                <a href="{% url 'admin_pending_users' %}" class="btn btn-outline-secondary">
+                                    <i class="bi bi-arrow-left"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Registration Timeline -->
+                    <div class="card info-card mt-4">
+                        <div class="card-header">
+                            <i class="bi bi-clock-history"></i> Registration Timeline
+                        </div>
+                        <div class="card-body">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <i class="bi bi-person-plus text-primary"></i>
+                                    <div>
+                                        <strong>Registration Submitted</strong><br>
+                                        <small class="text-muted">{{ user.date_joined|date:"M d, Y g:i A" }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const actionRadios = document.querySelectorAll('input[name="action"]');
+    const rejectionField = document.getElementById('rejection-reason-field');
+    const submitBtn = document.getElementById('submit-btn');
+    
+    function updateForm() {
+        const selectedAction = document.querySelector('input[name="action"]:checked');
+        
+        if (selectedAction) {
+            if (selectedAction.value === 'reject') {
+                rejectionField.style.display = 'block';
+                submitBtn.className = 'btn btn-lg btn-reject';
+                submitBtn.innerHTML = '<i class="bi bi-x-circle"></i> Reject Registration';
+            } else {
+                rejectionField.style.display = 'none';
+                submitBtn.className = 'btn btn-lg btn-approve';
+                submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> Approve Registration';
+            }
+        }
+    }
+    
+    actionRadios.forEach(radio => {
+        radio.addEventListener('change', updateForm);
+    });
+    
+    // Initialize form state
+    updateForm();
+});
+</script>
+
+<style>
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.timeline-item i {
+    font-size: 1.2rem;
+}
+</style>
+{% endblock %}

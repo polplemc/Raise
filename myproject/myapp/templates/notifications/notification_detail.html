@@ -1,0 +1,200 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Notification Details{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <h2><i class="bi bi-bell"></i> Notification Details</h2>
+                    <div>
+                        <a href="{% url 'notification_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-list"></i> All Notifications
+                        </a>
+                        <a href="javascript:history.back()" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Notification Content -->
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header {% if notification.notification_type == 'order_placed' %}bg-primary{% elif notification.notification_type == 'payment_verified' %}bg-success{% elif notification.notification_type == 'stock_low' %}bg-warning{% elif notification.notification_type == 'stock_out' %}bg-danger{% else %}bg-info{% endif %} text-white">
+                                <div class="d-flex align-items-center">
+                                    <!-- Icon based on type -->
+                                    {% if notification.notification_type == 'order_placed' %}
+                                        <i class="bi bi-cart-plus fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'order_confirmed' %}
+                                        <i class="bi bi-check-circle fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'order_processing' %}
+                                        <i class="bi bi-hourglass-split fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'order_completed' %}
+                                        <i class="bi bi-check-all fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'delivery_delivered' %}
+                                        <i class="bi bi-truck fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'payment_paid' %}
+                                        <i class="bi bi-cash fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'payment_verified' %}
+                                        <i class="bi bi-shield-check fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'new_message' %}
+                                        <i class="bi bi-envelope fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'stock_low' %}
+                                        <i class="bi bi-exclamation-triangle fs-3 me-3"></i>
+                                    {% elif notification.notification_type == 'stock_out' %}
+                                        <i class="bi bi-x-circle fs-3 me-3"></i>
+                                    {% else %}
+                                        <i class="bi bi-info-circle fs-3 me-3"></i>
+                                    {% endif %}
+                                    
+                                    <div>
+                                        <h4 class="mb-0">{{ notification.title }}</h4>
+                                        <small>{{ notification.get_notification_type_display }}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- Sender Info -->
+                                {% if notification.sender %}
+                                    <div class="alert alert-light border mb-3">
+                                        <div class="d-flex align-items-center">
+                                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                                <i class="bi bi-person fs-4"></i>
+                                            </div>
+                                            <div>
+                                                <strong>From:</strong> {{ notification.sender.first_name|default:notification.sender.username }}<br>
+                                                <small class="text-muted">@{{ notification.sender.username }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Message Content -->
+                                <div class="mb-4">
+                                    <h5>Message:</h5>
+                                    <p class="lead">{{ notification.message }}</p>
+                                </div>
+
+                                <!-- Timestamp -->
+                                <div class="mb-3">
+                                    <small class="text-muted">
+                                        <i class="bi bi-clock"></i> 
+                                        Received: {{ notification.created_at|date:"F d, Y g:i A" }}
+                                        ({{ notification.created_at|timesince }} ago)
+                                    </small>
+                                </div>
+
+                                {% if notification.is_read %}
+                                    <div class="mb-3">
+                                        <small class="text-muted">
+                                            <i class="bi bi-check-circle"></i> 
+                                            Read: {{ notification.read_at|date:"F d, Y g:i A" }}
+                                        </small>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Actions -->
+                                <div class="d-flex gap-2 mt-4">
+                                    {% if notification.related_order %}
+                                        {% if request.user.profile.role == 'owner' %}
+                                            <a href="{% url 'owner_supplier_order_detail' notification.related_order.id %}" class="btn btn-primary">
+                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                            </a>
+                                        {% elif request.user.profile.role == 'supplier' %}
+                                            <a href="{% url 'supplier_order_detail' notification.related_order.id %}" class="btn btn-primary">
+                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                            </a>
+                                        {% elif request.user.profile.role == 'staff' %}
+                                            <a href="{% url 'staff_supplier_order_detail' notification.related_order.id %}" class="btn btn-primary">
+                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                            </a>
+                                        {% endif %}
+                                    {% endif %}
+                                    
+                                    {% if notification.related_product %}
+                                        <a href="{% url 'supplier_inventory_list' %}" class="btn btn-info">
+                                            <i class="bi bi-box-seam"></i> View Product
+                                        </a>
+                                    {% endif %}
+                                    
+                                    <a href="{% url 'delete_notification' notification.id %}" class="btn btn-outline-danger" onclick="return confirm('Delete this notification?')">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Status Card -->
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="bi bi-info-circle"></i> Notification Status</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <strong>Status:</strong><br>
+                                    {% if notification.is_read %}
+                                        <span class="badge bg-success">Read</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">Unread</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <strong>Type:</strong><br>
+                                    <span class="badge bg-secondary">{{ notification.get_notification_type_display }}</span>
+                                </div>
+                                
+                                <div class="mb-0">
+                                    <strong>Received:</strong><br>
+                                    {{ notification.created_at|date:"M d, Y" }}<br>
+                                    {{ notification.created_at|time:"g:i A" }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Related Order Card -->
+                        {% if notification.related_order %}
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0"><i class="bi bi-box"></i> Related Order</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Order #:</strong> {{ notification.related_order.id }}</p>
+                                <p><strong>Product:</strong> {{ notification.related_order.supplier_product.name }}</p>
+                                <p><strong>Quantity:</strong> {{ notification.related_order.quantity }} {{ notification.related_order.supplier_product.unit }}</p>
+                                <p><strong>Total:</strong> ₱{{ notification.related_order.total_amount|floatformat:2 }}</p>
+                                <p class="mb-0">
+                                    <strong>Status:</strong><br>
+                                    <span class="badge bg-info">{{ notification.related_order.get_order_status_display }}</span>
+                                </p>
+                                <div class="d-grid mt-3">
+                                    {% if request.user.profile.role == 'owner' %}
+                                        <a href="{% url 'owner_supplier_order_detail' notification.related_order.id %}" class="btn btn-primary btn-sm">
+                                            View Order Details
+                                        </a>
+                                    {% elif request.user.profile.role == 'supplier' %}
+                                        <a href="{% url 'supplier_order_detail' notification.related_order.id %}" class="btn btn-primary btn-sm">
+                                            View Order Details
+                                        </a>
+                                    {% elif request.user.profile.role == 'staff' %}
+                                        <a href="{% url 'staff_supplier_order_detail' notification.related_order.id %}" class="btn btn-primary btn-sm">
+                                            View Order Details
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

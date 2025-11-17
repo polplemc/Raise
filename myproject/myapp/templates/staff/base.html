@@ -1,0 +1,297 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Staff Dashboard{% endblock %} - Raise</title>
+  
+  <!-- Google Fonts - Montserrat + Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mobile-enhancements.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive-design.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout-fix.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'js/notifications.js' %}" defer></script>
+  <style>
+    :root {
+      --yellow: #ffbf31;
+      --red: #ff5757;
+      --black: #000000;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: "Open Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+    
+    .sidebar {
+      min-height: 100vh;
+      background: var(--white);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      border-right: 1px solid #dee2e6;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    
+    .sidebar .logo-container {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--yellow);
+    }
+    
+    .sidebar .logo-container img {
+      max-width: 120px;
+      height: auto;
+    }
+    
+    .sidebar .nav-link {
+      color: var(--black);
+      padding: 12px 20px;
+      margin: 5px 10px;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover {
+      background: rgba(255, 191, 49, 0.2);
+      border-left-color: var(--yellow);
+      color: var(--black);
+    }
+    
+    .sidebar .nav-link.active {
+      background: var(--yellow);
+      color: var(--black);
+      font-weight: 600;
+    }
+    
+    .sidebar .nav-link.text-danger {
+      color: var(--red) !important;
+    }
+    
+    .sidebar .nav-link.text-danger:hover {
+      background: rgba(255, 87, 87, 0.1);
+      border-left-color: var(--red);
+      color: var(--red);
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 10px;
+      width: 20px;
+    }
+    
+    .mobile-navbar {
+      display: none;
+      background: var(--white);
+      padding: 10px 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 99;
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      .sidebar-overlay.show {
+        display: block;
+      }
+      
+      .main-content {
+        margin-top: 0;
+        margin-left: 0;
+        padding: 15px;
+      }
+    }
+    
+    .main-content {
+      margin-left: 250px;
+      padding: 30px;
+      background: #f8f9fa;
+      min-height: 100vh;
+    }
+    
+    @media (min-width: 768px) {
+      .main-content {
+        margin-left: 250px;
+      }
+    }
+    
+    .stat-card {
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-card .icon {
+      font-size: 2.5rem;
+      opacity: 0.8;
+    }
+    
+    .bg-yellow {
+      background-color: var(--yellow) !important;
+      color: var(--black) !important;
+    }
+    
+    .bg-red {
+      background-color: var(--red) !important;
+      color: var(--white) !important;
+    }
+    
+    .table-actions .btn {
+      padding: 5px 10px;
+      font-size: 0.875rem;
+    }
+    
+    .card-header {
+      border-bottom: 2px solid var(--yellow);
+    }
+    
+    .staff-badge {
+      background: var(--yellow);
+      color: var(--black);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Sidebar Toggle Button -->
+  <button class="mobile-sidebar-toggle d-md-none" id="mobileSidebarToggle">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- Sidebar Overlay (for mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-2 d-md-block sidebar p-0" id="sidebar">
+        <div class="position-sticky pt-3">
+          <div class="logo-container">
+            <img src="{% static 'img/raise_logo.png' %}" alt="Raise Logo" class="img-fluid mb-2">
+            <p class="text-muted small mb-1">Staff Member</p>
+            <p class="text-dark small fw-bold mb-0">{{ request.user.first_name }}</p>
+            {% if request.user.profile.owner %}
+            <p class="text-muted small mb-0">Working for: {{ request.user.profile.owner.first_name }}</p>
+            {% endif %}
+          </div>
+          
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'staff_dashboard' %}active{% endif %}" href="{% url 'staff_dashboard' %}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'inventory' in request.path %}active{% endif %}" href="{% url 'staff_inventory_list' %}">
+                <i class="bi bi-box-seam"></i> View Inventory
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'stock-out' in request.path %}active{% endif %}" href="{% url 'staff_stock_out_report' %}">
+                <i class="bi bi-file-text"></i> Stock Out Report
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'supplier-orders' in request.path %}active{% endif %}" href="{% url 'staff_supplier_orders' %}">
+                <i class="bi bi-receipt"></i> Supplier Orders
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'profile' in request.path %}active{% endif %}" href="{% url 'staff_profile' %}">
+                <i class="bi bi-person-circle"></i> Profile
+              </a>
+            </li>
+            <li class="nav-item mt-4">
+              <a class="nav-link text-danger" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-10 ms-sm-auto main-content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/responsive-enhancements.js' %}" defer></script>
+  <script>
+    // Mobile sidebar toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      
+      if (mobileSidebarToggle) {
+        mobileSidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+          sidebarOverlay.classList.toggle('show');
+        });
+      }
+      
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', function() {
+          sidebar.classList.remove('show');
+          sidebarOverlay.classList.remove('show');
+        });
+      }
+    });
+  </script>
+  
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

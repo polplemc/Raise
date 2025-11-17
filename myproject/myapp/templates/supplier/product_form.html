@@ -1,0 +1,103 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}{{ action }} Product{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h4 class="mb-0"><i class="bi bi-box-seam"></i> {{ action }} Product</h4>
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="mb-3">
+            <label class="form-label">Product Name *</label>
+            {{ form.name }}
+            {% if form.name.errors %}
+              <div class="text-danger small">{{ form.name.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            {{ form.description }}
+            {% if form.description.errors %}
+              <div class="text-danger small">{{ form.description.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Price (₱) *</label>
+              {{ form.price }}
+              {% if form.price.errors %}
+                <div class="text-danger small">{{ form.price.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Unit *</label>
+              {{ form.unit }}
+              {% if form.unit.errors %}
+                <div class="text-danger small">{{ form.unit.errors }}</div>
+              {% endif %}
+              <small class="text-muted">e.g., pcs, kg, liter, box</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Manufactured Date</label>
+              {{ form.manufactured_date }}
+              {% if form.manufactured_date.errors %}
+                <div class="text-danger small">{{ form.manufactured_date.errors }}</div>
+              {% endif %}
+              <small class="text-muted">Date when the product was manufactured</small>
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Expiration Date</label>
+              {{ form.expiration_date }}
+              {% if form.expiration_date.errors %}
+                <div class="text-danger small">{{ form.expiration_date.errors }}</div>
+              {% endif %}
+              <small class="text-muted">Date when the product expires</small>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.is_available }}
+              <label class="form-check-label" for="{{ form.is_available.id_for_label }}">
+                Available for Purchase
+              </label>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-dark">
+              <i class="bi bi-check-circle"></i> Save Product
+            </button>
+            <a href="{% url 'supplier_product_list' %}" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #ffbf31;
+    box-shadow: 0 0 0 0.2rem rgba(255, 191, 49, 0.25);
+  }
+</style>
+{% endblock %}

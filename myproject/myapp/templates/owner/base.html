@@ -1,0 +1,417 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Owner Dashboard{% endblock %} - Raise</title>
+  
+  <!-- Google Fonts - Montserrat + Open Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300..800&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/mobile-enhancements.css' %}">
+  <link rel="stylesheet" href="{% static 'css/responsive-design.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout-fix.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="{% static 'js/notifications.js' %}" defer></script>
+  <style>
+    :root {
+      --yellow: #ffbf31;
+      --red: #ff5757;
+      --black: #000000;
+      --white: #ffffff;
+    }
+    
+    body {
+      font-family: "Open Sans", sans-serif;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+      font-variation-settings: "wdth" 100;
+    }
+    
+    .sidebar {
+      min-height: 100vh;
+      background: var(--white);
+      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      border-right: 1px solid #dee2e6;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+    
+    .sidebar .logo-container {
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--yellow);
+    }
+    
+    .sidebar .logo-container img {
+      max-width: 120px;
+      height: auto;
+    }
+    
+    @media (max-width: 767.98px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
+      }
+      
+      .main-content {
+        margin-top: 0;
+        padding: 15px;
+      }
+      
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 99;
+      }
+      
+      .sidebar-overlay.show {
+        display: block;
+      }
+    }
+    
+    .sidebar .nav-link {
+      color: var(--black);
+      padding: 12px 20px;
+      margin: 5px 10px;
+      border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: all 0.3s;
+    }
+    
+    .sidebar .nav-link:hover {
+      background: rgba(255, 191, 49, 0.2);
+      border-left-color: var(--yellow);
+      color: var(--black);
+    }
+    
+    .sidebar .nav-link.active {
+      background: var(--yellow);
+      color: var(--black);
+      font-weight: 600;
+    }
+    
+    .sidebar .nav-link.text-danger {
+      color: var(--red) !important;
+    }
+    
+    .sidebar .nav-link.text-danger:hover {
+      background: rgba(255, 87, 87, 0.1);
+      border-left-color: var(--red);
+      color: var(--red);
+    }
+    
+    .sidebar .nav-link i {
+      margin-right: 10px;
+      width: 20px;
+    }
+    
+    .main-content {
+      padding: 30px;
+      background: #f8f9fa;
+      min-height: 100vh;
+    }
+    
+    @media (min-width: 768px) {
+      .main-content {
+        margin-left: 250px;
+      }
+    }
+    
+    .stat-card {
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-card .icon {
+      font-size: 2.5rem;
+      opacity: 0.8;
+    }
+    
+    .bg-yellow {
+      background-color: var(--yellow) !important;
+      color: var(--black) !important;
+    }
+    
+    .bg-red {
+      background-color: var(--red) !important;
+      color: var(--white) !important;
+    }
+    
+    .bg-black {
+      background-color: var(--black) !important;
+      color: var(--white) !important;
+    }
+    
+    .badge-low-stock {
+      background: #ffc107;
+      color: #000;
+    }
+    
+    .badge-out-stock {
+      background: #dc3545;
+      color: #fff;
+    }
+    
+    .table-actions .btn {
+      padding: 5px 10px;
+      font-size: 0.875rem;
+    }
+    
+    .card-header {
+      border-bottom: 2px solid var(--yellow);
+    }
+  </style>
+</head>
+<body>
+  <!-- Mobile Sidebar Toggle Button -->
+  <button class="mobile-sidebar-toggle d-md-none" id="mobileSidebarToggle">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- Sidebar Overlay (for mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-2 d-md-block sidebar p-0" id="sidebar">
+        <div class="position-sticky pt-3">
+          <div class="logo-container">
+            <img src="{% static 'img/raise_logo.png' %}" alt="Raise Logo" class="img-fluid mb-2">
+            <p class="text-muted small mb-1">Store Owner</p>
+            <p class="text-dark small fw-bold mb-0">{{ request.user.first_name }}</p>
+          </div>
+          
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link {% if request.resolver_match.url_name == 'owner_dashboard' %}active{% endif %}" href="{% url 'owner_dashboard' %}">
+                <i class="bi bi-speedometer2"></i> Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'inventory' in request.path %}active{% endif %}" href="{% url 'owner_inventory_list' %}">
+                <i class="bi bi-box-seam"></i> My Inventory
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'supplier-orders' in request.path %}active{% endif %}" href="{% url 'owner_supplier_orders' %}">
+                <i class="bi bi-receipt"></i> My Orders
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'suppliers' in request.path or 'search-suppliers' in request.path or 'connection' in request.path %}active{% endif %}" href="{% url 'owner_supplier_list' %}">
+                <i class="bi bi-truck"></i> My Suppliers
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'staff' in request.path %}active{% endif %}" href="{% url 'owner_staff_list' %}">
+                <i class="bi bi-people-fill"></i> Staff Management
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'profile' in request.path %}active{% endif %}" href="{% url 'owner_profile' %}">
+                <i class="bi bi-person-circle"></i> Profile
+              </a>
+            </li>
+            <li class="nav-item mt-4">
+              <a class="nav-link text-danger" href="{% url 'logout' %}">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="col-md-10 ms-sm-auto main-content">
+        {% block content %}{% endblock %}
+      </main>
+      
+      <!-- Popup Notification Container -->
+      <div class="notification-container" id="notificationContainer"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/responsive-enhancements.js' %}" defer></script>
+  <script>
+    // Popup Notification System
+    class NotificationSystem {
+      constructor() {
+        this.container = document.getElementById('notificationContainer');
+        this.notifications = [];
+      }
+
+      show(message, type = 'info', duration = 5000) {
+        const notification = this.createNotification(message, type, duration);
+        this.container.appendChild(notification);
+        this.notifications.push(notification);
+
+        // Trigger animation
+        setTimeout(() => {
+          notification.classList.add('show');
+        }, 100);
+
+        // Auto remove
+        if (duration > 0) {
+          setTimeout(() => {
+            this.remove(notification);
+          }, duration);
+        }
+
+        return notification;
+      }
+
+      createNotification(message, type, duration) {
+        const notification = document.createElement('div');
+        notification.className = `popup-notification ${type}`;
+        
+        const icons = {
+          success: 'bi-check-circle-fill',
+          error: 'bi-x-circle-fill',
+          warning: 'bi-exclamation-triangle-fill',
+          info: 'bi-info-circle-fill'
+        };
+
+        const titles = {
+          success: 'Success',
+          error: 'Error',
+          warning: 'Warning',
+          info: 'Information'
+        };
+
+        notification.innerHTML = `
+          <div class="notification-header">
+            <i class="bi ${icons[type]} notification-icon"></i>
+            <h6 class="notification-title">${titles[type]}</h6>
+            <button class="notification-close" onclick="notificationSystem.remove(this.closest('.popup-notification'))">
+              <i class="bi bi-x"></i>
+            </button>
+          </div>
+          <p class="notification-message">${message}</p>
+          ${duration > 0 ? `
+            <div class="notification-progress">
+              <div class="notification-progress-bar" style="transition-duration: ${duration}ms; transform: translateX(0);"></div>
+            </div>
+          ` : ''}
+        `;
+
+        return notification;
+      }
+
+      remove(notification) {
+        if (notification && notification.parentNode) {
+          notification.classList.add('hide');
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+            const index = this.notifications.indexOf(notification);
+            if (index > -1) {
+              this.notifications.splice(index, 1);
+            }
+          }, 400);
+        }
+      }
+
+      success(message, duration = 5000) {
+        return this.show(message, 'success', duration);
+      }
+
+      error(message, duration = 7000) {
+        return this.show(message, 'error', duration);
+      }
+
+      warning(message, duration = 6000) {
+        return this.show(message, 'warning', duration);
+      }
+
+      info(message, duration = 5000) {
+        return this.show(message, 'info', duration);
+      }
+    }
+
+    // Initialize notification system
+    const notificationSystem = new NotificationSystem();
+
+    // Process Django messages
+    document.addEventListener('DOMContentLoaded', function() {
+      // Handle Django messages
+      {% if messages %}
+        {% for message in messages %}
+          {% if message.tags == 'success' %}
+            notificationSystem.success('{{ message|escapejs }}');
+          {% elif message.tags == 'error' %}
+            notificationSystem.error('{{ message|escapejs }}');
+          {% elif message.tags == 'warning' %}
+            notificationSystem.warning('{{ message|escapejs }}');
+          {% else %}
+            notificationSystem.info('{{ message|escapejs }}');
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      // Mobile sidebar toggle
+      const mobileSidebarToggle = document.getElementById('mobileSidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarOverlay = document.getElementById('sidebarOverlay');
+      
+      if (mobileSidebarToggle) {
+        mobileSidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+          sidebarOverlay.classList.toggle('show');
+        });
+      }
+      
+      if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', function() {
+          sidebar.classList.remove('show');
+          sidebarOverlay.classList.remove('show');
+        });
+      }
+      
+      // Close sidebar when clicking a link on mobile
+      const sidebarLinks = sidebar.querySelectorAll('.nav-link');
+      sidebarLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          if (window.innerWidth < 768) {
+            sidebar.classList.remove('show');
+            sidebarOverlay.classList.remove('show');
+          }
+        });
+      });
+    });
+  </script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

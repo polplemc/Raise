@@ -1,0 +1,189 @@
+{% extends 'staff/base.html' %}
+
+{% block title %}Stock Out Report{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="mb-1">Stock Out Report</h2>
+    <p class="text-muted mb-0">Stock movement history for {{ business_owner.first_name }}'s store</p>
+  </div>
+  <a href="{% url 'staff_stock_out_form' %}" class="btn btn-danger">
+    <i class="bi bi-box-arrow-right"></i> Record Stock Out
+  </a>
+</div>
+
+<!-- Summary Stats -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card bg-yellow">
+      <div class="card-body text-center">
+        <i class="bi bi-list-ol icon"></i>
+        <h4 class="mb-1">{{ total_records }}</h4>
+        <p class="mb-0 small">Total Records</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-warning">
+      <div class="card-body text-center">
+        <i class="bi bi-box-arrow-right icon"></i>
+        <h4 class="mb-1">{{ total_quantity }}</h4>
+        <p class="mb-0 small">Units Moved</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-info text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-calendar-event icon"></i>
+        <h4 class="mb-1">{{ stock_outs|length }}</h4>
+        <p class="mb-0 small">Showing</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Reports</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-3">
+        <label for="product" class="form-label">Product</label>
+        <select class="form-select" id="product" name="product">
+          <option value="">All Products</option>
+          {% for product in products %}
+            <option value="{{ product.id }}" {% if filters.product == product.id|stringformat:"s" %}selected{% endif %}>
+              {{ product.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="reason" class="form-label">Reason</label>
+        <select class="form-select" id="reason" name="reason">
+          <option value="">All Reasons</option>
+          {% for value, label in reason_choices %}
+            <option value="{{ value }}" {% if filters.reason == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="date_from" class="form-label">From Date</label>
+        <input type="date" class="form-control" id="date_from" name="date_from" value="{{ filters.date_from }}">
+      </div>
+      <div class="col-md-2">
+        <label for="date_to" class="form-label">To Date</label>
+        <input type="date" class="form-control" id="date_to" name="date_to" value="{{ filters.date_to }}">
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Stock Out Records -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Stock Out Records ({{ stock_outs|length }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if stock_outs %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Date & Time</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Reason</th>
+            <th>Recorded By</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for stock_out in stock_outs %}
+          <tr>
+            <td>
+              <div>{{ stock_out.created_at|date:"M d, Y" }}</div>
+              <small class="text-muted">{{ stock_out.created_at|time:"g:i A" }}</small>
+            </td>
+            <td>
+              <div>
+                <strong>{{ stock_out.product.name }}</strong>
+                <br><small class="text-muted">₱{{ stock_out.product.price }} each</small>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-danger fs-6">-{{ stock_out.quantity }} {{ stock_out.product.unit }}</span>
+            </td>
+            <td>
+              {% if stock_out.reason == 'sale' %}
+                <span class="badge bg-success">{{ stock_out.get_reason_display }}</span>
+              {% elif stock_out.reason == 'damaged' %}
+                <span class="badge bg-warning">{{ stock_out.get_reason_display }}</span>
+              {% elif stock_out.reason == 'expired' %}
+                <span class="badge bg-danger">{{ stock_out.get_reason_display }}</span>
+              {% elif stock_out.reason == 'lost' %}
+                <span class="badge bg-secondary">{{ stock_out.get_reason_display }}</span>
+              {% elif stock_out.reason == 'return' %}
+                <span class="badge bg-info">{{ stock_out.get_reason_display }}</span>
+              {% else %}
+                <span class="badge bg-dark">{{ stock_out.get_reason_display }}</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if stock_out.processed_by %}
+                <div>
+                  <strong>{{ stock_out.processed_by.first_name|default:stock_out.processed_by.username }}</strong>
+                  <br><small class="text-muted">{{ stock_out.processed_by.profile.get_role_display }}</small>
+                </div>
+              {% else %}
+                <span class="text-muted">System</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if stock_out.remarks %}
+                <span class="text-muted">{{ stock_out.remarks|truncatewords:8 }}</span>
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-graph-down text-muted" style="font-size: 3rem;"></i>
+      <h5 class="text-muted mt-3">No stock out records found</h5>
+      {% if filters.product or filters.reason or filters.date_from or filters.date_to %}
+        <p class="text-muted">Try adjusting your filters to see more records.</p>
+        <a href="{% url 'staff_stock_out_report' %}" class="btn btn-outline-primary">Clear Filters</a>
+      {% else %}
+        <p class="text-muted">No stock movements have been recorded yet.</p>
+        <a href="{% url 'staff_stock_out_form' %}" class="btn btn-danger">
+          <i class="bi bi-box-arrow-right"></i> Record First Stock Out
+        </a>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if is_staff %}
+<div class="alert alert-info mt-4">
+  <i class="bi bi-info-circle"></i>
+  <strong>Staff Access:</strong> You can view all stock out records for {{ business_owner.first_name }}'s store. 
+  Your own recorded transactions are highlighted in the "Recorded By" column.
+</div>
+{% endif %}
+{% endblock %}

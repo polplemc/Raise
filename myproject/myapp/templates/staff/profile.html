@@ -1,0 +1,259 @@
+{% extends 'staff/base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="pagetitle">
+  <h1>Profile</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'staff_dashboard' %}">Home</a></li>
+      <li class="breadcrumb-item active">Profile</li>
+    </ol>
+  </nav>
+</div>
+
+<section class="section profile">
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+          <div class="profile-avatar mb-3">
+            <i class="bi bi-person-circle" style="font-size: 120px; color: #0d6efd;"></i>
+          </div>
+          <h2>{{ request.user.first_name }} {{ request.user.last_name|default:"" }}</h2>
+          <h3>Staff Member</h3>
+          <div class="mt-3">
+            <span class="badge bg-primary"><i class="bi bi-person-badge"></i> Staff</span>
+            {% if staff_profile.is_active %}
+              <span class="badge bg-success"><i class="bi bi-check-circle"></i> Active</span>
+            {% else %}
+              <span class="badge bg-secondary"><i class="bi bi-x-circle"></i> Inactive</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Business Owner Card -->
+      {% if business_owner %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Business Owner</h5>
+          <div class="text-center mb-3">
+            <i class="bi bi-person-circle" style="font-size: 60px; color: #ffc107;"></i>
+          </div>
+          <div class="text-center mb-3">
+            <h6 class="mb-0">{{ business_owner.first_name }} {{ business_owner.last_name }}</h6>
+            <small class="text-muted">Store Owner</small>
+          </div>
+          <hr>
+          {% if business_owner.profile.store_name %}
+          <div class="mb-2 d-flex align-items-center">
+            <i class="bi bi-shop text-warning me-2"></i>
+            <span>{{ business_owner.profile.store_name }}</span>
+          </div>
+          {% endif %}
+          {% if business_owner.email %}
+          <div class="mb-2 d-flex align-items-center">
+            <i class="bi bi-envelope text-primary me-2"></i>
+            <small>{{ business_owner.email }}</small>
+          </div>
+          {% endif %}
+          {% if business_owner.profile.phone %}
+          <div class="mb-0 d-flex align-items-center">
+            <i class="bi bi-telephone text-success me-2"></i>
+            <span>{{ business_owner.profile.phone }}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-body pt-3">
+          <!-- Bordered Tabs -->
+          <ul class="nav nav-tabs nav-tabs-bordered">
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-permissions">Permissions</button>
+            </li>
+          </ul>
+
+          <div class="tab-content pt-2">
+
+            <!-- Overview Tab -->
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title">Profile Details</h5>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Full Name</div>
+                <div class="col-lg-9 col-md-8">{{ request.user.first_name }} {{ request.user.last_name|default:"" }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Role</div>
+                <div class="col-lg-9 col-md-8">Staff Member</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Username</div>
+                <div class="col-lg-9 col-md-8">{{ request.user.username }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{ request.user.email|default:"Not provided" }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Phone</div>
+                <div class="col-lg-9 col-md-8">{{ staff_profile.phone|default:"Not provided" }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Address</div>
+                <div class="col-lg-9 col-md-8">{{ staff_profile.address|default:"Not provided" }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Member Since</div>
+                <div class="col-lg-9 col-md-8">
+                  {% if staff_profile.created_at %}
+                    {{ staff_profile.created_at|date:"F d, Y" }}
+                  {% else %}
+                    {{ request.user.date_joined|date:"F d, Y" }}
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Account Status</div>
+                <div class="col-lg-9 col-md-8">
+                  {% if staff_profile.is_active %}
+                    <span class="badge bg-success">Active</span>
+                  {% else %}
+                    <span class="badge bg-secondary">Inactive</span>
+                  {% endif %}
+                </div>
+              </div>
+
+              {% if business_owner %}
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Reports To</div>
+                <div class="col-lg-9 col-md-8">{{ business_owner.first_name }} {{ business_owner.last_name }}</div>
+              </div>
+              {% endif %}
+            </div>
+
+            <!-- Permissions Tab -->
+            <div class="tab-pane fade pt-3" id="profile-permissions">
+              <h5 class="card-title">Your Permissions</h5>
+
+              <div class="mb-4">
+                <h6 class="text-success"><i class="bi bi-check-circle"></i> You can:</h6>
+                <ul>
+                  <li>View and manage inventory</li>
+                  <li>Record stock out transactions</li>
+                  <li>View supplier orders</li>
+                  <li>Access business reports</li>
+                  <li>Process customer sales</li>
+                </ul>
+              </div>
+
+              <div class="mb-4">
+                <h6 class="text-danger"><i class="bi bi-x-circle"></i> You cannot:</h6>
+                <ul>
+                  <li>Manage other staff members</li>
+                  <li>Delete critical data</li>
+                  <li>Modify supplier relationships</li>
+                  <li>Change business settings</li>
+                  <li>Access financial reports</li>
+                </ul>
+              </div>
+
+              <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i>
+                <strong>Need additional permissions?</strong> Contact {{ business_owner.first_name|default:"your manager" }} to discuss your access level.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .profile-avatar {
+    position: relative;
+  }
+  
+  .profile-card h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c384e;
+    margin: 10px 0 5px 0;
+  }
+  
+  .profile-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6c757d;
+    margin: 0;
+  }
+  
+  .profile-overview .row {
+    margin-bottom: 15px;
+  }
+  
+  .profile-overview .label {
+    font-weight: 600;
+    color: rgba(1, 41, 112, 0.6);
+  }
+  
+  .card {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+  }
+  
+  .card-title {
+    padding: 20px 0 15px 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #012970;
+  }
+  
+  .nav-tabs-bordered {
+    border-bottom: 2px solid #ebeef4;
+  }
+  
+  .nav-tabs-bordered .nav-link {
+    margin-bottom: -2px;
+    border: none;
+    color: #2c384e;
+  }
+  
+  .nav-tabs-bordered .nav-link:hover,
+  .nav-tabs-bordered .nav-link:focus {
+    color: #0d6efd;
+  }
+  
+  .nav-tabs-bordered .nav-link.active {
+    background-color: #fff;
+    color: #0d6efd;
+    border-bottom: 2px solid #0d6efd;
+  }
+  
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+  }
+</style>
+{% endblock %}

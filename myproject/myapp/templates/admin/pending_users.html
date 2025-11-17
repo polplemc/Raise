@@ -1,0 +1,268 @@
+{% extends 'admin/base_new.html' %}
+{% load static %}
+
+{% block title %}Pending User Registrations{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, var(--yellow) 0%, #e6ab1f 100%);
+        color: var(--black);
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(255, 191, 49, 0.3);
+    }
+    
+    .page-header h2 {
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    
+    .page-header p {
+        margin-bottom: 0;
+        opacity: 0.8;
+    }
+    
+    .pending-badge {
+        background-color: var(--yellow);
+        color: var(--black);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(255, 191, 49, 0.3);
+    }
+    
+    .role-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .role-owner {
+        background-color: #e3f2fd;
+        color: #1976d2;
+        border: 1px solid #bbdefb;
+    }
+    
+    .role-supplier {
+        background-color: #f3e5f5;
+        color: #7b1fa2;
+        border: 1px solid #e1bee7;
+    }
+    
+    .user-card {
+        transition: all 0.3s ease;
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .user-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .user-card .card-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-bottom: 2px solid var(--yellow);
+        font-weight: 600;
+    }
+    
+    .user-card .card-footer {
+        background: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        color: #6c757d;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .empty-state i {
+        font-size: 5rem;
+        color: #dee2e6;
+        margin-bottom: 20px;
+    }
+    
+    .empty-state h4 {
+        color: var(--black);
+        margin-bottom: 15px;
+    }
+    
+    .alert-warning {
+        background: linear-gradient(135deg, rgba(255, 191, 49, 0.1) 0%, rgba(255, 191, 49, 0.05) 100%);
+        border: 1px solid var(--yellow);
+        border-radius: 8px;
+        color: var(--black);
+    }
+    
+    .alert-warning i {
+        color: var(--yellow);
+    }
+    
+    .btn-primary {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+        background: #e6ab1f;
+        border-color: #e6ab1f;
+        color: var(--black);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(255, 191, 49, 0.3);
+    }
+    
+    .btn-outline-success {
+        border-color: #28a745;
+        color: #28a745;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-success:hover {
+        background: #28a745;
+        border-color: #28a745;
+        transform: translateY(-1px);
+    }
+    
+    .btn-outline-primary {
+        border-color: var(--yellow);
+        color: var(--black);
+        border-radius: 8px;
+        font-weight: 600;
+    }
+    
+    .btn-outline-primary:hover {
+        background: var(--yellow);
+        border-color: var(--yellow);
+        color: var(--black);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2><i class="bi bi-person-check"></i> Pending User Registrations</h2>
+            <p>Review and approve new user registrations</p>
+        </div>
+        <div>
+            <a href="{% url 'admin_approved_users' %}" class="btn btn-outline-success">
+                <i class="bi bi-check-circle"></i> View Approved Users
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            
+            {% if pending_users %}
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>{{ pending_users|length }} user{{ pending_users|length|pluralize }} awaiting approval</strong>
+                    - These users cannot access the system until approved.
+                </div>
+                
+                <div class="row">
+                    {% for profile in pending_users %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card user-card h-100 shadow-sm">
+                            <div class="card-header bg-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">
+                                        <i class="bi bi-person-circle"></i> {{ profile.user.first_name|default:profile.user.username }}
+                                    </h6>
+                                    <span class="pending-badge">PENDING</span>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <span class="role-badge role-{{ profile.role }}">
+                                        {{ profile.get_role_display }}
+                                    </span>
+                                </div>
+                                
+                                <div class="mb-2">
+                                    <small class="text-muted">Username:</small><br>
+                                    <strong>{{ profile.user.username }}</strong>
+                                </div>
+                                
+                                <div class="mb-2">
+                                    <small class="text-muted">Email:</small><br>
+                                    <strong>{{ profile.user.email }}</strong>
+                                </div>
+                                
+                                {% if profile.phone %}
+                                <div class="mb-2">
+                                    <small class="text-muted">Phone:</small><br>
+                                    <strong>{{ profile.phone }}</strong>
+                                </div>
+                                {% endif %}
+                                
+                                <div class="mb-3">
+                                    <small class="text-muted">Registered:</small><br>
+                                    <strong>{{ profile.user.date_joined|date:"M d, Y g:i A" }}</strong>
+                                </div>
+                                
+                                {% if profile.address %}
+                                <div class="mb-3">
+                                    <small class="text-muted">Address:</small><br>
+                                    <small>{{ profile.address|truncatechars:50 }}</small>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer bg-light">
+                                <div class="d-grid">
+                                    <a href="{% url 'admin_user_approval_detail' profile.user.id %}" 
+                                       class="btn btn-primary btn-sm">
+                                        <i class="bi bi-eye"></i> Review & Approve
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="bi bi-check-circle"></i>
+                    <h4>No Pending Registrations</h4>
+                    <p>All user registrations have been processed. New registrations will appear here for review.</p>
+                    <a href="{% url 'admin_approved_users' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-people"></i> View Approved Users
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Auto-refresh every 30 seconds to check for new registrations
+    setTimeout(function() {
+        location.reload();
+    }, 30000);
+});
+</script>
+{% endblock %}

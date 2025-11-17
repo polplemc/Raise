@@ -1,0 +1,109 @@
+{% extends 'admin/base_new.html' %}
+
+{% block title %}Staff Members{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">Staff Members</h2>
+</div>
+
+<!-- Search and Filters -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-4">
+        <input type="text" name="search" class="form-control" placeholder="Search by name, email, or owner..." value="{{ search }}">
+      </div>
+      <div class="col-md-3">
+        <select name="status" class="form-select">
+          <option value="">All Status</option>
+          <option value="active" {% if status == 'active' %}selected{% endif %}>Active</option>
+          <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>Inactive</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">
+          <i class="bi bi-search"></i> Search
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Staff Table -->
+<div class="card">
+  <div class="card-body">
+    {% if staff_members %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Owner</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>Joined</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for staff in staff_members %}
+            <tr>
+              <td><strong>{{ staff.user.first_name }} {{ staff.user.last_name }}</strong></td>
+              <td>{{ staff.user.email }}</td>
+              <td>
+                {% if staff.owner %}
+                  <a href="{% url 'admin_owner_detail' staff.owner.id %}" class="text-decoration-none">
+                    {{ staff.owner.username }}
+                    {% if staff.owner.profile.store_name %}
+                      <br><small class="text-muted">{{ staff.owner.profile.store_name }}</small>
+                    {% endif %}
+                  </a>
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if staff.phone %}
+                  {{ staff.phone }}
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if staff.is_active %}
+                  <span class="badge bg-success">Active</span>
+                {% else %}
+                  <span class="badge bg-secondary">Inactive</span>
+                {% endif %}
+              </td>
+              <td>{{ staff.created_at|date:"M d, Y" }}</td>
+              <td>
+                <div class="btn-group" role="group">
+                  <a href="{% url 'admin_staff_detail' staff.user.id %}" class="btn btn-sm btn-outline-primary" title="View Details">
+                    <i class="bi bi-eye"></i>
+                  </a>
+                  <a href="{% url 'admin_staff_edit' staff.user.id %}" class="btn btn-sm btn-outline-warning" title="Edit">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <a href="{% url 'admin_staff_delete' staff.user.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="bi bi-people text-muted" style="font-size: 4rem;"></i>
+        <h4 class="text-muted mt-3">No Staff Members</h4>
+        <p class="text-muted">Staff members will appear here when owners create them.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

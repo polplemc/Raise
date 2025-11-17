@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Registration Update - Raise Inventory System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ffbf31;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .warning-icon {
+            font-size: 48px;
+            color: #ffc107;
+            margin: 20px 0;
+        }
+        h1 {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #f8d7da;
+            padding: 15px;
+            border-left: 4px solid #dc3545;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .reason-box {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #ffbf31;
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .info-box {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">RAISE</div>
+            <div style="color: #666;">Inventory Management System</div>
+        </div>
+        
+        <div style="text-align: center;">
+            <div class="warning-icon">⚠️</div>
+            <h1>Registration Update</h1>
+        </div>
+        
+        <p>Dear {{ full_name }},</p>
+        
+        <p>Thank you for your interest in joining the Raise Inventory Management System. We have reviewed your registration application.</p>
+        
+        <div class="highlight">
+            <strong>Unfortunately, we are unable to approve your account at this time.</strong>
+        </div>
+        
+        {% if rejection_reason %}
+        <div class="reason-box">
+            <h3 style="margin-top: 0;">Reason for rejection:</h3>
+            <p>{{ rejection_reason }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="info-box">
+            <h3 style="margin-top: 0;">What you can do:</h3>
+            <ul>
+                <li>Review the reason for rejection above</li>
+                <li>Gather any additional required documentation</li>
+                <li>Submit a new registration with the correct information</li>
+                <li>Contact our support team if you need clarification</li>
+            </ul>
+        </div>
+        
+        <p>We encourage you to address the issues mentioned and reapply when you have the necessary requirements.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ signup_url }}" class="button">Register Again</a>
+        </div>
+        
+        <p><strong>Registration Details:</strong></p>
+        <ul>
+            <li><strong>Username:</strong> {{ user.username }}</li>
+            <li><strong>Email:</strong> {{ user.email }}</li>
+            <li><strong>Account Type:</strong> {{ user.profile.get_role_display }}</li>
+        </ul>
+        
+        <p>If you have any questions about this decision or need assistance with your application, please contact our support team.</p>
+        
+        <p>Thank you for your understanding.</p>
+        
+        <p>Best regards,<br>
+        <strong>The Raise Team</strong></p>
+        
+        <div class="footer">
+            <p>This is an automated message. Please do not reply to this email.</p>
+            <p>If you need help, contact us at support@raise-inventory.com</p>
+        </div>
+    </div>
+</body>
+</html>

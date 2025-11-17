@@ -1,0 +1,232 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}{% if is_edit %}Edit Staff Member{% else %}Add Staff Member{% endif %}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">{% if is_edit %}Edit Staff Member{% else %}Add New Staff Member{% endif %}</h2>
+  <a href="{% url 'owner_staff_list' %}" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left"></i> Back to Staff List
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h4 class="mb-0"><i class="bi bi-people-fill"></i> {% if is_edit %}Staff Information{% else %}New Staff Information{% endif %}</h4>
+      </div>
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          
+          {% if not is_edit %}
+          <!-- Login Credentials (only for new staff) -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+              {{ form.username }}
+              {% if form.username.help_text %}
+                <div class="form-text">{{ form.username.help_text }}</div>
+              {% endif %}
+              {% if form.username.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.username.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <!-- Empty column for spacing -->
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+              {{ form.password }}
+              {% if form.password.help_text %}
+                <div class="form-text">{{ form.password.help_text }}</div>
+              {% endif %}
+              {% if form.password.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.password.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.confirm_password.id_for_label }}" class="form-label">{{ form.confirm_password.label }}</label>
+              {{ form.confirm_password }}
+              {% if form.confirm_password.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.confirm_password.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          
+          <hr class="my-4">
+          {% endif %}
+          
+          <!-- Personal Information -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.first_name.id_for_label }}" class="form-label">{{ form.first_name.label }}</label>
+              {{ form.first_name }}
+              {% if form.first_name.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.first_name.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.last_name.id_for_label }}" class="form-label">{{ form.last_name.label }}</label>
+              {{ form.last_name }}
+              {% if form.last_name.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.last_name.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.email.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="{{ form.phone.id_for_label }}" class="form-label">{{ form.phone.label }}</label>
+              {{ form.phone }}
+              {% if form.phone.errors %}
+                <div class="text-danger small mt-1">
+                  {% for error in form.phone.errors %}{{ error }}{% endfor %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="{{ form.address.id_for_label }}" class="form-label">{{ form.address.label }}</label>
+            {{ form.address }}
+            {% if form.address.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.address.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+
+          {% if is_edit %}
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.is_active }}
+              <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                {{ form.is_active.label }}
+              </label>
+            </div>
+            <div class="form-text">Inactive staff members cannot log in to the system</div>
+            {% if form.is_active.errors %}
+              <div class="text-danger small mt-1">
+                {% for error in form.is_active.errors %}{{ error }}{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-warning">
+              <i class="bi bi-check-circle"></i> {% if is_edit %}Update Staff Member{% else %}Add Staff Member{% endif %}
+            </button>
+            <a href="{% url 'owner_staff_list' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    {% if is_edit %}
+    <div class="card mb-3">
+      <div class="card-header">
+        <h6 class="mb-0">Current Staff Info</h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>Username:</strong> {{ staff_profile.user.username }}
+        </div>
+        
+        <div class="mb-3">
+          <strong>Status:</strong>
+          {% if staff_profile.is_active %}
+            <span class="badge bg-success">Active</span>
+          {% else %}
+            <span class="badge bg-secondary">Inactive</span>
+          {% endif %}
+        </div>
+        
+        <div class="mb-3">
+          <strong>Created:</strong>
+          <br>{{ staff_profile.created_at|date:"M d, Y" }}
+        </div>
+        
+        <div class="mb-3">
+          <strong>Last Updated:</strong>
+          <br>{{ staff_profile.updated_at|date:"M d, Y" }}
+        </div>
+        
+        <hr>
+        <div class="d-grid gap-2">
+          <a href="{% url 'owner_staff_reset_password' staff_profile.id %}" class="btn btn-outline-info btn-sm">
+            <i class="bi bi-key"></i> Reset Password
+          </a>
+          <a href="{% url 'owner_staff_delete' staff_profile.id %}" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-trash"></i> Delete Staff
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    
+    <div class="card">
+      <div class="card-header">
+        <h6 class="mb-0">Staff Permissions</h6>
+      </div>
+      <div class="card-body">
+        <p class="small mb-2"><strong>This staff member will be able to:</strong></p>
+        <ul class="small mb-0">
+          <li>View and manage your inventory</li>
+          <li>Record sales and stock movements</li>
+          <li>View supplier orders</li>
+          <li>Access business reports (read-only)</li>
+        </ul>
+        
+        <hr class="my-3">
+        
+        <p class="small mb-2"><strong>They will NOT be able to:</strong></p>
+        <ul class="small mb-0">
+          <li>Manage other staff members</li>
+          <li>Delete critical data</li>
+          <li>Access financial settings</li>
+          <li>Modify supplier relationships</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #ffbf31;
+    box-shadow: 0 0 0 0.2rem rgba(255, 191, 49, 0.25);
+  }
+</style>
+{% endblock %}

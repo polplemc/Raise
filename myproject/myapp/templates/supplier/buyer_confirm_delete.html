@@ -1,0 +1,29 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}Remove Buyer{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card border-danger">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirm Removal</h4>
+      </div>
+      <div class="card-body">
+        <p>Are you sure you want to remove the connection with <strong>{{ buyer.first_name }}</strong>?</p>
+        <p class="text-danger"><i class="bi bi-info-circle"></i> This will delete the supplier connection. The buyer will need to add you again to place new orders.</p>
+        
+        <form method="POST">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-trash"></i> Yes, Remove Connection
+            </button>
+            <a href="{% url 'supplier_buyer_list' %}" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

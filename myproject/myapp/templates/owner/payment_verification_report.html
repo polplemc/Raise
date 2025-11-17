@@ -1,0 +1,170 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Payment Verification Report{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="mb-1"><i class="bi bi-shield-check text-success"></i> Payment Verification Report</h2>
+    <p class="text-muted mb-0">Track payment verification status for your orders</p>
+  </div>
+  <a href="{% url 'owner_supplier_orders' %}" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left"></i> Back to Orders
+  </a>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card bg-primary text-white">
+      <div class="card-body">
+        <h6 class="card-title">Total Orders</h6>
+        <h3 class="mb-0">{{ total_orders }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-success text-white">
+      <div class="card-body">
+        <h6 class="card-title">Paid Orders</h6>
+        <h3 class="mb-0">{{ paid_orders }}</h3>
+        <small>₱{{ total_paid_amount|floatformat:2 }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <h6 class="card-title">Verified Payments</h6>
+        <h3 class="mb-0">{{ verified_payments }}</h3>
+        <small>₱{{ total_verified_amount|floatformat:2 }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-warning text-white">
+      <div class="card-body">
+        <h6 class="card-title">Pending Verification</h6>
+        <h3 class="mb-0">{{ pending_verification }}</h3>
+        <small>Paid but not verified</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Orders</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-5">
+        <label for="verification" class="form-label">Verification Status</label>
+        <select class="form-select" id="verification" name="verification">
+          <option value="">All Orders</option>
+          <option value="verified" {% if verification_filter == 'verified' %}selected{% endif %}>Verified Payments</option>
+          <option value="unverified" {% if verification_filter == 'unverified' %}selected{% endif %}>Unverified (Paid)</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label for="payment_status" class="form-label">Payment Status</label>
+        <select class="form-select" id="payment_status" name="payment_status">
+          <option value="">All Statuses</option>
+          <option value="pending" {% if payment_status_filter == 'pending' %}selected{% endif %}>Pending</option>
+          <option value="paid" {% if payment_status_filter == 'paid' %}selected{% endif %}>Paid</option>
+          <option value="failed" {% if payment_status_filter == 'failed' %}selected{% endif %}>Failed</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">
+            <i class="bi bi-funnel"></i> Filter
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Orders Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Orders ({{ orders|length }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if orders %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order #</th>
+            <th>Product</th>
+            <th>Supplier</th>
+            <th>Amount</th>
+            <th>Payment Method</th>
+            <th>Payment Status</th>
+            <th>Verification</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>
+              <a href="{% url 'owner_supplier_order_detail' order.pk %}">#{{ order.id }}</a>
+            </td>
+            <td>
+              <strong>{{ order.supplier_product.name }}</strong>
+              <br><small class="text-muted">{{ order.quantity }} {{ order.supplier_product.unit }}</small>
+            </td>
+            <td>
+              {{ order.supplier_product.supplier.first_name|default:order.supplier_product.supplier.username }}
+            </td>
+            <td>
+              <strong>₱{{ order.total_amount|floatformat:2 }}</strong>
+            </td>
+            <td>
+              <span class="badge bg-primary">{{ order.get_payment_method_display }}</span>
+            </td>
+            <td>
+              {% if order.payment_status == 'paid' %}
+                <span class="badge bg-success">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'pending' %}
+                <span class="badge bg-warning">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'failed' %}
+                <span class="badge bg-danger">{{ order.get_payment_status_display }}</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if order.payment_verified %}
+                <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Verified</span>
+                <br><small class="text-muted">{{ order.verified_date|date:"M d" }}</small>
+              {% else %}
+                <span class="badge bg-secondary"><i class="bi bi-clock"></i> Not Verified</span>
+              {% endif %}
+            </td>
+            <td>
+              <small>{{ order.created_at|date:"M d, Y" }}</small>
+            </td>
+            <td>
+              <a href="{% url 'owner_supplier_order_detail' order.pk %}" class="btn btn-sm btn-outline-primary">
+                <i class="bi bi-eye"></i> View
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+      <p class="text-muted mt-3">No orders found matching your criteria.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

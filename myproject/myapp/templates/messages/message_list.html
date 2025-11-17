@@ -1,0 +1,90 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0"><i class="bi bi-envelope"></i> Messages</h2>
+  {% if request.user.profile.role == 'owner' %}
+    <a href="{% url 'owner_dashboard' %}" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+  {% elif request.user.profile.role == 'supplier' %}
+    <a href="{% url 'supplier_dashboard' %}" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+  {% elif request.user.profile.role == 'staff' %}
+    <a href="{% url 'staff_dashboard' %}" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
+  {% endif %}
+</div>
+
+<!-- Conversations List -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Your Conversations</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if conversations %}
+      <div class="list-group list-group-flush">
+        {% for conv_data in conversations %}
+          <a href="{% url 'conversation_detail' conv_data.conversation.id %}" class="list-group-item list-group-item-action {% if conv_data.unread_count > 0 %}border-start border-primary border-3{% endif %}" style="transition: all 0.2s;">
+            <div class="d-flex w-100 justify-content-between align-items-start">
+              <div class="flex-grow-1">
+                <div class="d-flex align-items-center mb-2">
+                  <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">
+                    <i class="bi bi-person"></i>
+                  </div>
+                  <div>
+                    <h6 class="mb-0 fw-bold">{{ conv_data.other_user.first_name|default:conv_data.other_user.username }}</h6>
+                    <small class="text-muted">@{{ conv_data.other_user.username }}</small>
+                  </div>
+                </div>
+                
+                {% if conv_data.conversation.related_order %}
+                  <div class="mb-2">
+                    <span class="badge bg-info">
+                      <i class="bi bi-box"></i> Order #{{ conv_data.conversation.related_order.id }}
+                    </span>
+                  </div>
+                {% endif %}
+                
+                {% if conv_data.last_message %}
+                  <p class="mb-1 text-muted small" style="line-height: 1.4;">
+                    {% if conv_data.last_message.sender == request.user %}
+                      <strong class="text-primary">You:</strong>
+                    {% else %}
+                      <strong>{{ conv_data.other_user.first_name|default:conv_data.other_user.username }}:</strong>
+                    {% endif %}
+                    {{ conv_data.last_message.body|truncatewords:15 }}
+                  </p>
+                  <small class="text-muted">
+                    <i class="bi bi-clock"></i> {{ conv_data.last_message.created_at|timesince }} ago
+                  </small>
+                {% endif %}
+              </div>
+              
+              <div class="ms-3 text-end">
+                {% if conv_data.unread_count > 0 %}
+                  <span class="badge bg-danger rounded-pill" style="font-size: 0.85rem;">{{ conv_data.unread_count }}</span>
+                {% endif %}
+                <div class="mt-2">
+                  <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="bi bi-envelope-slash text-muted" style="font-size: 4rem;"></i>
+        <h5 class="text-muted mt-3">No conversations yet</h5>
+        <p class="text-muted">Messages will appear here when you communicate with {% if request.user.profile.role == 'owner' %}suppliers{% else %}store owners{% endif %} about orders.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

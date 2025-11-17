@@ -1,0 +1,27 @@
+{% extends 'emails/base_email.html' %}
+
+{% block title %}New Order Received{% endblock %}
+
+{% block content %}
+<h2>📦 New Order Received!</h2>
+
+<p>Hello {{ supplier.first_name }},</p>
+
+<p>You have received a new order from <strong>{{ owner.first_name }}</strong>.</p>
+
+<div class="info-box">
+    <strong>Order Details:</strong><br>
+    Order ID: #{{ order.id }}<br>
+    Product: {{ order.supplier_product.name }}<br>
+    Quantity: {{ order.quantity }} {{ order.supplier_product.unit }}<br>
+    Total Amount: ₱{{ order.total_amount }}<br>
+    Payment Method: {{ order.get_payment_method_display }}<br>
+    Order Date: {{ order.created_at|date:"F d, Y g:i A" }}
+</div>
+
+<p>Please log in to your account to review and process this order.</p>
+
+<a href="{{ request.scheme }}://{{ request.get_host }}/supplier/supplier-orders/{{ order.id }}/" class="button">View Order Details</a>
+
+<p>Thank you for using {{ site_name }}!</p>
+{% endblock %}

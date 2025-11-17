@@ -1,0 +1,343 @@
+<!-- Reusable Bulk Actions Component -->
+<div class="card mb-4">
+  <div class="card-header bg-warning bg-opacity-10">
+    <div class="d-flex justify-content-between align-items-center">
+      <h6 class="mb-0">
+        <i class="bi bi-check2-square"></i> 
+        Bulk Actions 
+        <span class="badge bg-primary" id="selectedCount">0 selected</span>
+      </h6>
+      <button class="btn btn-sm btn-outline-secondary" type="button" onclick="clearSelection()">
+        <i class="bi bi-x-circle"></i> Clear Selection
+      </button>
+    </div>
+  </div>
+  
+  <div class="card-body" id="bulkActionsPanel" style="display: none;">
+    <form method="post" action="{{ bulk_action_url }}" id="bulkActionForm">
+      {% csrf_token %}
+      
+      <!-- Hidden field for selected IDs -->
+      <input type="hidden" name="selected_ids" id="selectedIds" value="">
+      
+      <div class="row g-3 align-items-end">
+        
+        <!-- Action Selection -->
+        <div class="col-md-4">
+          <label class="form-label fw-bold">Select Action</label>
+          <select name="bulk_action" id="bulkActionSelect" class="form-select" required>
+            <option value="">Choose action...</option>
+            
+            {% if action_type == 'orders' %}
+            <option value="confirm">✓ Confirm Orders</option>
+            <option value="update_status">📦 Update Order Status</option>
+            <option value="update_delivery">🚚 Update Delivery Status</option>
+            <option value="cancel">❌ Cancel Orders</option>
+            {% endif %}
+            
+            {% if action_type == 'products' %}
+            <option value="update_price">💰 Update Prices</option>
+            <option value="restock">📦 Restock Products</option>
+            <option value="activate">✓ Activate Products</option>
+            <option value="deactivate">✗ Deactivate Products</option>
+            {% endif %}
+            
+            {% if action_type == 'inventory' %}
+            <option value="adjust_stock">📊 Adjust Stock</option>
+            <option value="update_threshold">⚠️ Update Threshold</option>
+            {% endif %}
+          </select>
+        </div>
+        
+        <!-- Dynamic Fields (shown based on action) -->
+        
+        <!-- Order Status Field -->
+        <div class="col-md-3 dynamic-field" id="orderStatusField" style="display: none;">
+          <label class="form-label">New Status</label>
+          <select name="order_status" class="form-select">
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        
+        <!-- Delivery Status Field -->
+        <div class="col-md-3 dynamic-field" id="deliveryStatusField" style="display: none;">
+          <label class="form-label">Delivery Status</label>
+          <select name="delivery_status" class="form-select">
+            <option value="pending">Pending</option>
+            <option value="shipped">Shipped</option>
+            <option value="out_for_delivery">Out for Delivery</option>
+            <option value="delivered">Delivered</option>
+          </select>
+        </div>
+        
+        <!-- Price Update Fields -->
+        <div class="col-md-2 dynamic-field" id="priceChangeField" style="display: none;">
+          <label class="form-label">Change Amount</label>
+          <input type="number" name="price_change" class="form-control" step="0.01" placeholder="0.00">
+        </div>
+        
+        <div class="col-md-2 dynamic-field" id="priceTypeField" style="display: none;">
+          <label class="form-label">Change Type</label>
+          <select name="price_type" class="form-select">
+            <option value="percentage">Percentage (%)</option>
+            <option value="fixed">Fixed Amount (₱)</option>
+          </select>
+        </div>
+        
+        <!-- Quantity Field (for restock/adjust) -->
+        <div class="col-md-2 dynamic-field" id="quantityField" style="display: none;">
+          <label class="form-label">Quantity</label>
+          <input type="number" name="quantity" class="form-control" min="1" placeholder="0">
+        </div>
+        
+        <!-- Adjustment Type Field -->
+        <div class="col-md-2 dynamic-field" id="adjustmentTypeField" style="display: none;">
+          <label class="form-label">Adjustment</label>
+          <select name="adjustment_type" class="form-select">
+            <option value="add">Add Stock</option>
+            <option value="subtract">Subtract Stock</option>
+          </select>
+        </div>
+        
+        <!-- Threshold Field -->
+        <div class="col-md-2 dynamic-field" id="thresholdField" style="display: none;">
+          <label class="form-label">Threshold Value</label>
+          <input type="number" name="threshold" class="form-control" min="0" placeholder="0">
+        </div>
+        
+        <!-- Reason/Notes Field -->
+        <div class="col-md-4 dynamic-field" id="reasonField" style="display: none;">
+          <label class="form-label">Reason/Notes</label>
+          <input type="text" name="reason" class="form-control" placeholder="Optional notes...">
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-warning w-100" id="bulkActionSubmit" disabled>
+            <i class="bi bi-lightning-charge"></i> Apply to Selected
+          </button>
+        </div>
+        
+      </div>
+      
+      <!-- Confirmation Message -->
+      <div class="alert alert-info mt-3 mb-0" id="confirmationMessage" style="display: none;">
+        <i class="bi bi-info-circle"></i>
+        <span id="confirmationText"></span>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<style>
+  .bulk-select-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  #bulkActionsPanel {
+    animation: slideDown 0.3s ease;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .dynamic-field {
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script>
+  // Bulk actions JavaScript
+  let selectedItems = new Set();
+  
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    // Add select all checkbox to table header
+    const tableHeader = document.querySelector('table thead tr');
+    if (tableHeader && !document.getElementById('selectAllCheckbox')) {
+      const th = document.createElement('th');
+      th.innerHTML = '<input type="checkbox" id="selectAllCheckbox" class="bulk-select-checkbox">';
+      th.style.width = '40px';
+      tableHeader.insertBefore(th, tableHeader.firstChild);
+      
+      // Add checkboxes to each row
+      const tableRows = document.querySelectorAll('table tbody tr');
+      tableRows.forEach(row => {
+        const itemId = row.dataset.itemId || row.querySelector('[data-id]')?.dataset.id;
+        if (itemId) {
+          const td = document.createElement('td');
+          td.innerHTML = `<input type="checkbox" class="bulk-item-checkbox" data-id="${itemId}">`;
+          row.insertBefore(td, row.firstChild);
+        }
+      });
+      
+      // Select all functionality
+      document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.bulk-item-checkbox');
+        checkboxes.forEach(cb => {
+          cb.checked = this.checked;
+          if (this.checked) {
+            selectedItems.add(cb.dataset.id);
+          } else {
+            selectedItems.delete(cb.dataset.id);
+          }
+        });
+        updateSelectedCount();
+      });
+      
+      // Individual checkbox functionality
+      document.querySelectorAll('.bulk-item-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            selectedItems.add(this.dataset.id);
+          } else {
+            selectedItems.delete(this.dataset.id);
+          }
+          updateSelectedCount();
+        });
+      });
+    }
+    
+    // Action select change handler
+    const actionSelect = document.getElementById('bulkActionSelect');
+    if (actionSelect) {
+      actionSelect.addEventListener('change', handleActionChange);
+    }
+  });
+  
+  function updateSelectedCount() {
+    const count = selectedItems.size;
+    document.getElementById('selectedCount').textContent = `${count} selected`;
+    document.getElementById('selectedIds').value = Array.from(selectedItems).join(',');
+    
+    // Show/hide bulk actions panel
+    const panel = document.getElementById('bulkActionsPanel');
+    const submitBtn = document.getElementById('bulkActionSubmit');
+    
+    if (count > 0) {
+      panel.style.display = 'block';
+      submitBtn.disabled = false;
+    } else {
+      panel.style.display = 'none';
+      submitBtn.disabled = true;
+    }
+  }
+  
+  function clearSelection() {
+    selectedItems.clear();
+    document.querySelectorAll('.bulk-item-checkbox, #selectAllCheckbox').forEach(cb => {
+      cb.checked = false;
+    });
+    updateSelectedCount();
+  }
+  
+  function handleActionChange(event) {
+    const action = event.target.value;
+    
+    // Hide all dynamic fields
+    document.querySelectorAll('.dynamic-field').forEach(field => {
+      field.style.display = 'none';
+    });
+    
+    // Show relevant fields based on action
+    switch(action) {
+      case 'update_status':
+        document.getElementById('orderStatusField').style.display = 'block';
+        break;
+      case 'update_delivery':
+        document.getElementById('deliveryStatusField').style.display = 'block';
+        break;
+      case 'cancel':
+        document.getElementById('reasonField').style.display = 'block';
+        break;
+      case 'update_price':
+        document.getElementById('priceChangeField').style.display = 'block';
+        document.getElementById('priceTypeField').style.display = 'block';
+        break;
+      case 'restock':
+        document.getElementById('quantityField').style.display = 'block';
+        break;
+      case 'adjust_stock':
+        document.getElementById('quantityField').style.display = 'block';
+        document.getElementById('adjustmentTypeField').style.display = 'block';
+        document.getElementById('reasonField').style.display = 'block';
+        break;
+      case 'update_threshold':
+        document.getElementById('thresholdField').style.display = 'block';
+        break;
+    }
+    
+    updateConfirmationMessage(action);
+  }
+  
+  function updateConfirmationMessage(action) {
+    const count = selectedItems.size;
+    const messageDiv = document.getElementById('confirmationMessage');
+    const messageText = document.getElementById('confirmationText');
+    
+    if (count > 0 && action) {
+      let message = '';
+      
+      switch(action) {
+        case 'confirm':
+          message = `You are about to confirm ${count} order(s).`;
+          break;
+        case 'cancel':
+          message = `⚠️ You are about to cancel ${count} order(s). This action may not be reversible.`;
+          break;
+        case 'update_price':
+          message = `You are about to update prices for ${count} product(s).`;
+          break;
+        case 'deactivate':
+          message = `⚠️ You are about to deactivate ${count} product(s). They will not be visible to buyers.`;
+          break;
+        default:
+          message = `You are about to perform this action on ${count} item(s).`;
+      }
+      
+      messageText.textContent = message;
+      messageDiv.style.display = 'block';
+    } else {
+      messageDiv.style.display = 'none';
+    }
+  }
+  
+  // Form submission confirmation
+  document.getElementById('bulkActionForm')?.addEventListener('submit', function(e) {
+    const action = document.getElementById('bulkActionSelect').value;
+    const count = selectedItems.size;
+    
+    if (!action) {
+      e.preventDefault();
+      alert('Please select an action');
+      return;
+    }
+    
+    if (count === 0) {
+      e.preventDefault();
+      alert('Please select at least one item');
+      return;
+    }
+    
+    // Confirm destructive actions
+    if (['cancel', 'deactivate', 'subtract'].includes(action)) {
+      if (!confirm(`Are you sure you want to perform this action on ${count} item(s)?`)) {
+        e.preventDefault();
+      }
+    }
+  });
+</script>

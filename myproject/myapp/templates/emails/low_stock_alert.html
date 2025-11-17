@@ -1,0 +1,25 @@
+{% extends 'emails/base_email.html' %}
+
+{% block title %}Low Stock Alert{% endblock %}
+
+{% block content %}
+<h2>⚠️ Low Stock Alert</h2>
+
+<p>Hello {{ supplier.first_name }},</p>
+
+<p>This is an automated alert to notify you that one of your products is running low on stock.</p>
+
+<div class="info-box">
+    <strong>Product Details:</strong><br>
+    Product Name: {{ product.name }}<br>
+    Current Stock: {{ product.available_stock }} {{ product.unit }}<br>
+    Low Stock Threshold: {{ product.low_stock_threshold }} {{ product.unit }}<br>
+    Category: {{ product.get_category_display }}
+</div>
+
+<p><strong>Action Recommended:</strong> Please restock this product soon to avoid running out of stock.</p>
+
+<a href="{{ request.scheme }}://{{ request.get_host }}/supplier/inventory/{{ product.id }}/restock/" class="button">Restock Now</a>
+
+<p>Thank you for keeping your inventory updated!</p>
+{% endblock %}

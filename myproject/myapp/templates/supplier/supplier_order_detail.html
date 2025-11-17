@@ -1,0 +1,381 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}Order #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Order #{{ order.id }}</h2>
+  <a href="{% url 'supplier_orders_list' %}" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left"></i> Back to Orders
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <!-- Order Details -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Order Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Product Information</h6>
+            <div class="mb-3">
+              <strong>{{ order.supplier_product.name }}</strong>
+              {% if order.supplier_product.description %}
+                <br><small class="text-muted">{{ order.supplier_product.description }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Unit Price:</strong> ₱{{ order.unit_price|floatformat:2 }} per {{ order.supplier_product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Quantity Ordered:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Total Amount:</strong> 
+              <span class="fs-4 fw-bold text-success">₱{{ order.total_amount|floatformat:2 }}</span>
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Method:</strong> 
+              <span class="badge bg-primary">{{ order.get_payment_method_display }}</span>
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Status:</strong> 
+              {% if order.payment_status == 'paid' %}
+                <span class="badge bg-success">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'pending' %}
+                <span class="badge bg-warning">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'failed' %}
+                <span class="badge bg-danger">{{ order.get_payment_status_display }}</span>
+              {% endif %}
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Verified:</strong> 
+              {% if order.payment_verified %}
+                <span class="badge bg-success"><i class="bi bi-check-circle-fill"></i> Verified</span>
+                <br><small class="text-muted">You verified this on {{ order.verified_date|date:"M d, Y" }}</small>
+              {% else %}
+                <span class="badge bg-secondary"><i class="bi bi-clock"></i> Not Verified</span>
+                {% if order.payment_status == 'paid' %}
+                  <br>
+                  <a href="{% url 'supplier_verify_payment' order.id %}" class="btn btn-sm btn-success mt-2">
+                    <i class="bi bi-check-circle"></i> Verify Payment
+                  </a>
+                {% else %}
+                  <br><small class="text-muted">Store owner hasn't marked payment as received yet</small>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h6>Transaction Status</h6>
+            
+            <!-- Order Status -->
+            <div class="mb-3">
+              <strong>Order Status:</strong><br>
+              {% if order.order_status == 'pending' %}
+                <span class="badge bg-warning fs-6">{{ order.get_order_status_display }}</span>
+              {% elif order.order_status == 'confirmed' %}
+                <span class="badge bg-info fs-6">{{ order.get_order_status_display }}</span>
+              {% elif order.order_status == 'processing' %}
+                <span class="badge bg-primary fs-6">{{ order.get_order_status_display }}</span>
+              {% elif order.order_status == 'completed' %}
+                <span class="badge bg-success fs-6">{{ order.get_order_status_display }}</span>
+              {% elif order.order_status == 'cancelled' %}
+                <span class="badge bg-danger fs-6">{{ order.get_order_status_display }}</span>
+              {% endif %}
+              {% if order.order_status_updated_at %}
+                <br><small class="text-muted">Updated: {{ order.order_status_updated_at|date:"M d, Y g:i A" }}</small>
+              {% endif %}
+            </div>
+            
+            <!-- Delivery Status -->
+            <div class="mb-3">
+              <strong>Delivery Status:</strong><br>
+              {% if order.delivery_status == 'not_shipped' %}
+                <span class="badge bg-secondary fs-6">{{ order.get_delivery_status_display }}</span>
+              {% elif order.delivery_status == 'out_for_delivery' %}
+                <span class="badge bg-warning fs-6">{{ order.get_delivery_status_display }}</span>
+              {% elif order.delivery_status == 'delivered' %}
+                <span class="badge bg-success fs-6">{{ order.get_delivery_status_display }}</span>
+              {% elif order.delivery_status == 'returned' %}
+                <span class="badge bg-danger fs-6">{{ order.get_delivery_status_display }}</span>
+              {% endif %}
+              {% if order.delivery_status_updated_at %}
+                <br><small class="text-muted">Updated: {{ order.delivery_status_updated_at|date:"M d, Y g:i A" }}</small>
+              {% endif %}
+            </div>
+            
+            <hr>
+            
+            <div class="mb-3">
+              <strong>Order Date:</strong>
+              <br>{{ order.created_at|date:"M d, Y" }} at {{ order.created_at|time:"g:i A" }}
+            </div>
+            
+            {% if order.delivered_at %}
+            <div class="mb-3">
+              <strong>Delivered Date:</strong>
+              <br>{{ order.delivered_at|date:"M d, Y" }} at {{ order.delivered_at|time:"g:i A" }}
+            </div>
+            {% endif %}
+            
+            <div class="mb-3">
+              <strong>Last Updated:</strong>
+              <br>{{ order.updated_at|date:"M d, Y" }} at {{ order.updated_at|time:"g:i A" }}
+            </div>
+          </div>
+        </div>
+        
+        {% if order.notes %}
+        <hr>
+        <h6>Order Notes</h6>
+        <div class="bg-light p-3 rounded">
+          <p class="mb-0">{{ order.notes }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Stock Availability Check -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Stock Availability</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <strong>Current Stock:</strong> {{ order.supplier_product.available_stock }} {{ order.supplier_product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Ordered Quantity:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}
+            </div>
+            
+            {% if order.status == 'approved' %}
+            <div class="mb-3">
+              <strong>Stock After Delivery:</strong> 
+              {% with remaining=order.supplier_product.available_stock|add:order.quantity|add:"-"|add:order.quantity %}
+                {{ order.supplier_product.available_stock|add:"-"|add:order.quantity }} {{ order.supplier_product.unit }}
+                {% if order.supplier_product.available_stock >= order.quantity %}
+                  <span class="badge bg-success ms-2">Sufficient Stock</span>
+                {% else %}
+                  <span class="badge bg-danger ms-2">Insufficient Stock</span>
+                {% endif %}
+              {% endwith %}
+            </div>
+            {% endif %}
+          </div>
+          
+          <div class="col-md-6">
+            {% if order.supplier_product.available_stock < order.quantity %}
+            <div class="alert alert-warning">
+              <i class="bi bi-exclamation-triangle"></i>
+              <strong>Warning:</strong> Insufficient stock to fulfill this order. 
+              Current stock: {{ order.supplier_product.available_stock }} {{ order.supplier_product.unit }}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Timeline -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Order Timeline</h5>
+      </div>
+      <div class="card-body">
+        <div class="timeline">
+          <!-- Order Placed -->
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-cart-plus"></i> Order Placed</h6>
+              <p class="text-muted small mb-0">{{ order.created_at|date:"M d, Y" }} at {{ order.created_at|time:"g:i A" }}</p>
+            </div>
+          </div>
+          
+          <!-- Order Confirmed -->
+          {% if order.order_status == 'confirmed' or order.order_status == 'processing' or order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-info"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-check-circle"></i> Order Confirmed</h6>
+              <p class="text-muted small mb-0">You confirmed this order</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Processing -->
+          {% if order.order_status == 'processing' or order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-primary"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-hourglass-split"></i> Order Processing</h6>
+              <p class="text-muted small mb-0">Order is being prepared</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Out for Delivery -->
+          {% if order.delivery_status == 'out_for_delivery' or order.delivery_status == 'delivered' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-warning"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-truck"></i> Out for Delivery</h6>
+              <p class="text-muted small mb-0">Order is on the way to customer</p>
+              {% if order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Delivered -->
+          {% if order.delivery_status == 'delivered' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-box-seam"></i> Delivered</h6>
+              <p class="text-muted small mb-0">Order delivered to customer</p>
+              {% if order.delivered_at %}
+                <p class="text-muted small mb-0">{{ order.delivered_at|date:"M d, Y" }} at {{ order.delivered_at|time:"g:i A" }}</p>
+              {% elif order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Completed -->
+          {% if order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-check-all"></i> Order Completed</h6>
+              <p class="text-muted small mb-0">Transaction completed successfully</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Cancelled -->
+          {% if order.order_status == 'cancelled' %}
+          <div class="timeline-item rejected">
+            <div class="timeline-marker bg-danger"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-x-circle"></i> Order Cancelled</h6>
+              <p class="text-muted small mb-0">Order has been cancelled</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Returned -->
+          {% if order.delivery_status == 'returned' %}
+          <div class="timeline-item rejected">
+            <div class="timeline-marker bg-warning"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-arrow-return-left"></i> Order Returned</h6>
+              <p class="text-muted small mb-0">Order has been returned by customer</p>
+              {% if order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Communication Card -->
+    <div class="card mb-3 border-info">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Communication</h5>
+      </div>
+      <div class="card-body">
+        <p class="mb-3">
+          Send a message to the store owner about this order.
+        </p>
+        <div class="d-grid">
+          <a href="{% url 'send_message_to_order' order.id %}" class="btn btn-info">
+            <i class="bi bi-envelope"></i> Send Message
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Update Order & Delivery Status -->
+    {% if order.order_status != 'completed' and order.order_status != 'cancelled' %}
+    <div class="card mb-3 border-primary">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-arrow-repeat"></i> Update Status</h5>
+      </div>
+      <div class="card-body">
+        <p class="mb-3">
+          Update the order and delivery status to keep the store owner informed about their order progress.
+        </p>
+        <div class="d-grid">
+          <a href="{% url 'update_order_delivery_status' order.pk %}" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i> Update Order & Delivery Status
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <!-- Store Owner Information -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Store Owner</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>{{ order.store_owner.first_name|default:order.store_owner.username }}</strong>
+          {% if order.store_owner.profile.store_name %}
+            <br><small class="text-muted">{{ order.store_owner.profile.store_name }}</small>
+          {% endif %}
+        </div>
+        
+        <div class="mb-2">
+          <i class="bi bi-envelope me-2"></i>{{ order.store_owner.email }}
+        </div>
+        
+        {% if order.store_owner.profile.phone %}
+        <div class="mb-2">
+          <i class="bi bi-telephone me-2"></i>{{ order.store_owner.profile.phone }}
+        </div>
+        {% endif %}
+        
+        {% if order.store_owner.profile.address %}
+        <div class="mb-2">
+          <i class="bi bi-geo-alt me-2"></i>{{ order.store_owner.profile.address }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

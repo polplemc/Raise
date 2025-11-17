@@ -1,0 +1,169 @@
+{% extends base_template %}
+{% load static %}
+
+{% block title %}Notifications{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <h2><i class="bi bi-bell"></i> Notifications</h2>
+                    <div>
+                        {% if unread_count > 0 %}
+                            <a href="{% url 'mark_all_notifications_read' %}" class="btn btn-outline-primary">
+                                <i class="bi bi-check-all"></i> Mark All as Read
+                            </a>
+                        {% endif %}
+                        <a href="javascript:history.back()" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link {% if filter_type == 'all' %}active{% endif %}" href="?filter=all">
+                            All ({{ notifications.paginator.count }})
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if filter_type == 'unread' %}active{% endif %}" href="?filter=unread">
+                            Unread ({{ unread_count }})
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if filter_type == 'read' %}active{% endif %}" href="?filter=read">
+                            Read
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Notifications List -->
+                <div class="card shadow-sm">
+                    <div class="card-body p-0">
+                        {% if notifications %}
+                            <div class="list-group list-group-flush">
+                                {% for notification in notifications %}
+                                    <div class="list-group-item {% if not notification.is_read %}bg-light{% endif %}">
+                                        <div class="d-flex w-100 justify-content-between align-items-start">
+                                            <div class="flex-grow-1">
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <!-- Notification Icon -->
+                                                    {% if notification.notification_type == 'order_placed' %}
+                                                        <i class="bi bi-cart-plus text-primary fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'order_confirmed' %}
+                                                        <i class="bi bi-check-circle text-info fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'order_processing' %}
+                                                        <i class="bi bi-hourglass-split text-warning fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'order_completed' %}
+                                                        <i class="bi bi-check-all text-success fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'delivery_delivered' %}
+                                                        <i class="bi bi-truck text-success fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'payment_paid' %}
+                                                        <i class="bi bi-cash text-success fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'payment_verified' %}
+                                                        <i class="bi bi-shield-check text-success fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'new_message' %}
+                                                        <i class="bi bi-envelope text-info fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'stock_low' %}
+                                                        <i class="bi bi-exclamation-triangle text-warning fs-4 me-2"></i>
+                                                    {% elif notification.notification_type == 'stock_out' %}
+                                                        <i class="bi bi-x-circle text-danger fs-4 me-2"></i>
+                                                    {% else %}
+                                                        <i class="bi bi-info-circle text-secondary fs-4 me-2"></i>
+                                                    {% endif %}
+                                                    
+                                                    <div>
+                                                        <h6 class="mb-0">{{ notification.title }}</h6>
+                                                        {% if notification.sender %}
+                                                            <small class="text-muted">From: {{ notification.sender.first_name|default:notification.sender.username }}</small>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                
+                                                <p class="mb-2">{{ notification.message }}</p>
+                                                
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <small class="text-muted">
+                                                        <i class="bi bi-clock"></i> {{ notification.created_at|timesince }} ago
+                                                    </small>
+                                                    
+                                                    {% if notification.related_order %}
+                                                        {% if request.user.profile.role == 'owner' %}
+                                                            <a href="{% url 'owner_supplier_order_detail' notification.related_order.id %}" class="btn btn-sm btn-outline-primary">
+                                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                                            </a>
+                                                        {% elif request.user.profile.role == 'supplier' %}
+                                                            <a href="{% url 'supplier_order_detail' notification.related_order.id %}" class="btn btn-sm btn-outline-primary">
+                                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                                            </a>
+                                                        {% elif request.user.profile.role == 'staff' %}
+                                                            <a href="{% url 'staff_supplier_order_detail' notification.related_order.id %}" class="btn btn-sm btn-outline-primary">
+                                                                <i class="bi bi-box"></i> View Order #{{ notification.related_order.id }}
+                                                            </a>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="ms-3">
+                                                {% if not notification.is_read %}
+                                                    <span class="badge bg-primary">New</span>
+                                                {% endif %}
+                                                <div class="btn-group-vertical mt-2">
+                                                    {% if not notification.is_read %}
+                                                        <a href="{% url 'mark_notification_read' notification.id %}" class="btn btn-sm btn-outline-success" title="Mark as read">
+                                                            <i class="bi bi-check"></i>
+                                                        </a>
+                                                    {% endif %}
+                                                    <a href="{% url 'delete_notification' notification.id %}" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Delete this notification?')">
+                                                        <i class="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="bi bi-bell-slash text-muted" style="font-size: 4rem;"></i>
+                                <p class="text-muted mt-3">No notifications found.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                {% if notifications.has_other_pages %}
+                    <nav class="mt-4">
+                        <ul class="pagination justify-content-center">
+                            {% if notifications.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ notifications.previous_page_number }}&filter={{ filter_type }}">Previous</a>
+                                </li>
+                            {% endif %}
+                            
+                            {% for num in notifications.paginator.page_range %}
+                                {% if notifications.number == num %}
+                                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ num }}&filter={{ filter_type }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            {% if notifications.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ notifications.next_page_number }}&filter={{ filter_type }}">Next</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

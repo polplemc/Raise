@@ -1,0 +1,340 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">Dashboard</h2>
+  <div class="d-flex gap-2 align-items-center">
+    <!-- Notifications Dropdown -->
+    <div class="dropdown">
+      <a class="btn btn-link position-relative p-2" href="#" id="notificationDropdownDesktop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-4 text-dark"></i>
+        {% if unread_notifications_count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+            {{ unread_notifications_count }}
+          </span>
+        {% endif %}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdownDesktop" style="width: 320px; max-height: 400px; overflow-y: auto;">
+        <li><h6 class="dropdown-header">Notifications</h6></li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item text-center" href="{% url 'notification_list' %}">
+            <i class="bi bi-list"></i> View All Notifications
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Messages Dropdown -->
+    <div class="dropdown">
+      <a class="btn btn-link position-relative p-2" href="#" id="messageDropdownDesktop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-envelope fs-4 text-dark"></i>
+        {% if unread_messages_count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+            {{ unread_messages_count }}
+          </span>
+        {% endif %}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="messageDropdownDesktop" style="width: 320px;">
+        <li><h6 class="dropdown-header">Messages</h6></li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item text-center" href="{% url 'message_list' %}">
+            <i class="bi bi-chat-dots"></i> View All Messages
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row">
+  <div class="col-md-3">
+    <div class="card stat-card bg-black text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="text-uppercase mb-1">Total Products</h6>
+          <h2 class="mb-0">{{ total_products }}</h2>
+        </div>
+        <div class="icon">
+          <i class="bi bi-box-seam"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3">
+    <div class="card stat-card bg-yellow">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="text-uppercase mb-1">Low Stock</h6>
+          <h2 class="mb-0">{{ low_stock_items }}</h2>
+        </div>
+        <div class="icon">
+          <i class="bi bi-exclamation-triangle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3">
+    <div class="card stat-card bg-red text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="text-uppercase mb-1">Out of Stock</h6>
+          <h2 class="mb-0">{{ out_of_stock }}</h2>
+        </div>
+        <div class="icon">
+          <i class="bi bi-x-circle"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-3">
+    <div class="card stat-card bg-black text-white">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h6 class="text-uppercase mb-1">Pending Orders</h6>
+          <h2 class="mb-0">{{ pending_orders }}</h2>
+        </div>
+        <div class="icon">
+          <i class="bi bi-clock-history"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="row mt-4">
+  <!-- Product Quantity Chart -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-bar-chart-fill"></i> Product Quantities Overview</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="inventoryChart" height="145"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stock Status -->
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-pie-chart-fill"></i> Stock Status Distribution</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <canvas id="stockStatusChart"></canvas>
+          </div>
+          <div class="col-md-6 d-flex align-items-center">
+            <div class="w-100">
+              <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                <span><i class="bi bi-circle-fill text-dark"></i> In Stock</span>
+                <strong>{{ in_stock }} items</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-3 pb-2 border-bottom">
+                <span><i class="bi bi-circle-fill" style="color: #ffbf31;"></i> Low Stock</span>
+                <strong>{{ low_stock_items }} items</strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span><i class="bi bi-circle-fill text-danger"></i> Out of Stock</span>
+                <strong>{{ out_of_stock }} items</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Orders -->
+<div class="row mt-4">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Orders</h5>
+        <a href="{% url 'owner_supplier_orders' %}" class="btn btn-sm btn-outline-dark">View All</a>
+      </div>
+      <div class="card-body">
+        {% if recent_orders %}
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Order #</th>
+                  <th>Supplier</th>
+                  <th>Product</th>
+                  <th>Date</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for order in recent_orders %}
+                <tr>
+                  <td><strong>#{{ order.id }}</strong></td>
+                  <td>{{ order.supplier_product.supplier.first_name|default:order.supplier_product.supplier.username }}</td>
+                  <td>
+                    <div>{{ order.supplier_product.name }}</div>
+                    <small class="text-muted">{{ order.quantity }} {{ order.supplier_product.unit }}</small>
+                  </td>
+                  <td>{{ order.created_at|date:"M d, Y" }}</td>
+                  <td><strong>₱{{ order.total_amount|floatformat:2 }}</strong></td>
+                  <td>
+                    {% if order.order_status == 'pending' %}
+                      <span class="badge bg-warning">Pending</span>
+                    {% elif order.order_status == 'confirmed' %}
+                      <span class="badge bg-info">Confirmed</span>
+                    {% elif order.order_status == 'processing' %}
+                      <span class="badge bg-primary">Processing</span>
+                    {% elif order.order_status == 'completed' %}
+                      <span class="badge bg-success">Completed</span>
+                    {% elif order.order_status == 'cancelled' %}
+                      <span class="badge bg-danger">Cancelled</span>
+                    {% endif %}
+                  </td>
+                  <td>
+                    <a href="{% url 'owner_supplier_order_detail' order.id %}" class="btn btn-sm btn-outline-dark">
+                      <i class="bi bi-eye"></i> View
+                    </a>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="text-muted text-center py-4">No orders yet. Start ordering from your suppliers!</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  // Product Quantity Bar Chart
+  const inventoryData = {{ inventory_data|safe }};
+  const ctx = document.getElementById('inventoryChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: inventoryData.map(item => item.name),
+      datasets: [{
+        label: 'Quantity in Stock',
+        data: inventoryData.map(item => item.quantity),
+        backgroundColor: inventoryData.map(item => {
+          if (item.quantity === 0) return 'rgba(255, 87, 87, 0.8)';
+          if (item.is_low) return 'rgba(255, 191, 49, 0.8)';
+          return 'rgba(0, 0, 0, 0.8)';
+        }),
+        borderColor: inventoryData.map(item => {
+          if (item.quantity === 0) return 'rgba(255, 87, 87, 1)';
+          if (item.is_low) return 'rgba(255, 191, 49, 1)';
+          return 'rgba(0, 0, 0, 1)';
+        }),
+        borderWidth: 2,
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              return 'Quantity: ' + context.parsed.y + ' units';
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          },
+          title: {
+            display: true,
+            text: 'Quantity'
+          }
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Products'
+          }
+        }
+      }
+    }
+  });
+
+  // Stock Status Pie Chart
+  const stockCtx = document.getElementById('stockStatusChart').getContext('2d');
+  new Chart(stockCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['In Stock', 'Low Stock', 'Out of Stock'],
+      datasets: [{
+        data: [
+          {{ in_stock }},
+          {{ low_stock_items }},
+          {{ out_of_stock }}
+        ],
+        backgroundColor: [
+          'rgba(0, 0, 0, 0.8)',
+          'rgba(255, 191, 49, 0.8)',
+          'rgba(255, 87, 87, 0.8)'
+        ],
+        borderColor: [
+          'rgba(0, 0, 0, 1)',
+          'rgba(255, 191, 49, 1)',
+          'rgba(255, 87, 87, 1)'
+        ],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: {
+              size: 12
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const label = context.label || '';
+              const value = context.parsed || 0;
+              const total = context.dataset.data.reduce((a, b) => a + b, 0);
+              const percentage = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+              return label + ': ' + value + ' items (' + percentage + '%)';
+            }
+          }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

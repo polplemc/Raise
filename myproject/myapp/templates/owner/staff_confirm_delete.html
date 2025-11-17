@@ -1,0 +1,59 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Delete Staff Member{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 mx-auto">
+    <div class="card border-danger">
+      <div class="card-header bg-danger text-white">
+        <h4 class="mb-0"><i class="bi bi-exclamation-triangle"></i> Confirm Staff Deletion</h4>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle"></i>
+          <strong>Warning:</strong> This action cannot be undone!
+        </div>
+        
+        <p>Are you sure you want to delete the staff member:</p>
+        <div class="bg-light p-3 rounded mb-3">
+          <strong>{{ staff_profile.user.first_name }} {{ staff_profile.user.last_name }}</strong><br>
+          <small class="text-muted">Username: {{ staff_profile.user.username }}</small><br>
+          {% if staff_profile.user.email %}
+            <small class="text-muted">Email: {{ staff_profile.user.email }}</small><br>
+          {% endif %}
+          <small class="text-muted">
+            Status: 
+            {% if staff_profile.is_active %}
+              <span class="badge bg-success">Active</span>
+            {% else %}
+              <span class="badge bg-secondary">Inactive</span>
+            {% endif %}
+          </small>
+        </div>
+        
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle"></i>
+          <strong>What will happen:</strong>
+          <ul class="mb-0 mt-2">
+            <li>The staff member's account will be permanently deleted</li>
+            <li>They will no longer be able to access the system</li>
+            <li>All their activity logs will be preserved for audit purposes</li>
+            <li>Any inventory changes they made will remain in the system</li>
+          </ul>
+        </div>
+        
+        <form method="POST">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-trash"></i> Yes, Delete Staff Member
+            </button>
+            <a href="{% url 'owner_staff_list' %}" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'emails/base_email.html' %}
+
+{% block title %}Payment Received{% endblock %}
+
+{% block content %}
+<h2>💰 Payment Received Notification</h2>
+
+<p>Hello {{ supplier.first_name }},</p>
+
+<p><strong>{{ owner.first_name }}</strong> has marked the payment as <strong>PAID</strong> for Order #{{ order.id }}.</p>
+
+<div class="info-box">
+    <strong>Payment Details:</strong><br>
+    Order ID: #{{ order.id }}<br>
+    Product: {{ order.supplier_product.name }}<br>
+    Amount: ₱{{ order.total_amount }}<br>
+    Payment Method: {{ order.get_payment_method_display }}<br>
+    Payment Status: {{ order.get_payment_status_display }}
+</div>
+
+<p><strong>Action Required:</strong> Please verify that you have received the payment and confirm it in the system.</p>
+
+<a href="{{ request.scheme }}://{{ request.get_host }}/supplier/order/{{ order.id }}/verify-payment/" class="button">Verify Payment</a>
+
+<p>Thank you!</p>
+{% endblock %}

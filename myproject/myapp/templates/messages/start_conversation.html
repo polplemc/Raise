@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Conversation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <h2><i class="bi bi-chat-dots"></i> Start New Conversation</h2>
+                    <div>
+                        <a href="{% url 'message_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-list"></i> All Messages
+                        </a>
+                        <a href="javascript:history.back()" class="btn btn-outline-dark">
+                            <i class="bi bi-arrow-left"></i> Back
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Message Form -->
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-pencil-square"></i> New Conversation</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Recipient Info -->
+                                <div class="alert alert-light border mb-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px; font-size: 2rem;">
+                                            <i class="bi bi-person"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="mb-0">{{ other_user.first_name|default:other_user.username }}</h5>
+                                            <small class="text-muted">@{{ other_user.username }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Info Alert -->
+                                <div class="alert alert-info mb-4">
+                                    <h6><i class="bi bi-info-circle"></i> Starting a new conversation</h6>
+                                    <p class="mb-0">
+                                        You're about to start a new conversation with {{ other_user.first_name|default:other_user.username }}.
+                                        They will receive a notification when you send your first message.
+                                    </p>
+                                </div>
+
+                                <!-- Message Form -->
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    
+                                    <div class="mb-4">
+                                        <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">
+                                            <i class="bi bi-chat-left-text"></i> Your First Message
+                                        </label>
+                                        {{ form.message }}
+                                        {% if form.message.errors %}
+                                            <div class="text-danger small mt-1">
+                                                {% for error in form.message.errors %}{{ error }}{% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-text">
+                                            Start your conversation with {{ other_user.first_name|default:other_user.username }}.
+                                            Be clear about what you'd like to discuss.
+                                        </div>
+                                    </div>
+
+                                    <!-- Communication Guidelines -->
+                                    <div class="card bg-light border-0 mb-4">
+                                        <div class="card-body">
+                                            <h6><i class="bi bi-shield-check"></i> Communication Guidelines</h6>
+                                            <ul class="mb-0 small">
+                                                <li>Be professional and respectful in all communications</li>
+                                                <li>Keep conversations relevant to business transactions</li>
+                                                <li>Respond to messages in a timely manner</li>
+                                                <li>Use clear and concise language</li>
+                                                <li>All messages are logged for record-keeping</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit Buttons -->
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary flex-fill">
+                                            <i class="bi bi-send"></i> Start Conversation
+                                        </button>
+                                        <a href="{% url 'message_list' %}" class="btn btn-outline-secondary">
+                                            <i class="bi bi-x-circle"></i> Cancel
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- User Profile Card -->
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="bi bi-person-circle"></i> User Profile</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 100px; height: 100px; font-size: 3rem;">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                </div>
+                                <h4 class="text-center">{{ other_user.first_name|default:other_user.username }}</h4>
+                                <p class="text-center text-muted mb-3">@{{ other_user.username }}</p>
+                                
+                                {% if other_user.email %}
+                                <div class="text-center mb-3">
+                                    <i class="bi bi-envelope"></i> {{ other_user.email }}
+                                </div>
+                                {% endif %}
+                                
+                                <hr>
+                                
+                                <div class="text-center">
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar"></i> 
+                                        Member since {{ other_user.date_joined|date:"M Y" }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tips Card -->
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="bi bi-lightbulb"></i> Messaging Tips</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="small mb-0">
+                                    <li class="mb-2">
+                                        <strong>Be Specific:</strong> Clearly state your question or concern
+                                    </li>
+                                    <li class="mb-2">
+                                        <strong>Include Details:</strong> Reference order numbers, products, or dates
+                                    </li>
+                                    <li class="mb-2">
+                                        <strong>Stay Professional:</strong> Maintain a courteous tone
+                                    </li>
+                                    <li class="mb-2">
+                                        <strong>Respond Promptly:</strong> Check messages regularly
+                                    </li>
+                                    <li class="mb-0">
+                                        <strong>Keep Records:</strong> All messages are saved for reference
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

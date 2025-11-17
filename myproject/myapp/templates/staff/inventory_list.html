@@ -1,0 +1,169 @@
+{% extends 'staff/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Inventory Management{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="mb-1">Inventory Management</h2>
+    <p class="text-muted mb-0">Managing {{ business_owner.first_name }}'s store inventory</p>
+  </div>
+  <a href="{% url 'staff_stock_out_form' %}" class="btn btn-danger">
+    <i class="bi bi-box-arrow-right"></i> Record Stock Out
+  </a>
+</div>
+
+<!-- Summary Stats -->
+<div class="row mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card bg-black text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-box-seam icon"></i>
+        <h4 class="mb-1">{{ total_items }}</h4>
+        <p class="mb-0 small">Total Items</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-warning">
+      <div class="card-body text-center">
+        <i class="bi bi-exclamation-triangle icon"></i>
+        <h4 class="mb-1">{{ low_stock_count }}</h4>
+        <p class="mb-0 small">Low Stock</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card stat-card bg-danger text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-x-circle icon"></i>
+        <h4 class="mb-1">{{ out_of_stock_count }}</h4>
+        <p class="mb-0 small">Out of Stock</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters and Search -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Inventory</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-6">
+        <label for="search" class="form-label">Search</label>
+        <input type="text" class="form-control" id="search" name="search" value="{{ search }}" placeholder="Product name or description...">
+      </div>
+      <div class="col-md-4">
+        <label for="stock" class="form-label">Stock Level</label>
+        <select class="form-select" id="stock" name="stock">
+          <option value="">All Stock Levels</option>
+          <option value="available" {% if stock_filter == 'available' %}selected{% endif %}>Available (>10)</option>
+          <option value="low" {% if stock_filter == 'low' %}selected{% endif %}>Low Stock (1-10)</option>
+          <option value="out" {% if stock_filter == 'out' %}selected{% endif %}>Out of Stock (0)</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Inventory Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Inventory Items ({{ inventory_items|length }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if inventory_items %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Product</th>
+            <th>Current Stock</th>
+            <th>Unit Price</th>
+            <th>Total Value</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in inventory_items %}
+          <tr>
+            <td>
+              <div>
+                <strong>{{ item.product.name }}</strong>
+                {% if item.product.description %}
+                  <br><small class="text-muted">{{ item.product.description|truncatewords:8 }}</small>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <span class="me-2 fw-bold">{{ item.quantity }}</span>
+              {% if item.quantity == 0 %}
+                <span class="badge bg-danger">Out of Stock</span>
+              {% elif item.is_low_stock %}
+                <span class="badge bg-warning text-dark">Low Stock</span>
+              {% else %}
+                <span class="badge bg-success">In Stock</span>
+              {% endif %}
+            </td>
+            <td>
+              <strong>₱{{ item.product.price|floatformat:2 }}</strong>
+            </td>
+            <td>
+              <strong>₱{{ item.quantity|multiply:item.product.price|floatformat:2 }}</strong>
+            </td>
+            <td>
+              {% if item.quantity == 0 %}
+                <span class="text-danger"><i class="bi bi-x-circle"></i> Out of Stock</span>
+              {% elif item.is_low_stock %}
+                <span class="text-warning"><i class="bi bi-exclamation-triangle"></i> Low Stock</span>
+              {% else %}
+                <span class="text-success"><i class="bi bi-check-circle"></i> Available</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if item.quantity > 0 %}
+              <a href="{% url 'staff_stock_out_form' %}?product={{ item.product.id }}" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Stock Out
+              </a>
+              {% else %}
+              <span class="text-muted small">No stock</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+      <h5 class="text-muted mt-3">No inventory items found</h5>
+      {% if search or stock_filter %}
+        <p class="text-muted">Try adjusting your filters to see more items.</p>
+        <a href="{% url 'staff_inventory_list' %}" class="btn btn-outline-primary">Clear Filters</a>
+      {% else %}
+        <p class="text-muted">The inventory is empty or no items match your search.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if is_staff %}
+<div class="alert alert-info mt-4">
+  <i class="bi bi-info-circle"></i>
+  <strong>Staff Access:</strong> You can view inventory and record stock out transactions. 
+  Contact {{ business_owner.first_name }} for inventory additions or product management.
+</div>
+{% endif %}
+{% endblock %}

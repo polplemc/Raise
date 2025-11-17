@@ -1,0 +1,240 @@
+{% extends 'admin/base_new.html' %}
+
+{% block title %}Supplier Details{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">Supplier Details</h2>
+  <div>
+    <a href="{% url 'admin_supplier_edit' supplier_user.id %}" class="btn btn-warning me-2">
+      <i class="bi bi-pencil"></i> Edit
+    </a>
+    <a href="{% url 'admin_supplier_delete' supplier_user.id %}" class="btn btn-danger me-2">
+      <i class="bi bi-trash"></i> Delete
+    </a>
+    <a href="{% url 'admin_suppliers_list' %}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+  </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row row-cols-1 row-cols-md-5 g-3 mb-4">
+  <div class="col">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-box-seam text-primary" style="font-size: 2rem;"></i>
+        <h6 class="text-muted mt-2 mb-1">Products</h6>
+        <h3 class="mb-0">{{ products_count }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-cart text-secondary" style="font-size: 2rem;"></i>
+        <h6 class="text-muted mt-2 mb-1">Total Orders</h6>
+        <h3 class="mb-0">{{ orders_count }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-check-circle text-primary" style="font-size: 2rem;"></i>
+        <h6 class="text-muted mt-2 mb-1">Completed</h6>
+        <h3 class="mb-0">{{ completed_orders }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-truck text-info" style="font-size: 2rem;"></i>
+        <h6 class="text-muted mt-2 mb-1">Delivered</h6>
+        <h3 class="mb-0">{{ delivered_orders }}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card text-center h-100">
+      <div class="card-body">
+        <i class="bi bi-cash-stack text-success" style="font-size: 2rem;"></i>
+        <h6 class="text-muted mt-2 mb-1">Revenue</h6>
+        <h4 class="mb-0 text-success">₱{{ revenue|floatformat:2 }}</h4>
+        <small class="text-muted">Completed & Delivered</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <!-- Supplier Info -->
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="bi bi-person-circle"></i> Supplier Information</h5>
+      </div>
+      <div class="card-body">
+        <h5>{{ supplier_user.first_name }} {{ supplier_user.last_name }}</h5>
+        <p class="mb-1">
+          <i class="bi bi-envelope"></i> {{ supplier_user.email }}
+        </p>
+        {% if profile.phone %}
+          <p class="mb-1">
+            <i class="bi bi-telephone"></i> {{ profile.phone }}
+          </p>
+        {% endif %}
+        {% if profile.address %}
+          <p class="mb-0">
+            <i class="bi bi-geo-alt"></i> {{ profile.address }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <!-- Tabs -->
+    <div class="card">
+      <div class="card-header bg-white">
+        <ul class="nav nav-tabs card-header-tabs" id="supplierDetailTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products" type="button" role="tab" aria-controls="products" aria-selected="true">
+              <i class="bi bi-box-seam"></i> Products
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab" aria-controls="orders" aria-selected="false">
+              <i class="bi bi-cart-check"></i> Recent Orders
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="activity-tab" data-bs-toggle="tab" data-bs-target="#activity" type="button" role="tab" aria-controls="activity" aria-selected="false">
+              <i class="bi bi-clock-history"></i> Recent Activity
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="supplierDetailTabsContent">
+          <!-- Products Tab -->
+          <div class="tab-pane fade show active" id="products" role="tabpanel" aria-labelledby="products-tab">
+            {% if products %}
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Stock</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for product in products %}
+                    <tr>
+                      <td><strong>{{ product.name }}</strong></td>
+                      <td><span class="badge bg-info">{{ product.get_category_display }}</span></td>
+                      <td>₱{{ product.unit_price|floatformat:2 }}/{{ product.unit }}</td>
+                      <td>{{ product.available_stock }}</td>
+                      <td>
+                        {% if product.is_active %}
+                          <span class="badge bg-success">Active</span>
+                        {% else %}
+                          <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <p class="text-muted text-center py-4">No products yet</p>
+            {% endif %}
+          </div>
+
+          <!-- Recent Orders Tab -->
+          <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+            {% if orders %}
+              <div class="table-responsive">
+                <table class="table table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th>Order #</th>
+                      <th>Buyer</th>
+                      <th>Date</th>
+                      <th>Total</th>
+                      <th>Order Status</th>
+                      <th>Delivery Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for order in orders %}
+                    <tr>
+                      <td><strong>#{{ order.id }}</strong></td>
+                      <td>{{ order.store_owner.first_name }} {{ order.store_owner.last_name }}</td>
+                      <td>{{ order.created_at|date:"M d, Y" }}</td>
+                      <td>₱{{ order.total_amount|floatformat:2 }}</td>
+                      <td>
+                        {% if order.order_status == 'pending' %}
+                          <span class="badge bg-warning text-dark">Pending</span>
+                        {% elif order.order_status == 'confirmed' %}
+                          <span class="badge bg-info">Confirmed</span>
+                        {% elif order.order_status == 'processing' %}
+                          <span class="badge bg-primary">Processing</span>
+                        {% elif order.order_status == 'completed' %}
+                          <span class="badge bg-success">Completed</span>
+                        {% elif order.order_status == 'cancelled' %}
+                          <span class="badge bg-danger">Cancelled</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if order.delivery_status == 'not_shipped' %}
+                          <span class="badge bg-secondary"><i class="bi bi-box"></i> Not Shipped</span>
+                        {% elif order.delivery_status == 'out_for_delivery' %}
+                          <span class="badge bg-info"><i class="bi bi-truck"></i> Out for Delivery</span>
+                        {% elif order.delivery_status == 'delivered' %}
+                          <span class="badge bg-success"><i class="bi bi-check-circle"></i> Delivered</span>
+                        {% elif order.delivery_status == 'returned' %}
+                          <span class="badge bg-danger"><i class="bi bi-arrow-return-left"></i> Returned</span>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            {% else %}
+              <p class="text-muted text-center py-4">No orders yet</p>
+            {% endif %}
+          </div>
+
+          <!-- Recent Activity Tab -->
+          <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+            {% if recent_activities %}
+              <div style="max-height: 400px; overflow-y: auto;">
+                {% for log in recent_activities %}
+                <div class="border-start border-3 border-primary ps-3 mb-3 pb-2">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <span class="badge bg-secondary">{{ log.get_action_display }}</span>
+                    </div>
+                    <small class="text-muted">{{ log.timestamp|date:"M d, H:i" }}</small>
+                  </div>
+                  <p class="mb-0 small text-muted mt-1">{{ log.description }}</p>
+                </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p class="text-muted text-center py-4">No recent activity</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

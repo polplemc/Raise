@@ -1,0 +1,111 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">Inventory</h2>
+  <div>
+    <a href="{% url 'owner_stock_out_form' %}" class="btn btn-danger me-2">
+      <i class="bi bi-box-arrow-right"></i> Stock Out
+    </a>
+    <a href="{% url 'browse_supplier_products' %}" class="btn btn-dark">
+      <i class="bi bi-plus-circle"></i> Order Products
+    </a>
+  </div>
+</div>
+
+<!-- Search and Filter -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-6">
+        <input type="text" name="search" class="form-control" placeholder="Search products..." value="{{ search }}">
+      </div>
+      <div class="col-md-4">
+        <select name="status" class="form-select">
+          <option value="">All Stock Status</option>
+          <option value="low" {% if status == 'low' %}selected{% endif %}>Low Stock</option>
+          <option value="out" {% if status == 'out' %}selected{% endif %}>Out of Stock</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">
+          <i class="bi bi-search"></i> Filter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Inventory Table -->
+<div class="card">
+  <div class="card-body">
+    {% if inventory_items %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Supplier</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Last Restocked</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in inventory_items %}
+            <tr>
+              <td><strong>{{ item.product.name }}</strong></td>
+              <td>{{ item.product.supplier.name }}</td>
+              <td>
+                <span class="badge {% if item.quantity == 0 %}bg-danger{% elif item.is_low_stock %}bg-warning text-dark{% else %}bg-success{% endif %} fs-6">
+                  {{ item.quantity }}
+                </span>
+              </td>
+              <td>{{ item.product.unit }}</td>
+              <td>
+                {% if item.last_restocked %}
+                  {{ item.last_restocked|date:"M d, Y" }}
+                {% else %}
+                  <span class="text-muted">Never</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if item.quantity == 0 %}
+                  <span class="badge bg-danger">Out of Stock</span>
+                {% elif item.is_low_stock %}
+                  <span class="badge bg-warning text-dark">Low Stock</span>
+                {% else %}
+                  <span class="badge bg-success">In Stock</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if item.quantity == 0 %}
+                  <a href="{% url 'owner_inventory_delete' item.pk %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                    <i class="bi bi-trash"></i>
+                  </a>
+                {% else %}
+                  <span class="text-muted small">-</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="bi bi-box-seam text-muted" style="font-size: 4rem;"></i>
+        <h4 class="text-muted mt-3">No Inventory Items</h4>
+        <p class="text-muted">Start ordering from suppliers to build your inventory.</p>
+        <a href="{% url 'browse_supplier_products' %}" class="btn btn-dark mt-2">
+          <i class="bi bi-plus-circle"></i> Browse Products
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}Incoming Orders{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Incoming Orders</h2>
+</div>
+
+<!-- Filters and Search -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Orders</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-5">
+        <label for="search" class="form-label">Search</label>
+        <input type="text" class="form-control" id="search" name="search" value="{{ search }}" placeholder="Store owner name or product name...">
+      </div>
+      <div class="col-md-4">
+        <label for="status" class="form-label">Order Status</label>
+        <select class="form-select" id="status" name="status">
+          <option value="">All Statuses</option>
+          {% for value, label in status_choices %}
+            <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Active Orders Table -->
+<div class="card mb-4">
+  <div class="card-header bg-warning bg-opacity-10">
+    <h5 class="mb-0"><i class="bi bi-hourglass-split"></i> Active Orders ({{ active_page_obj.paginator.count }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if active_orders %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order #</th>
+            <th>Store Owner</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Order Status</th>
+            <th>Delivery Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in active_orders %}
+          <tr>
+            <td><strong>#{{ order.id }}</strong></td>
+            <td>
+              <div>
+                <strong>{{ order.store_owner.first_name|default:order.store_owner.username }}</strong>
+                <br><small class="text-muted">{{ order.store_owner.email }}</small>
+              </div>
+            </td>
+            <td>
+              <div>
+                <strong>{{ order.supplier_product.name }}</strong>
+                <br><small class="text-muted">₱{{ order.unit_price|floatformat:2 }} per {{ order.supplier_product.unit }}</small>
+              </div>
+            </td>
+            <td><strong>{{ order.quantity }} {{ order.supplier_product.unit }}</strong></td>
+            <td><strong>₱{{ order.total_amount|floatformat:2 }}</strong></td>
+            <td>
+              {% if order.order_status == 'pending' %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif order.order_status == 'confirmed' %}
+                <span class="badge bg-info">Confirmed</span>
+              {% elif order.order_status == 'processing' %}
+                <span class="badge bg-primary">Processing</span>
+              {% elif order.order_status == 'completed' %}
+                <span class="badge bg-success">Completed</span>
+              {% elif order.order_status == 'cancelled' %}
+                <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if order.delivery_status == 'delivered' %}
+                <span class="badge bg-success"><i class="bi bi-truck"></i> Delivered</span>
+              {% elif order.delivery_status == 'out_for_delivery' %}
+                <span class="badge bg-info"><i class="bi bi-truck"></i> Out for Delivery</span>
+              {% elif order.delivery_status == 'not_shipped' %}
+                <span class="badge bg-secondary"><i class="bi bi-box"></i> Not Shipped</span>
+              {% elif order.delivery_status == 'returned' %}
+                <span class="badge bg-warning text-dark"><i class="bi bi-arrow-return-left"></i> Returned</span>
+              {% endif %}
+            </td>
+            <td>
+              <div>{{ order.created_at|date:"M d, Y" }}</div>
+              <small class="text-muted">{{ order.created_at|time:"g:i A" }}</small>
+            </td>
+            <td>
+              <a href="{% url 'supplier_order_detail' order.pk %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-eye"></i> View
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    {% if active_page_obj.has_other_pages %}
+    <div class="card-footer">
+      <nav aria-label="Active orders pagination">
+        <ul class="pagination justify-content-center mb-0">
+          {% if active_page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?active_page={{ active_page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Previous</a>
+            </li>
+          {% endif %}
+          <li class="page-item active">
+            <span class="page-link">Page {{ active_page_obj.number }} of {{ active_page_obj.paginator.num_pages }}</span>
+          </li>
+          {% if active_page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?active_page={{ active_page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Next</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="text-center py-4">
+      <i class="bi bi-check-circle text-success" style="font-size: 2rem;"></i>
+      <p class="text-muted mt-2">No active orders at the moment.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Completed Orders Table -->
+<div class="card">
+  <div class="card-header bg-success bg-opacity-10">
+    <h5 class="mb-0"><i class="bi bi-check-circle"></i> Completed & Delivered Orders ({{ completed_page_obj.paginator.count }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if completed_orders %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order #</th>
+            <th>Store Owner</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Order Status</th>
+            <th>Delivery Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in completed_orders %}
+          <tr>
+            <td><strong>#{{ order.id }}</strong></td>
+            <td>
+              <div>
+                <strong>{{ order.store_owner.first_name|default:order.store_owner.username }}</strong>
+                <br><small class="text-muted">{{ order.store_owner.email }}</small>
+              </div>
+            </td>
+            <td>
+              <div>
+                <strong>{{ order.supplier_product.name }}</strong>
+                <br><small class="text-muted">₱{{ order.unit_price|floatformat:2 }} per {{ order.supplier_product.unit }}</small>
+              </div>
+            </td>
+            <td><strong>{{ order.quantity }} {{ order.supplier_product.unit }}</strong></td>
+            <td><strong>₱{{ order.total_amount|floatformat:2 }}</strong></td>
+            <td>
+              <span class="badge bg-success">Completed</span>
+            </td>
+            <td>
+              <span class="badge bg-success"><i class="bi bi-truck"></i> Delivered</span>
+            </td>
+            <td>
+              <div>{{ order.created_at|date:"M d, Y" }}</div>
+              <small class="text-muted">{{ order.created_at|time:"g:i A" }}</small>
+            </td>
+            <td>
+              <a href="{% url 'supplier_order_detail' order.pk %}" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-eye"></i> View
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    {% if completed_page_obj.has_other_pages %}
+    <div class="card-footer">
+      <nav aria-label="Completed orders pagination">
+        <ul class="pagination justify-content-center mb-0">
+          {% if completed_page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?completed_page={{ completed_page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Previous</a>
+            </li>
+          {% endif %}
+          <li class="page-item active">
+            <span class="page-link">Page {{ completed_page_obj.number }} of {{ completed_page_obj.paginator.num_pages }}</span>
+          </li>
+          {% if completed_page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?completed_page={{ completed_page_obj.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}">Next</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="text-center py-4">
+      <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
+      <p class="text-muted mt-2">No completed orders yet.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

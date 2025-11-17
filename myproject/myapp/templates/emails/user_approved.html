@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Approved - Raise Inventory System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ffbf31;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 10px;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #28a745;
+            margin: 20px 0;
+        }
+        h1 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffbf31;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #ffbf31;
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        .info-box {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">RAISE</div>
+            <div style="color: #666;">Inventory Management System</div>
+        </div>
+        
+        <div style="text-align: center;">
+            <div class="success-icon">✅</div>
+            <h1>Account Approved!</h1>
+        </div>
+        
+        <p>Dear {{ full_name }},</p>
+        
+        <p>Great news! Your account registration for the Raise Inventory Management System has been <strong>approved</strong> by our admin team.</p>
+        
+        <div class="highlight">
+            <strong>Your account is now active and ready to use!</strong>
+        </div>
+        
+        <div class="info-box">
+            <h3 style="margin-top: 0;">What you can do now:</h3>
+            <ul>
+                <li>Log in to your account using your registered credentials</li>
+                <li>Complete your profile setup</li>
+                <li>Start using the inventory management features</li>
+                <li>Connect with suppliers or manage your business operations</li>
+            </ul>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="{{ login_url }}" class="button">Login to Your Account</a>
+        </div>
+        
+        <p><strong>Account Details:</strong></p>
+        <ul>
+            <li><strong>Username:</strong> {{ user.username }}</li>
+            <li><strong>Email:</strong> {{ user.email }}</li>
+            <li><strong>Account Type:</strong> {{ user.profile.get_role_display }}</li>
+        </ul>
+        
+        <p>If you have any questions or need assistance getting started, please don't hesitate to contact our support team.</p>
+        
+        <p>Welcome to Raise Inventory Management System!</p>
+        
+        <p>Best regards,<br>
+        <strong>The Raise Team</strong></p>
+        
+        <div class="footer">
+            <p>This is an automated message. Please do not reply to this email.</p>
+            <p>If you need help, contact us at support@raise-inventory.com</p>
+        </div>
+    </div>
+</body>
+</html>

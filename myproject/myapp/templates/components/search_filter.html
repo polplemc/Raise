@@ -1,0 +1,252 @@
+<!-- Reusable Search and Filter Component -->
+<div class="card mb-4">
+  <div class="card-header bg-light">
+    <div class="d-flex justify-content-between align-items-center">
+      <h6 class="mb-0"><i class="bi bi-funnel"></i> Search & Filters</h6>
+      <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+        <i class="bi bi-chevron-down"></i>
+      </button>
+    </div>
+  </div>
+  
+  <div class="collapse show" id="filterCollapse">
+    <div class="card-body">
+      <form method="get" action="" id="filterForm">
+        <div class="row g-3">
+          
+          <!-- Search Input -->
+          <div class="col-md-4">
+            <label class="form-label">Search</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-search"></i></span>
+              <input type="text" 
+                     name="search" 
+                     class="form-control" 
+                     placeholder="Search..." 
+                     value="{{ search_query|default:'' }}">
+            </div>
+          </div>
+          
+          <!-- Status Filter (if applicable) -->
+          {% if show_status_filter %}
+          <div class="col-md-3">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-select">
+              <option value="">All Status</option>
+              {% for value, label in status_choices %}
+              <option value="{{ value }}" {% if request.GET.status == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+          
+          <!-- Category Filter (if applicable) -->
+          {% if show_category_filter %}
+          <div class="col-md-3">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select">
+              <option value="">All Categories</option>
+              {% for value, label in category_choices %}
+              <option value="{{ value }}" {% if request.GET.category == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+          
+          <!-- Date Range Filter (if applicable) -->
+          {% if show_date_filter %}
+          <div class="col-md-3">
+            <label class="form-label">From Date</label>
+            <input type="date" 
+                   name="date_from" 
+                   class="form-control" 
+                   value="{{ request.GET.date_from|default:'' }}">
+          </div>
+          
+          <div class="col-md-3">
+            <label class="form-label">To Date</label>
+            <input type="date" 
+                   name="date_to" 
+                   class="form-control" 
+                   value="{{ request.GET.date_to|default:'' }}">
+          </div>
+          {% endif %}
+          
+          <!-- Price Range Filter (if applicable) -->
+          {% if show_price_filter %}
+          <div class="col-md-3">
+            <label class="form-label">Min Price</label>
+            <div class="input-group">
+              <span class="input-group-text">₱</span>
+              <input type="number" 
+                     name="price_min" 
+                     class="form-control" 
+                     placeholder="0" 
+                     value="{{ request.GET.price_min|default:'' }}"
+                     step="0.01">
+            </div>
+          </div>
+          
+          <div class="col-md-3">
+            <label class="form-label">Max Price</label>
+            <div class="input-group">
+              <span class="input-group-text">₱</span>
+              <input type="number" 
+                     name="price_max" 
+                     class="form-control" 
+                     placeholder="10000" 
+                     value="{{ request.GET.price_max|default:'' }}"
+                     step="0.01">
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Payment Method Filter (if applicable) -->
+          {% if show_payment_filter %}
+          <div class="col-md-3">
+            <label class="form-label">Payment Method</label>
+            <select name="payment_method" class="form-select">
+              <option value="">All Methods</option>
+              {% for value, label in payment_method_choices %}
+              <option value="{{ value }}" {% if request.GET.payment_method == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          
+          <div class="col-md-3">
+            <label class="form-label">Payment Status</label>
+            <select name="payment_status" class="form-select">
+              <option value="">All Status</option>
+              {% for value, label in payment_status_choices %}
+              <option value="{{ value }}" {% if request.GET.payment_status == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          {% endif %}
+          
+          <!-- Sort Options -->
+          <div class="col-md-3">
+            <label class="form-label">Sort By</label>
+            <select name="sort" class="form-select">
+              <option value="">Default</option>
+              {% for value, label in sort_choices %}
+              <option value="{{ value }}" {% if request.GET.sort == value %}selected{% endif %}>
+                {{ label }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          
+          <div class="col-md-2">
+            <label class="form-label">Order</label>
+            <select name="order" class="form-select">
+              <option value="desc" {% if request.GET.order == 'desc' or not request.GET.order %}selected{% endif %}>
+                Descending
+              </option>
+              <option value="asc" {% if request.GET.order == 'asc' %}selected{% endif %}>
+                Ascending
+              </option>
+            </select>
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="col-md-4">
+            <label class="form-label d-block">&nbsp;</label>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-filter"></i> Apply Filters
+            </button>
+            <a href="?" class="btn btn-outline-secondary">
+              <i class="bi bi-x-circle"></i> Clear
+            </a>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Active Filters Display -->
+{% if search_query or request.GET.status or request.GET.category or request.GET.date_from or request.GET.date_to %}
+<div class="mb-3">
+  <div class="d-flex flex-wrap gap-2 align-items-center">
+    <span class="text-muted">Active filters:</span>
+    
+    {% if search_query %}
+    <span class="badge bg-primary">
+      Search: "{{ search_query }}"
+      <a href="?{% for key, value in request.GET.items %}{% if key != 'search' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" 
+         class="text-white text-decoration-none ms-1">×</a>
+    </span>
+    {% endif %}
+    
+    {% if request.GET.status %}
+    <span class="badge bg-info">
+      Status: {{ request.GET.status }}
+      <a href="?{% for key, value in request.GET.items %}{% if key != 'status' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" 
+         class="text-white text-decoration-none ms-1">×</a>
+    </span>
+    {% endif %}
+    
+    {% if request.GET.category %}
+    <span class="badge bg-success">
+      Category: {{ request.GET.category }}
+      <a href="?{% for key, value in request.GET.items %}{% if key != 'category' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" 
+         class="text-white text-decoration-none ms-1">×</a>
+    </span>
+    {% endif %}
+    
+    {% if request.GET.date_from or request.GET.date_to %}
+    <span class="badge bg-warning text-dark">
+      Date: {{ request.GET.date_from|default:'Start' }} to {{ request.GET.date_to|default:'End' }}
+      <a href="?{% for key, value in request.GET.items %}{% if key != 'date_from' and key != 'date_to' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" 
+         class="text-dark text-decoration-none ms-1">×</a>
+    </span>
+    {% endif %}
+    
+    <a href="?" class="btn btn-sm btn-outline-danger">
+      <i class="bi bi-x-circle"></i> Clear All
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  #filterCollapse {
+    transition: all 0.3s ease;
+  }
+  
+  .badge a:hover {
+    opacity: 0.8;
+  }
+  
+  @media (max-width: 767px) {
+    #filterForm .col-md-3,
+    #filterForm .col-md-4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Auto-submit on filter change (optional)
+  document.addEventListener('DOMContentLoaded', function() {
+    const autoSubmitSelects = document.querySelectorAll('#filterForm select');
+    
+    // Uncomment to enable auto-submit on select change
+    // autoSubmitSelects.forEach(select => {
+    //   select.addEventListener('change', function() {
+    //     document.getElementById('filterForm').submit();
+    //   });
+    // });
+  });
+</script>

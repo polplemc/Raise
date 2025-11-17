@@ -1,0 +1,135 @@
+{% extends 'admin/base_new.html' %}
+
+{% block title %}Staff Details{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">Staff Details</h2>
+  <div>
+    <a href="{% url 'admin_staff_edit' staff_user.id %}" class="btn btn-warning me-2">
+      <i class="bi bi-pencil"></i> Edit
+    </a>
+    <a href="{% url 'admin_staff_delete' staff_user.id %}" class="btn btn-danger me-2">
+      <i class="bi bi-trash"></i> Delete
+    </a>
+    {% if staff_profile.owner %}
+      <a href="{% url 'admin_owner_detail' staff_profile.owner.id %}" class="btn btn-outline-primary me-2">
+        <i class="bi bi-shop"></i> View Owner
+      </a>
+    {% endif %}
+    <a href="{% url 'admin_staff_list' %}" class="btn btn-outline-secondary">
+      <i class="bi bi-arrow-left"></i> Back to List
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <!-- Staff Info -->
+    <div class="card mb-4">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0"><i class="bi bi-person-circle"></i> Staff Information</h5>
+      </div>
+      <div class="card-body">
+        <h5>{{ staff_user.first_name }} {{ staff_user.last_name }}</h5>
+        <p class="mb-1">
+          <i class="bi bi-person-badge"></i> <strong>Username:</strong> {{ staff_user.username }}
+        </p>
+        <p class="mb-1">
+          <i class="bi bi-envelope"></i> {{ staff_user.email }}
+        </p>
+        {% if staff_profile.phone %}
+          <p class="mb-1">
+            <i class="bi bi-telephone"></i> {{ staff_profile.phone }}
+          </p>
+        {% endif %}
+        <p class="mb-1">
+          <i class="bi bi-calendar"></i> <strong>Joined:</strong> {{ staff_profile.created_at|date:"M d, Y" }}
+        </p>
+        <p class="mb-0">
+          <i class="bi bi-circle-fill {% if staff_profile.is_active %}text-success{% else %}text-secondary{% endif %}"></i>
+          <strong>Status:</strong>
+          {% if staff_profile.is_active %}
+            <span class="badge bg-success">Active</span>
+          {% else %}
+            <span class="badge bg-secondary">Inactive</span>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+
+    <!-- Owner Info -->
+    <div class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-shop"></i> Owner Information</h5>
+      </div>
+      <div class="card-body">
+        {% if staff_profile.owner %}
+          <h6>{{ staff_profile.owner.first_name }} {{ staff_profile.owner.last_name }}</h6>
+          <p class="mb-1">
+            <i class="bi bi-person-badge"></i> {{ staff_profile.owner.username }}
+          </p>
+          {% if staff_profile.owner.profile.store_name %}
+            <p class="mb-1">
+              <i class="bi bi-shop-window"></i> {{ staff_profile.owner.profile.store_name }}
+            </p>
+          {% endif %}
+          <p class="mb-0">
+            <i class="bi bi-envelope"></i> {{ staff_profile.owner.email }}
+          </p>
+          <a href="{% url 'admin_owner_detail' staff_profile.owner.id %}" class="btn btn-sm btn-outline-primary mt-2 w-100">
+            <i class="bi bi-eye"></i> View Owner Details
+          </a>
+        {% else %}
+          <p class="text-muted text-center py-3">No owner assigned</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <!-- Recent Activity -->
+    <div class="card">
+      <div class="card-header bg-white">
+        <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Activity</h5>
+      </div>
+      <div class="card-body">
+        {% if recent_activities %}
+          <div style="max-height: 500px; overflow-y: auto;">
+            {% for log in recent_activities %}
+            <div class="border-start border-3 border-info ps-3 mb-3 pb-2">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  {% if log.action == 'login' %}
+                    <span class="badge bg-info">{{ log.get_action_display }}</span>
+                  {% elif log.action == 'logout' %}
+                    <span class="badge bg-secondary">{{ log.get_action_display }}</span>
+                  {% elif log.action == 'create' %}
+                    <span class="badge bg-success">{{ log.get_action_display }}</span>
+                  {% elif log.action == 'update' %}
+                    <span class="badge bg-warning text-dark">{{ log.get_action_display }}</span>
+                  {% elif log.action == 'delete' %}
+                    <span class="badge bg-danger">{{ log.get_action_display }}</span>
+                  {% elif log.action == 'stock_out' %}
+                    <span class="badge bg-warning">{{ log.get_action_display }}</span>
+                  {% else %}
+                    <span class="badge bg-secondary">{{ log.get_action_display }}</span>
+                  {% endif %}
+                </div>
+                <small class="text-muted">{{ log.timestamp|date:"M d, Y H:i" }}</small>
+              </div>
+              <p class="mb-0 small text-muted mt-1">{{ log.description }}</p>
+              {% if log.ip_address %}
+                <small class="text-muted"><i class="bi bi-geo-alt"></i> IP: <code>{{ log.ip_address }}</code></small>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p class="text-muted text-center py-4">No recent activity</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}Update Order & Delivery Status{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-arrow-repeat text-primary"></i> Update Order & Delivery Status</h2>
+        <a href="{% url 'supplier_order_detail' order.pk %}" class="btn btn-outline-dark">
+          <i class="bi bi-arrow-left"></i> Back to Order
+        </a>
+      </div>
+
+      <div class="row">
+        <!-- Order Information Card -->
+        <div class="col-lg-5">
+          <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+              <h5 class="mb-0"><i class="bi bi-info-circle"></i> Order Information</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <strong>Order #:</strong> {{ order.id }}
+              </div>
+              <div class="mb-3">
+                <strong>Product:</strong> {{ order.supplier_product.name }}
+              </div>
+              <div class="mb-3">
+                <strong>Quantity:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}
+              </div>
+              <div class="mb-3">
+                <strong>Total Amount:</strong> ₱{{ order.total_amount|floatformat:2 }}
+              </div>
+              <div class="mb-3">
+                <strong>Store Owner:</strong> {{ order.store_owner.first_name|default:order.store_owner.username }}
+              </div>
+              <div class="mb-3">
+                <strong>Order Date:</strong> {{ order.created_at|date:"M d, Y g:i A" }}
+              </div>
+              
+              <hr>
+              
+              <!-- Current Status -->
+              <div class="mb-3">
+                <strong>Current Order Status:</strong><br>
+                {% if order.order_status == 'pending' %}
+                  <span class="badge bg-warning fs-6">{{ order.get_order_status_display }}</span>
+                {% elif order.order_status == 'confirmed' %}
+                  <span class="badge bg-info fs-6">{{ order.get_order_status_display }}</span>
+                {% elif order.order_status == 'processing' %}
+                  <span class="badge bg-primary fs-6">{{ order.get_order_status_display }}</span>
+                {% elif order.order_status == 'completed' %}
+                  <span class="badge bg-success fs-6">{{ order.get_order_status_display }}</span>
+                {% elif order.order_status == 'cancelled' %}
+                  <span class="badge bg-danger fs-6">{{ order.get_order_status_display }}</span>
+                {% endif %}
+                {% if order.order_status_updated_at %}
+                  <br><small class="text-muted">Last updated: {{ order.order_status_updated_at|date:"M d, Y g:i A" }}</small>
+                {% endif %}
+              </div>
+              
+              <div class="mb-0">
+                <strong>Current Delivery Status:</strong><br>
+                {% if order.delivery_status == 'not_shipped' %}
+                  <span class="badge bg-secondary fs-6">{{ order.get_delivery_status_display }}</span>
+                {% elif order.delivery_status == 'out_for_delivery' %}
+                  <span class="badge bg-warning fs-6">{{ order.get_delivery_status_display }}</span>
+                {% elif order.delivery_status == 'delivered' %}
+                  <span class="badge bg-success fs-6">{{ order.get_delivery_status_display }}</span>
+                {% elif order.delivery_status == 'returned' %}
+                  <span class="badge bg-danger fs-6">{{ order.get_delivery_status_display }}</span>
+                {% endif %}
+                {% if order.delivery_status_updated_at %}
+                  <br><small class="text-muted">Last updated: {{ order.delivery_status_updated_at|date:"M d, Y g:i A" }}</small>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Guide -->
+          <div class="card shadow-sm">
+            <div class="card-header bg-light">
+              <h6 class="mb-0"><i class="bi bi-question-circle"></i> Status Guide</h6>
+            </div>
+            <div class="card-body">
+              <h6 class="text-primary">Order Status:</h6>
+              <ul class="small mb-3">
+                <li><strong>Pending:</strong> Order received, awaiting confirmation</li>
+                <li><strong>Confirmed:</strong> Order accepted and confirmed</li>
+                <li><strong>Processing:</strong> Preparing items for delivery</li>
+                <li><strong>Completed:</strong> Order successfully fulfilled</li>
+                <li><strong>Cancelled:</strong> Order cancelled</li>
+              </ul>
+              
+              <h6 class="text-success">Delivery Status:</h6>
+              <ul class="small mb-0">
+                <li><strong>Not Yet Shipped:</strong> Items not yet dispatched</li>
+                <li><strong>Out for Delivery:</strong> Items in transit</li>
+                <li><strong>Delivered:</strong> Items received by customer</li>
+                <li><strong>Returned:</strong> Items returned</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Update Form -->
+        <div class="col-lg-7">
+          <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-pencil-square"></i> Update Status</h5>
+            </div>
+            <div class="card-body">
+              <form method="POST">
+                {% csrf_token %}
+                
+                <!-- Order Status -->
+                <div class="mb-4">
+                  <label for="{{ form.order_status.id_for_label }}" class="form-label fw-bold">
+                    <i class="bi bi-clipboard-check"></i> {{ form.order_status.label }}
+                  </label>
+                  {{ form.order_status }}
+                  <div class="form-text">{{ form.order_status.help_text }}</div>
+                  {% if form.order_status.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.order_status.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <!-- Delivery Status -->
+                <div class="mb-4">
+                  <label for="{{ form.delivery_status.id_for_label }}" class="form-label fw-bold">
+                    <i class="bi bi-truck"></i> {{ form.delivery_status.label }}
+                  </label>
+                  {{ form.delivery_status }}
+                  <div class="form-text">{{ form.delivery_status.help_text }}</div>
+                  {% if form.delivery_status.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.delivery_status.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <!-- Status Notes -->
+                <div class="mb-4">
+                  <label for="{{ form.status_notes.id_for_label }}" class="form-label fw-bold">
+                    <i class="bi bi-chat-left-text"></i> {{ form.status_notes.label }}
+                  </label>
+                  {{ form.status_notes }}
+                  <div class="form-text">{{ form.status_notes.help_text }}</div>
+                  {% if form.status_notes.errors %}
+                    <div class="text-danger small mt-1">
+                      {% for error in form.status_notes.errors %}{{ error }}{% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+
+                <!-- Important Notice -->
+                <div class="alert alert-warning">
+                  <h6><i class="bi bi-exclamation-triangle"></i> Important Notice:</h6>
+                  <ul class="mb-0 small">
+                    <li>Setting delivery status to <strong>"Delivered"</strong> will automatically:
+                      <ul>
+                        <li>Deduct stock from your supplier inventory</li>
+                        <li>Add stock to the owner's inventory</li>
+                        <li>Record the delivery timestamp</li>
+                      </ul>
+                    </li>
+                    <li>Status changes are logged and timestamped</li>
+                    <li>The store owner will be notified of status updates</li>
+                  </ul>
+                </div>
+
+                <!-- Form Errors -->
+                {% if form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    {{ form.non_field_errors.0 }}
+                  </div>
+                {% endif %}
+
+                <!-- Submit Buttons -->
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-primary flex-fill">
+                    <i class="bi bi-check-circle"></i> Update Status
+                  </button>
+                  <a href="{% url 'supplier_order_detail' order.pk %}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x-circle"></i> Cancel
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus, .form-select:focus {
+    border-color: #ffbf31;
+    box-shadow: 0 0 0 0.25rem rgba(255, 191, 49, 0.15);
+  }
+  
+  .card {
+    border: none;
+    border-radius: 12px;
+  }
+  
+  .badge {
+    padding: 0.5rem 1rem;
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Stock Out{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2><i class="bi bi-box-arrow-right text-danger"></i> Stock Out</h2>
+                <div>
+                    <a href="{% url 'owner_inventory_list' %}" class="btn btn-outline-dark me-2">
+                        <i class="bi bi-box-seam"></i> Back to Inventory
+                    </a>
+                    <a href="{% url 'owner_stock_out_report' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-file-earmark-text"></i> View Report
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stock Out Form -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="bi bi-minus-circle"></i> Record Stock Out</h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="post">
+                                {% csrf_token %}
+                                
+                                <!-- Product Selection -->
+                                <div class="mb-3">
+                                    <label for="{{ form.product.id_for_label }}" class="form-label">{{ form.product.label }}</label>
+                                    {{ form.product }}
+                                    {% if form.product.errors %}
+                                        <div class="text-danger small">{{ form.product.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Quantity -->
+                                <div class="mb-3">
+                                    <label for="{{ form.quantity.id_for_label }}" class="form-label">{{ form.quantity.label }}</label>
+                                    {{ form.quantity }}
+                                    {% if form.quantity.errors %}
+                                        <div class="text-danger small">{{ form.quantity.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Reason -->
+                                <div class="mb-3">
+                                    <label for="{{ form.reason.id_for_label }}" class="form-label">{{ form.reason.label }}</label>
+                                    {{ form.reason }}
+                                    {% if form.reason.errors %}
+                                        <div class="text-danger small">{{ form.reason.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Remarks -->
+                                <div class="mb-3">
+                                    <label for="{{ form.remarks.id_for_label }}" class="form-label">{{ form.remarks.label }}</label>
+                                    {{ form.remarks }}
+                                    {% if form.remarks.errors %}
+                                        <div class="text-danger small">{{ form.remarks.errors.0 }}</div>
+                                    {% endif %}
+                                </div>
+
+                                <!-- Form Errors -->
+                                {% if form.non_field_errors %}
+                                    <div class="alert alert-danger">
+                                        {{ form.non_field_errors.0 }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-check-circle"></i> Process Stock Out
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Stock Outs</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if recent_stock_outs %}
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Qty</th>
+                                                <th>Reason</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for stock_out in recent_stock_outs %}
+                                            <tr>
+                                                <td>
+                                                    <strong>{{ stock_out.product.name }}</strong>
+                                                    {% if stock_out.remarks %}
+                                                        <br><small class="text-muted">{{ stock_out.remarks|truncatechars:30 }}</small>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-danger">
+                                                        -{{ stock_out.quantity }} {{ stock_out.product.unit }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">{{ stock_out.get_reason_display }}</span>
+                                                </td>
+                                                <td>
+                                                    <small>{{ stock_out.created_at|date:"M d, Y" }}<br>{{ stock_out.created_at|time:"g:i A" }}</small>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <a href="{% url 'owner_stock_out_report' %}" class="btn btn-sm btn-outline-primary">
+                                        View All Transactions
+                                    </a>
+                                </div>
+                            {% else %}
+                                <div class="text-center text-muted py-4">
+                                    <i class="bi bi-inbox display-4"></i>
+                                    <p class="mt-2">No stock out transactions yet.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="alert alert-info">
+                        <h6><i class="bi bi-info-circle"></i> How Stock Out Works:</h6>
+                        <ul class="mb-0">
+                            <li><strong>Select Product:</strong> Choose from products currently in your inventory</li>
+                            <li><strong>Enter Quantity:</strong> Specify how many units were sold/used</li>
+                            <li><strong>Choose Reason:</strong> Select why the stock is being reduced (sale, used, damaged, etc.)</li>
+                            <li><strong>Add Remarks:</strong> Optional notes for your records</li>
+                            <li><strong>Process:</strong> Stock will be automatically deducted from your inventory</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,259 @@
+{% extends 'supplier/base.html' %}
+{% load custom_filters %}
+
+{% block title %}Reports & Analytics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Reports & Analytics</h2>
+</div>
+
+<!-- Date Filter -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter by Date Range</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-4">
+        <label for="start_date" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+      </div>
+      <div class="col-md-4">
+        <label for="end_date" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-warning">
+            <i class="bi bi-funnel"></i> Apply Filter
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="row mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card bg-success text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-currency-dollar icon"></i>
+        <h4 class="mb-1">${{ total_revenue|floatformat:2 }}</h4>
+        <p class="mb-0 small">Total Revenue</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card bg-info text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-cart-check icon"></i>
+        <h4 class="mb-1">{{ total_orders }}</h4>
+        <p class="mb-0 small">Orders Delivered</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card bg-warning">
+      <div class="card-body text-center">
+        <i class="bi bi-boxes icon"></i>
+        <h4 class="mb-1">{{ total_units_sold }}</h4>
+        <p class="mb-0 small">Units Sold</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card bg-primary text-white">
+      <div class="card-body text-center">
+        <i class="bi bi-graph-up icon"></i>
+        <h4 class="mb-1">${{ total_revenue|div:total_orders|floatformat:2|default:"0.00" }}</h4>
+        <p class="mb-0 small">Avg Order Value</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <!-- Top Selling Products -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Top Selling Products</h5>
+      </div>
+      <div class="card-body">
+        {% if top_products %}
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Product</th>
+                <th>Units Sold</th>
+                <th>Revenue</th>
+                <th>Avg Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in top_products %}
+              <tr>
+                <td><strong>{{ product.supplier_product__name }}</strong></td>
+                <td>{{ product.total_sold }}</td>
+                <td>${{ product.total_revenue|floatformat:2 }}</td>
+                <td>${{ product.total_revenue|div:product.total_sold|floatformat:2 }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-4">
+          <i class="bi bi-graph-down text-muted" style="font-size: 2rem;"></i>
+          <p class="text-muted mt-2">No sales data available for the selected period.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Recent Delivered Orders -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Recent Delivered Orders</h5>
+      </div>
+      <div class="card-body">
+        {% if delivered_orders %}
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead class="table-light">
+              <tr>
+                <th>Order #</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Delivered</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in delivered_orders|slice:":10" %}
+              <tr>
+                <td><strong>#{{ order.id }}</strong></td>
+                <td>{{ order.store_owner.first_name|default:order.store_owner.username }}</td>
+                <td>{{ order.supplier_product.name }}</td>
+                <td>{{ order.quantity }} {{ order.supplier_product.unit }}</td>
+                <td>${{ order.total_amount }}</td>
+                <td>{{ order.delivered_at|date:"M d, Y" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-4">
+          <i class="bi bi-cart-x text-muted" style="font-size: 2rem;"></i>
+          <p class="text-muted mt-2">No delivered orders in the selected period.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Recent Stock Movements -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Recent Stock Movements</h5>
+      </div>
+      <div class="card-body">
+        {% if stock_movements %}
+        {% for movement in stock_movements %}
+        <div class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom">
+          <div>
+            <strong class="{% if movement.quantity > 0 %}text-success{% else %}text-danger{% endif %}">
+              {% if movement.quantity > 0 %}+{% endif %}{{ movement.quantity }}
+            </strong>
+            <br>
+            <small class="text-muted">{{ movement.supplier_product.name }}</small>
+            <br>
+            <small class="text-muted">{{ movement.get_movement_type_display }}</small>
+          </div>
+          <div class="text-end">
+            <div class="small">{{ movement.created_at|date:"M d" }}</div>
+            <div class="small text-muted">{{ movement.created_at|time:"g:i A" }}</div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="text-center py-3">
+          <i class="bi bi-arrow-left-right text-muted" style="font-size: 1.5rem;"></i>
+          <p class="text-muted small mt-2">No stock movements in the selected period.</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Quick Stats</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <div class="d-flex justify-content-between">
+            <span>Period:</span>
+            <strong>{{ start_date }} to {{ end_date }}</strong>
+          </div>
+        </div>
+        
+        {% if total_orders > 0 %}
+        <div class="mb-3">
+          <div class="d-flex justify-content-between">
+            <span>Avg Revenue/Day:</span>
+            <strong>${{ total_revenue|div:30|floatformat:2 }}</strong>
+          </div>
+        </div>
+        
+        <div class="mb-3">
+          <div class="d-flex justify-content-between">
+            <span>Avg Orders/Day:</span>
+            <strong>{{ total_orders|div:30|floatformat:1 }}</strong>
+          </div>
+        </div>
+        {% endif %}
+        
+        <hr>
+        
+        <div class="d-grid gap-2">
+          <a href="{% url 'supplier_inventory_list' %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-boxes"></i> View Inventory
+          </a>
+          <a href="{% url 'supplier_orders_list' %}" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-cart-check"></i> View Orders
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Set default date range to last 30 days if not set
+document.addEventListener('DOMContentLoaded', function() {
+    const startDateInput = document.getElementById('start_date');
+    const endDateInput = document.getElementById('end_date');
+    
+    if (!startDateInput.value) {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        startDateInput.value = thirtyDaysAgo.toISOString().split('T')[0];
+    }
+    
+    if (!endDateInput.value) {
+        const today = new Date();
+        endDateInput.value = today.toISOString().split('T')[0];
+    }
+});
+</script>
+{% endblock %}

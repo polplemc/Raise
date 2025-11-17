@@ -1,0 +1,41 @@
+{% extends 'emails/base_email.html' %}
+
+{% block title %}Welcome to Raise{% endblock %}
+
+{% block content %}
+<h2>🎉 Welcome to {{ site_name }}!</h2>
+
+<p>Hello {{ user.first_name }},</p>
+
+<p>Thank you for joining {{ site_name }}! We're excited to have you as part of our community.</p>
+
+<div class="info-box">
+    <strong>Your Account Details:</strong><br>
+    Name: {{ user.first_name }}<br>
+    Email: {{ user.email }}<br>
+    Role: {{ role|title }}
+</div>
+
+<p>You can now access your dashboard and start managing your {% if role == 'owner' %}inventory and orders{% elif role == 'supplier' %}products and incoming orders{% else %}tasks{% endif %}.</p>
+
+<a href="{{ request.scheme }}://{{ request.get_host }}/login/" class="button">Login to Your Account</a>
+
+<p><strong>Getting Started:</strong></p>
+<ul>
+    {% if role == 'owner' %}
+    <li>Set up your store profile</li>
+    <li>Connect with suppliers</li>
+    <li>Browse products and place orders</li>
+    <li>Manage your inventory</li>
+    {% elif role == 'supplier' %}
+    <li>Complete your supplier profile</li>
+    <li>Add your products to the catalog</li>
+    <li>Set up payment information</li>
+    <li>Start receiving orders from store owners</li>
+    {% endif %}
+</ul>
+
+<p>If you have any questions or need assistance, please don't hesitate to contact our support team.</p>
+
+<p>Welcome aboard!</p>
+{% endblock %}

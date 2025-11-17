@@ -1,0 +1,159 @@
+{% extends 'staff/base.html' %}
+
+{% block title %}Supplier Orders{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="mb-1">Supplier Orders</h2>
+    <p class="text-muted mb-0">Orders placed by {{ business_owner.first_name }}'s store</p>
+  </div>
+</div>
+
+
+<!-- Filters and Search -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Orders</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-4">
+        <label for="search" class="form-label">Search</label>
+        <input type="text" class="form-control" id="search" name="search" value="{{ search }}" placeholder="Product name or supplier name...">
+      </div>
+      <div class="col-md-3">
+        <label for="order_status" class="form-label">Order Status</label>
+        <select class="form-select" id="order_status" name="order_status">
+          <option value="">All Order Status</option>
+          {% for value, label in order_status_choices %}
+            <option value="{{ value }}" {% if order_status_filter == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label for="delivery_status" class="form-label">Delivery Status</label>
+        <select class="form-select" id="delivery_status" name="delivery_status">
+          <option value="">All Delivery Status</option>
+          {% for value, label in delivery_status_choices %}
+            <option value="{{ value }}" {% if delivery_status_filter == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Orders Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Orders ({{ orders|length }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if orders %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Order #</th>
+            <th>Product</th>
+            <th>Supplier</th>
+            <th>Quantity</th>
+            <th>Amount</th>
+            <th>Order Status</th>
+            <th>Delivery Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+          <tr>
+            <td>
+              <strong>#{{ order.id }}</strong>
+            </td>
+            <td>
+              <div>
+                <strong>{{ order.supplier_product.name }}</strong>
+                <br><small class="text-muted">₱{{ order.unit_price|floatformat:2 }} per {{ order.supplier_product.unit }}</small>
+              </div>
+            </td>
+            <td>
+              <div>
+                <strong>{{ order.supplier_product.supplier.first_name|default:order.supplier_product.supplier.username }}</strong>
+                <br><small class="text-muted">{{ order.supplier_product.supplier.email }}</small>
+              </div>
+            </td>
+            <td>
+              <strong>{{ order.quantity }} {{ order.supplier_product.unit }}</strong>
+            </td>
+            <td>
+              <strong>₱{{ order.total_amount|floatformat:2 }}</strong>
+            </td>
+            <td>
+              {% if order.order_status == 'pending' %}
+                <span class="badge bg-warning text-dark">Pending</span>
+              {% elif order.order_status == 'confirmed' %}
+                <span class="badge bg-info">Confirmed</span>
+              {% elif order.order_status == 'processing' %}
+                <span class="badge bg-primary">Processing</span>
+              {% elif order.order_status == 'completed' %}
+                <span class="badge bg-success">Completed</span>
+              {% elif order.order_status == 'cancelled' %}
+                <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if order.delivery_status == 'delivered' %}
+                <span class="badge bg-success"><i class="bi bi-truck"></i> Delivered</span>
+              {% elif order.delivery_status == 'out_for_delivery' %}
+                <span class="badge bg-info"><i class="bi bi-truck"></i> Out for Delivery</span>
+              {% elif order.delivery_status == 'not_shipped' %}
+                <span class="badge bg-secondary"><i class="bi bi-box"></i> Not Shipped</span>
+              {% elif order.delivery_status == 'returned' %}
+                <span class="badge bg-warning text-dark"><i class="bi bi-arrow-return-left"></i> Returned</span>
+              {% endif %}
+            </td>
+            <td>
+              <div>{{ order.created_at|date:"M d, Y" }}</div>
+              <small class="text-muted">{{ order.created_at|time:"g:i A" }}</small>
+            </td>
+            <td>
+              <a href="{% url 'staff_supplier_order_detail' order.pk %}" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-eye"></i> View
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-cart-x text-muted" style="font-size: 3rem;"></i>
+      <h5 class="text-muted mt-3">No orders found</h5>
+      {% if search or order_status_filter or delivery_status_filter %}
+        <p class="text-muted">Try adjusting your filters to see more orders.</p>
+        <a href="{% url 'staff_supplier_orders' %}" class="btn btn-outline-primary">Clear Filters</a>
+      {% else %}
+        <p class="text-muted">No orders have been placed with suppliers yet.</p>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if is_staff %}
+<div class="alert alert-info mt-4">
+  <i class="bi bi-info-circle"></i>
+  <strong>Staff Access:</strong> You can view all supplier orders for {{ business_owner.first_name }}'s store. 
+  Only {{ business_owner.first_name }} can place new orders or modify existing ones.
+</div>
+{% endif %}
+{% endblock %}

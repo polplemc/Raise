@@ -1,0 +1,92 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}{{ action }} Supplier{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <div class="card">
+      <div class="card-header bg-white">
+        <h4 class="mb-0"><i class="bi bi-truck"></i> {{ action }} Supplier</h4>
+      </div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Supplier Name *</label>
+              {{ form.name }}
+              {% if form.name.errors %}
+                <div class="text-danger small">{{ form.name.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Contact Person *</label>
+              {{ form.contact_person }}
+              {% if form.contact_person.errors %}
+                <div class="text-danger small">{{ form.contact_person.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email *</label>
+              {{ form.email }}
+              {% if form.email.errors %}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Phone *</label>
+              {{ form.phone }}
+              {% if form.phone.errors %}
+                <div class="text-danger small">{{ form.phone.errors }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Address *</label>
+            {{ form.address }}
+            {% if form.address.errors %}
+              <div class="text-danger small">{{ form.address.errors }}</div>
+            {% endif %}
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check">
+              {{ form.is_active }}
+              <label class="form-check-label" for="{{ form.is_active.id_for_label }}">
+                Active Supplier
+              </label>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-warning">
+              <i class="bi bi-check-circle"></i> Save Supplier
+            </button>
+            <a href="{% url 'owner_supplier_list' %}" class="btn btn-outline-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+  }
+  .form-control:focus, .form-select:focus {
+    border-color: #ffbf31;
+    box-shadow: 0 0 0 0.2rem rgba(255, 191, 49, 0.25);
+  }
+</style>
+{% endblock %}

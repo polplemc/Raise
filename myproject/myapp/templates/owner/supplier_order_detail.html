@@ -1,0 +1,492 @@
+{% extends 'owner/base.html' %}
+
+{% block title %}Order #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Order #{{ order.id }}</h2>
+  <a href="{% url 'owner_supplier_orders' %}" class="btn btn-outline-dark">
+    <i class="bi bi-arrow-left"></i> Back to Orders
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <!-- Order Details -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Order Information</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <h6>Product Details</h6>
+            <div class="mb-3">
+              <strong>{{ order.supplier_product.name }}</strong>
+              {% if order.supplier_product.description %}
+                <br><small class="text-muted">{{ order.supplier_product.description|truncatewords:20 }}</small>
+              {% endif %}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Unit Price:</strong> ₱{{ order.unit_price|floatformat:2 }} per {{ order.supplier_product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Quantity Ordered:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}
+            </div>
+            
+            <div class="mb-3">
+              <strong>Total Amount:</strong> 
+              <span class="fs-4 fw-bold text-success">₱{{ order.total_amount|floatformat:2 }}</span>
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Method:</strong> 
+              <span class="badge bg-primary">{{ order.get_payment_method_display }}</span>
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Status:</strong> 
+              {% if order.payment_status == 'paid' %}
+                <span class="badge bg-success">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'pending' %}
+                <span class="badge bg-warning">{{ order.get_payment_status_display }}</span>
+              {% elif order.payment_status == 'failed' %}
+                <span class="badge bg-danger">{{ order.get_payment_status_display }}</span>
+              {% endif %}
+              <a href="{% url 'owner_update_payment_status' order.id %}" class="btn btn-sm btn-outline-primary ms-2">
+                <i class="bi bi-pencil"></i> Update
+              </a>
+            </div>
+
+            <div class="mb-3">
+              <strong>Payment Verified:</strong> 
+              {% if order.payment_verified %}
+                <span class="badge bg-success"><i class="bi bi-check-circle"></i> Verified</span>
+                <br><small class="text-muted">Verified on {{ order.verified_date|date:"M d, Y" }} at {{ order.verified_date|time:"g:i A" }}</small>
+              {% else %}
+                <span class="badge bg-secondary"><i class="bi bi-clock"></i> Not Verified</span>
+                {% if order.payment_status == 'paid' %}
+                  <br><small class="text-muted">Waiting for supplier verification</small>
+                {% else %}
+                  <br><small class="text-muted">Mark as paid for supplier verification</small>
+                {% endif %}
+              {% endif %}
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <h6>Transaction Status</h6>
+            
+            <!-- Order Status -->
+            <div class="mb-3">
+              <strong>Order Status:</strong><br>
+              {% if order.order_status == 'pending' %}
+                <span class="badge bg-warning fs-6">{{ order.get_order_status_display }}</span>
+                <br><small class="text-muted">Waiting for supplier confirmation</small>
+              {% elif order.order_status == 'confirmed' %}
+                <span class="badge bg-info fs-6">{{ order.get_order_status_display }}</span>
+                <br><small class="text-muted">Order confirmed by supplier</small>
+              {% elif order.order_status == 'processing' %}
+                <span class="badge bg-primary fs-6">{{ order.get_order_status_display }}</span>
+                <br><small class="text-muted">Supplier is preparing your order</small>
+              {% elif order.order_status == 'completed' %}
+                <span class="badge bg-success fs-6">{{ order.get_order_status_display }}</span>
+                <br><small class="text-muted">Order successfully completed</small>
+              {% elif order.order_status == 'cancelled' %}
+                <span class="badge bg-danger fs-6">{{ order.get_order_status_display }}</span>
+                <br><small class="text-muted">Order has been cancelled</small>
+              {% endif %}
+              {% if order.order_status_updated_at %}
+                <br><small class="text-muted">Updated: {{ order.order_status_updated_at|date:"M d, Y g:i A" }}</small>
+              {% endif %}
+            </div>
+            
+            <!-- Delivery Status -->
+            <div class="mb-3">
+              <strong>Delivery Status:</strong><br>
+              {% if order.delivery_status == 'not_shipped' %}
+                <span class="badge bg-secondary fs-6">{{ order.get_delivery_status_display }}</span>
+                <br><small class="text-muted">Items not yet dispatched</small>
+              {% elif order.delivery_status == 'out_for_delivery' %}
+                <span class="badge bg-warning fs-6">{{ order.get_delivery_status_display }}</span>
+                <br><small class="text-muted">Your order is on the way!</small>
+              {% elif order.delivery_status == 'delivered' %}
+                <span class="badge bg-success fs-6">{{ order.get_delivery_status_display }}</span>
+                <br><small class="text-muted">Order delivered successfully</small>
+              {% elif order.delivery_status == 'returned' %}
+                <span class="badge bg-danger fs-6">{{ order.get_delivery_status_display }}</span>
+                <br><small class="text-muted">Order has been returned</small>
+              {% endif %}
+              {% if order.delivery_status_updated_at %}
+                <br><small class="text-muted">Updated: {{ order.delivery_status_updated_at|date:"M d, Y g:i A" }}</small>
+              {% endif %}
+            </div>
+            
+            <hr>
+            
+            <div class="mb-3">
+              <strong>Order Date:</strong>
+              <br>{{ order.created_at|date:"M d, Y" }} at {{ order.created_at|time:"g:i A" }}
+            </div>
+            
+            {% if order.delivered_at %}
+            <div class="mb-3">
+              <strong>Delivered Date:</strong>
+              <br>{{ order.delivered_at|date:"M d, Y" }} at {{ order.delivered_at|time:"g:i A" }}
+            </div>
+            {% endif %}
+            
+            <div class="mb-3">
+              <strong>Last Updated:</strong>
+              <br>{{ order.updated_at|date:"M d, Y" }} at {{ order.updated_at|time:"g:i A" }}
+            </div>
+          </div>
+        </div>
+        
+        {% if order.notes %}
+        <hr>
+        <h6>Order Notes</h6>
+        <div class="bg-light p-3 rounded">
+          <p class="mb-0">{{ order.notes }}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Supplier Payment Details -->
+    {% if order.supplier_product.supplier.supplier_payment_info %}
+    <div class="card mb-3">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0"><i class="bi bi-wallet2"></i> Supplier Payment Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info">
+          <i class="bi bi-info-circle"></i>
+          <strong>Payment Instructions:</strong> Use the details below to send payment to the supplier.
+        </div>
+
+        {% if order.payment_method == 'gcash' and order.supplier_product.supplier.supplier_payment_info.has_gcash %}
+          <div class="card border-primary mb-3">
+            <div class="card-header bg-primary text-white">
+              <h6 class="mb-0"><i class="bi bi-phone"></i> GCash Payment Details</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>GCash Number:</strong></p>
+                  <p class="fs-5 text-primary mb-0">{{ order.supplier_product.supplier.supplier_payment_info.gcash_number }}</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Account Name:</strong></p>
+                  <p class="fs-5 mb-0">{{ order.supplier_product.supplier.supplier_payment_info.gcash_account_name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% elif order.payment_method == 'paymaya' and order.supplier_product.supplier.supplier_payment_info.has_paymaya %}
+          <div class="card border-primary mb-3">
+            <div class="card-header bg-primary text-white">
+              <h6 class="mb-0"><i class="bi bi-phone"></i> PayMaya Payment Details</h6>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>PayMaya Number:</strong></p>
+                  <p class="fs-5 text-primary mb-0">{{ order.supplier_product.supplier.supplier_payment_info.paymaya_number }}</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="mb-1"><strong>Account Name:</strong></p>
+                  <p class="fs-5 mb-0">{{ order.supplier_product.supplier.supplier_payment_info.paymaya_account_name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {% elif order.payment_method == 'bank_transfer' and order.supplier_product.supplier.supplier_payment_info.has_bank_transfer %}
+          <div class="card border-primary mb-3">
+            <div class="card-header bg-primary text-white">
+              <h6 class="mb-0"><i class="bi bi-bank"></i> Bank Transfer Details</h6>
+            </div>
+            <div class="card-body">
+              <div class="mb-2">
+                <p class="mb-1"><strong>Bank Name:</strong></p>
+                <p class="fs-5 mb-0">{{ order.supplier_product.supplier.supplier_payment_info.bank_name }}</p>
+              </div>
+              <div class="mb-2">
+                <p class="mb-1"><strong>Account Name:</strong></p>
+                <p class="fs-5 mb-0">{{ order.supplier_product.supplier.supplier_payment_info.bank_account_name }}</p>
+              </div>
+              <div class="mb-2">
+                <p class="mb-1"><strong>Account Number:</strong></p>
+                <p class="fs-5 text-primary mb-0">{{ order.supplier_product.supplier.supplier_payment_info.bank_account_number }}</p>
+              </div>
+            </div>
+          </div>
+
+        {% elif order.payment_method == 'cod' %}
+          <div class="alert alert-warning">
+            <i class="bi bi-cash"></i>
+            <strong>Cash on Delivery:</strong> Payment will be made upon delivery.
+          </div>
+
+        {% else %}
+          <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i>
+            <strong>Payment Details Not Available:</strong> The supplier hasn't set up {{ order.get_payment_method_display }} details yet. Please contact them directly.
+          </div>
+        {% endif %}
+
+        {% if order.supplier_product.supplier.supplier_payment_info.payment_notes %}
+        <div class="alert alert-secondary">
+          <h6><i class="bi bi-info-circle"></i> Additional Instructions from Supplier:</h6>
+          <p class="mb-0">{{ order.supplier_product.supplier.supplier_payment_info.payment_notes }}</p>
+        </div>
+        {% endif %}
+
+        <div class="alert alert-success mb-0">
+          <i class="bi bi-shield-check"></i>
+          <strong>Next Step:</strong> After sending payment, update the payment status to "Paid" so the supplier can verify receipt.
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Order Timeline -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Order Timeline</h5>
+      </div>
+      <div class="card-body">
+        <div class="timeline">
+          <!-- Order Placed -->
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-cart-plus"></i> Order Placed</h6>
+              <p class="text-muted small mb-0">{{ order.created_at|date:"M d, Y" }} at {{ order.created_at|time:"g:i A" }}</p>
+            </div>
+          </div>
+          
+          <!-- Order Confirmed -->
+          {% if order.order_status == 'confirmed' or order.order_status == 'processing' or order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-info"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-check-circle"></i> Order Confirmed</h6>
+              <p class="text-muted small mb-0">Supplier confirmed your order</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Processing -->
+          {% if order.order_status == 'processing' or order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-primary"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-hourglass-split"></i> Order Processing</h6>
+              <p class="text-muted small mb-0">Supplier is preparing your order</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Out for Delivery -->
+          {% if order.delivery_status == 'out_for_delivery' or order.delivery_status == 'delivered' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-warning"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-truck"></i> Out for Delivery</h6>
+              <p class="text-muted small mb-0">Your order is on the way!</p>
+              {% if order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Delivered -->
+          {% if order.delivery_status == 'delivered' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-box-seam"></i> Delivered</h6>
+              <p class="text-muted small mb-0">Order delivered successfully</p>
+              {% if order.delivered_at %}
+                <p class="text-muted small mb-0">{{ order.delivered_at|date:"M d, Y" }} at {{ order.delivered_at|time:"g:i A" }}</p>
+              {% elif order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Completed -->
+          {% if order.order_status == 'completed' %}
+          <div class="timeline-item completed">
+            <div class="timeline-marker bg-success"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-check-all"></i> Order Completed</h6>
+              <p class="text-muted small mb-0">Transaction completed successfully</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Cancelled -->
+          {% if order.order_status == 'cancelled' %}
+          <div class="timeline-item rejected">
+            <div class="timeline-marker bg-danger"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-x-circle"></i> Order Cancelled</h6>
+              <p class="text-muted small mb-0">Order has been cancelled</p>
+              {% if order.order_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.order_status_updated_at|date:"M d, Y" }} at {{ order.order_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Order Returned -->
+          {% if order.delivery_status == 'returned' %}
+          <div class="timeline-item rejected">
+            <div class="timeline-marker bg-warning"></div>
+            <div class="timeline-content">
+              <h6 class="mb-1"><i class="bi bi-arrow-return-left"></i> Order Returned</h6>
+              <p class="text-muted small mb-0">Order has been returned</p>
+              {% if order.delivery_status_updated_at %}
+                <p class="text-muted small mb-0">{{ order.delivery_status_updated_at|date:"M d, Y" }} at {{ order.delivery_status_updated_at|time:"g:i A" }}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Communication Card -->
+    <div class="card mb-3 border-info">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Communication</h5>
+      </div>
+      <div class="card-body">
+        <p class="mb-3">
+          Send a message to the supplier about this order.
+        </p>
+        <div class="d-grid">
+          <a href="{% url 'send_message_to_order' order.id %}" class="btn btn-info">
+            <i class="bi bi-envelope"></i> Send Message
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Supplier Information -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Supplier Information</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>{{ order.supplier_product.supplier.first_name|default:order.supplier_product.supplier.username }}</strong>
+        </div>
+        
+        <div class="mb-2">
+          <i class="bi bi-envelope me-2"></i>{{ order.supplier_product.supplier.email }}
+        </div>
+        
+        {% if order.supplier_product.supplier.profile.phone %}
+        <div class="mb-2">
+          <i class="bi bi-telephone me-2"></i>{{ order.supplier_product.supplier.profile.phone }}
+        </div>
+        {% endif %}
+        
+        {% if order.supplier_product.supplier.profile.address %}
+        <div class="mb-2">
+          <i class="bi bi-geo-alt me-2"></i>{{ order.supplier_product.supplier.profile.address }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Product Information -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 class="mb-0">Product Information</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <strong>Current Stock:</strong> {{ order.supplier_product.available_stock }} {{ order.supplier_product.unit }}
+        </div>
+        
+        <div class="mb-3">
+          <strong>Minimum Order:</strong> {{ order.supplier_product.minimum_order_quantity }} {{ order.supplier_product.unit }}
+        </div>
+        
+        <div class="mb-3">
+          <strong>Current Price:</strong> ₱{{ order.supplier_product.unit_price|floatformat:2 }}
+          {% if order.unit_price != order.supplier_product.unit_price %}
+            <br><small class="text-muted">(You paid: ₱{{ order.unit_price|floatformat:2 }})</small>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dee2e6;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -23px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px #dee2e6;
+}
+
+.timeline-item.completed .timeline-marker {
+  box-shadow: 0 0 0 2px #28a745;
+}
+
+.timeline-item.rejected .timeline-marker {
+  box-shadow: 0 0 0 2px #dc3545;
+}
+
+.timeline-content h6 {
+  margin-bottom: 5px;
+}
+</style>
+{% endblock %}

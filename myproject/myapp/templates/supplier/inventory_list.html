@@ -1,0 +1,173 @@
+{% extends 'supplier/base.html' %}
+
+{% block title %}My Inventory{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">My Inventory</h2>
+  <a href="{% url 'supplier_product_add' %}" class="btn btn-warning">
+    <i class="bi bi-plus-circle"></i> Add Product
+  </a>
+</div>
+
+<!-- Filters and Search -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filter Products</h5>
+  </div>
+  <div class="card-body">
+    <form method="get" class="row g-3">
+      <div class="col-md-3">
+        <label for="search" class="form-label">Search</label>
+        <input type="text" class="form-control" id="search" name="search" value="{{ search }}" placeholder="Product name or description...">
+      </div>
+      <div class="col-md-3">
+        <label for="category" class="form-label">Category</label>
+        <select class="form-select" id="category" name="category">
+          <option value="">All Categories</option>
+          {% for value, label in category_choices %}
+            <option value="{{ value }}" {% if category_filter == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="stock" class="form-label">Stock Status</label>
+        <select class="form-select" id="stock" name="stock">
+          <option value="">All Stock</option>
+          <option value="available" {% if stock_filter == 'available' %}selected{% endif %}>Available</option>
+          <option value="low" {% if stock_filter == 'low' %}selected{% endif %}>Low Stock</option>
+          <option value="out" {% if stock_filter == 'out' %}selected{% endif %}>Out of Stock</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status">
+          <option value="">All</option>
+          <option value="active" {% if status_filter == 'active' %}selected{% endif %}>Active</option>
+          <option value="inactive" {% if status_filter == 'inactive' %}selected{% endif %}>Inactive</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">&nbsp;</label>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-outline-dark">Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Products Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">Products ({{ products|length }})</h5>
+  </div>
+  <div class="card-body p-0">
+    {% if products %}
+    <div class="table-responsive">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Min Order</th>
+            <th>Manufactured</th>
+            <th>Expiration</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>
+              <div>
+                <strong>{{ product.name }}</strong>
+                {% if product.description %}
+                <br><small class="text-muted">{{ product.description|truncatewords:10 }}</small>
+                {% endif %}
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-secondary">{{ product.get_category_display }}</span>
+            </td>
+            <td>
+              <strong>₱{{ product.unit_price }}</strong>
+              <br><small class="text-muted">per {{ product.get_unit_display }}</small>
+            </td>
+            <td>
+              <div class="d-flex align-items-center">
+                <span class="me-2">{{ product.available_stock }} {{ product.unit }}</span>
+                {% if product.is_out_of_stock %}
+                  <span class="badge bg-danger">Out of Stock</span>
+                {% elif product.is_low_stock %}
+                  <span class="badge bg-warning">Low Stock</span>
+                {% else %}
+                  <span class="badge bg-success">In Stock</span>
+                {% endif %}
+              </div>
+              <small class="text-muted">Threshold: {{ product.low_stock_threshold }}</small>
+            </td>
+            <td>{{ product.minimum_order_quantity }} {{ product.unit }}</td>
+            <td>
+              {% if product.manufactured_date %}
+                <small>{{ product.manufactured_date|date:"M d, Y" }}</small>
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if product.expiration_date %}
+                {% if product.is_expired %}
+                  <span class="badge bg-danger">Expired</span>
+                  <br><small>{{ product.expiration_date|date:"M d, Y" }}</small>
+                {% elif product.is_near_expiration %}
+                  <span class="badge bg-warning text-dark">{{ product.days_until_expiration }} days left</span>
+                  <br><small>{{ product.expiration_date|date:"M d, Y" }}</small>
+                {% else %}
+                  <small>{{ product.expiration_date|date:"M d, Y" }}</small>
+                {% endif %}
+              {% else %}
+                <span class="text-muted">-</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if product.is_active %}
+                <span class="badge bg-success">Active</span>
+              {% else %}
+                <span class="badge bg-secondary">Inactive</span>
+              {% endif %}
+            </td>
+            <td>
+              <div class="btn-group btn-group-sm table-actions" role="group">
+                <a href="{% url 'supplier_product_restock' product.pk %}" class="btn btn-outline-success" title="Restock">
+                  <i class="bi bi-plus-circle"></i>
+                </a>
+                <a href="{% url 'supplier_product_edit' product.pk %}" class="btn btn-outline-primary" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <a href="{% url 'supplier_product_delete' product.pk %}" class="btn btn-outline-danger" title="Delete">
+                  <i class="bi bi-trash"></i>
+                </a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+      <i class="bi bi-boxes text-muted" style="font-size: 3rem;"></i>
+      <h5 class="text-muted mt-3">No products found</h5>
+      <p class="text-muted">Start by adding your first product to manage your inventory.</p>
+      <a href="{% url 'supplier_product_add' %}" class="btn btn-warning">
+        <i class="bi bi-plus-circle"></i> Add Product
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

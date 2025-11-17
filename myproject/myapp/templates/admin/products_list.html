@@ -1,0 +1,103 @@
+{% extends 'admin/base_new.html' %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="fw-bold">All Products</h2>
+  <span class="badge bg-info fs-6">View Only</span>
+</div>
+
+<!-- Search and Filter -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-3">
+      <div class="col-md-6">
+        <input type="text" name="search" class="form-control" placeholder="Search products or suppliers..." value="{{ search }}">
+      </div>
+      <div class="col-md-4">
+        <select name="status" class="form-select">
+          <option value="">All Products</option>
+          <option value="active" {% if status == 'active' %}selected{% endif %}>Active</option>
+          <option value="inactive" {% if status == 'inactive' %}selected{% endif %}>Inactive</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button type="submit" class="btn btn-dark w-100">
+          <i class="bi bi-search"></i> Filter
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Products Table -->
+<div class="card">
+  <div class="card-body">
+    {% if products %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Supplier</th>
+              <th>Unit Price</th>
+              <th>Stock</th>
+              <th>Unit</th>
+              <th>Manufactured</th>
+              <th>Expiration</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td><strong>{{ product.name }}</strong></td>
+              <td><span class="badge bg-info">{{ product.get_category_display }}</span></td>
+              <td>{{ product.supplier.username }}</td>
+              <td><strong>₱{{ product.unit_price|floatformat:2 }}</strong></td>
+              <td>{{ product.available_stock }}</td>
+              <td>{{ product.unit }}</td>
+              <td>
+                {% if product.manufactured_date %}
+                  {{ product.manufactured_date|date:"M d, Y" }}
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if product.expiration_date %}
+                  {% if product.is_expired %}
+                    <span class="badge bg-danger">Expired {{ product.expiration_date|date:"M d, Y" }}</span>
+                  {% elif product.is_near_expiration %}
+                    <span class="badge bg-warning text-dark">{{ product.expiration_date|date:"M d, Y" }}</span>
+                  {% else %}
+                    {{ product.expiration_date|date:"M d, Y" }}
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted">-</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if product.is_active %}
+                  <span class="badge bg-success">Active</span>
+                {% else %}
+                  <span class="badge bg-secondary">Inactive</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="text-center py-5">
+        <i class="bi bi-box-seam text-muted" style="font-size: 4rem;"></i>
+        <h4 class="text-muted mt-3">No Products</h4>
+        <p class="text-muted">Products will appear here when suppliers add them.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

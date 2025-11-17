@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center my-4">
+                    <h2><i class="bi bi-envelope"></i> Send Message</h2>
+                    <a href="javascript:history.back()" class="btn btn-outline-dark">
+                        <i class="bi bi-arrow-left"></i> Back
+                    </a>
+                </div>
+
+                <div class="row">
+                    <!-- Message Form -->
+                    <div class="col-lg-8">
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="bi bi-pencil-square"></i> Compose Message</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Recipient Info -->
+                                <div class="alert alert-light border mb-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                            <i class="bi bi-person fs-4"></i>
+                                        </div>
+                                        <div>
+                                            <strong>To:</strong> {{ recipient.first_name|default:recipient.username }}<br>
+                                            <small class="text-muted">@{{ recipient.username }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Order Context -->
+                                {% if order %}
+                                <div class="alert alert-info mb-4">
+                                    <h6><i class="bi bi-box"></i> About Order #{{ order.id }}</h6>
+                                    <p class="mb-0">
+                                        <strong>Product:</strong> {{ order.supplier_product.name }}<br>
+                                        <strong>Quantity:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}<br>
+                                        <strong>Total:</strong> ₱{{ order.total_amount|floatformat:2 }}
+                                    </p>
+                                </div>
+                                {% endif %}
+
+                                <!-- Message Form -->
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    
+                                    <div class="mb-4">
+                                        <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">
+                                            <i class="bi bi-chat-left-text"></i> Your Message
+                                        </label>
+                                        {{ form.message }}
+                                        {% if form.message.errors %}
+                                            <div class="text-danger small mt-1">
+                                                {% for error in form.message.errors %}{{ error }}{% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-text">
+                                            Write your message to {{ recipient.first_name|default:recipient.username }} about 
+                                            {% if order %}Order #{{ order.id }}{% else %}this matter{% endif %}.
+                                        </div>
+                                    </div>
+
+                                    <!-- Tips -->
+                                    <div class="alert alert-warning">
+                                        <h6><i class="bi bi-lightbulb"></i> Tips for effective communication:</h6>
+                                        <ul class="mb-0 small">
+                                            <li>Be clear and specific about your question or concern</li>
+                                            <li>Include relevant details (dates, quantities, etc.)</li>
+                                            <li>Be professional and courteous</li>
+                                            <li>The recipient will be notified of your message</li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Submit Buttons -->
+                                    <div class="d-flex gap-2">
+                                        <button type="submit" class="btn btn-primary flex-fill">
+                                            <i class="bi bi-send"></i> Send Message
+                                        </button>
+                                        <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                                            <i class="bi bi-x-circle"></i> Cancel
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="col-lg-4">
+                        <!-- Recipient Card -->
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0"><i class="bi bi-person"></i> Recipient</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                                        <i class="bi bi-person"></i>
+                                    </div>
+                                </div>
+                                <h5 class="text-center">{{ recipient.first_name|default:recipient.username }}</h5>
+                                <p class="text-center text-muted">@{{ recipient.username }}</p>
+                                {% if recipient.email %}
+                                    <p class="text-center">
+                                        <i class="bi bi-envelope"></i> {{ recipient.email }}
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Order Info Card -->
+                        {% if order %}
+                        <div class="card shadow-sm">
+                            <div class="card-header bg-light">
+                                <h6 class="mb-0"><i class="bi bi-box"></i> Order Information</h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Order #:</strong> {{ order.id }}</p>
+                                <p><strong>Product:</strong> {{ order.supplier_product.name }}</p>
+                                <p><strong>Quantity:</strong> {{ order.quantity }} {{ order.supplier_product.unit }}</p>
+                                <p><strong>Unit Price:</strong> ₱{{ order.unit_price|floatformat:2 }}</p>
+                                <p><strong>Total:</strong> ₱{{ order.total_amount|floatformat:2 }}</p>
+                                <p><strong>Order Status:</strong><br>
+                                    <span class="badge bg-primary">{{ order.get_order_status_display }}</span>
+                                </p>
+                                <p class="mb-0"><strong>Delivery Status:</strong><br>
+                                    <span class="badge bg-info">{{ order.get_delivery_status_display }}</span>
+                                </p>
+                                <div class="d-grid mt-3">
+                                    <a href="{% url 'owner_supplier_order_detail' order.id %}" class="btn btn-outline-primary btn-sm">
+                                        View Order Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

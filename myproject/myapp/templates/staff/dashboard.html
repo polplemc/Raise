@@ -1,0 +1,301 @@
+{% extends 'staff/base.html' %}
+
+{% block title %}Staff Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2 class="mb-1">Welcome, {{ request.user.first_name }}!</h2>
+    <p class="text-muted mb-0">Managing inventory for {{ business_owner.first_name }}'s store</p>
+  </div>
+  <div class="d-flex gap-2 align-items-center">
+    <!-- Notifications Dropdown -->
+    <div class="dropdown">
+      <a class="btn btn-link position-relative p-2" href="#" id="notificationDropdownDesktop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-bell fs-4 text-dark"></i>
+        {% if unread_notifications_count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+            {{ unread_notifications_count }}
+          </span>
+        {% endif %}
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdownDesktop" style="width: 320px; max-height: 400px; overflow-y: auto;">
+        <li><h6 class="dropdown-header">Notifications</h6></li>
+        <li><hr class="dropdown-divider"></li>
+        <li>
+          <a class="dropdown-item text-center" href="{% url 'notification_list' %}">
+            <i class="bi bi-list"></i> View All Notifications
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="staff-badge">
+      <i class="bi bi-person-badge"></i> Staff
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <!-- Recent Orders -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Recent Orders</h5>
+      </div>
+      <div class="card-body">
+        {% if recent_orders %}
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Product</th>
+                <th>Total</th>
+                <th>Order Status</th>
+                <th>Delivery Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in recent_orders %}
+              <tr>
+                <td><strong>#{{ order.id }}</strong></td>
+                <td>{{ order.supplier_product.name }}</td>
+                <td>₱{{ order.total_amount|floatformat:2 }}</td>
+                <td>
+                  {% if order.order_status == 'pending' %}
+                    <span class="badge bg-warning text-dark">Pending</span>
+                  {% elif order.order_status == 'confirmed' %}
+                    <span class="badge bg-info">Confirmed</span>
+                  {% elif order.order_status == 'processing' %}
+                    <span class="badge bg-primary">Processing</span>
+                  {% elif order.order_status == 'completed' %}
+                    <span class="badge bg-success">Completed</span>
+                  {% elif order.order_status == 'cancelled' %}
+                    <span class="badge bg-danger">Cancelled</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if order.delivery_status == 'not_shipped' %}
+                    <span class="badge bg-secondary">Not Shipped</span>
+                  {% elif order.delivery_status == 'out_for_delivery' %}
+                    <span class="badge bg-info">Out for Delivery</span>
+                  {% elif order.delivery_status == 'delivered' %}
+                    <span class="badge bg-success">Delivered</span>
+                  {% elif order.delivery_status == 'returned' %}
+                    <span class="badge bg-danger">Returned</span>
+                  {% endif %}
+                </td>
+                <td>{{ order.created_at|date:"M d" }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="text-center py-3">
+          <i class="bi bi-cart text-muted" style="font-size: 2rem;"></i>
+          <p class="text-muted mt-2">No recent orders</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Inventory Chart -->
+    {% if inventory_data %}
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Inventory Overview</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="inventoryChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    {% endif %}
+    
+    <!-- Stock Out Reasons Chart -->
+    {% if stock_out_reasons_data.labels %}
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Stock Out Reasons</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="stockOutReasonsChart" width="400" height="200"></canvas>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  
+  <div class="col-md-4">
+    <!-- Recent Stock Outs -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <h6 class="mb-0">Recent Stock Movements</h6>
+      </div>
+      <div class="card-body">
+        {% if recent_stock_outs %}
+        {% for stock_out in recent_stock_outs %}
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+          <div>
+            <strong class="text-danger">-{{ stock_out.quantity }}</strong>
+            <br>
+            <small class="text-muted">{{ stock_out.product.name|truncatewords:3 }}</small>
+            <br>
+            <small class="text-muted">{{ stock_out.get_reason_display }}</small>
+          </div>
+          <div class="text-end">
+            <div class="small">{{ stock_out.created_at|date:"M d" }}</div>
+            <div class="small text-muted">{{ stock_out.created_at|time:"g:i A" }}</div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="text-center py-3">
+          <i class="bi bi-arrow-down-circle text-muted"></i>
+          <p class="text-muted small mt-1">No recent stock movements</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Business Owner Info -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="mb-0">Business Information</h6>
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          <strong>Owner:</strong> {{ business_owner.first_name }} {{ business_owner.last_name }}
+        </div>
+        {% if business_owner.profile.store_name %}
+        <div class="mb-2">
+          <strong>Store:</strong> {{ business_owner.profile.store_name }}
+        </div>
+        {% endif %}
+        {% if business_owner.email %}
+        <div class="mb-2">
+          <i class="bi bi-envelope me-1"></i>{{ business_owner.email }}
+        </div>
+        {% endif %}
+        {% if business_owner.profile.phone %}
+        <div class="mb-2">
+          <i class="bi bi-telephone me-1"></i>{{ business_owner.profile.phone }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% if inventory_data %}
+    // Inventory Chart
+    const inventoryCtx = document.getElementById('inventoryChart').getContext('2d');
+    const inventoryData = {{ inventory_data|safe }};
+    
+    new Chart(inventoryCtx, {
+        type: 'bar',
+        data: {
+            labels: inventoryData.map(item => item.name),
+            datasets: [{
+                label: 'Stock Quantity',
+                data: inventoryData.map(item => item.quantity),
+                backgroundColor: inventoryData.map(item => 
+                    item.is_low ? '#ffc107' : '#007bff'
+                ),
+                borderColor: inventoryData.map(item => 
+                    item.is_low ? '#e0a800' : '#0056b3'
+                ),
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+    {% endif %}
+    
+    {% if stock_out_reasons_data.labels %}
+    // Stock Out Reasons Chart
+    const stockOutCtx = document.getElementById('stockOutReasonsChart').getContext('2d');
+    
+    new Chart(stockOutCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ stock_out_reasons_data.labels|safe }},
+            datasets: [{
+                label: 'Number of Stock Outs',
+                data: {{ stock_out_reasons_data.counts|safe }},
+                backgroundColor: [
+                    '#ffbf31',  // Yellow
+                    '#ff5757',  // Red
+                    '#000000',  // Black
+                    '#6c757d',  // Gray
+                    '#17a2b8',  // Cyan
+                    '#ffc107'   // Warning
+                ],
+                borderColor: [
+                    '#ffbf31',
+                    '#ff5757',
+                    '#000000',
+                    '#6c757d',
+                    '#17a2b8',
+                    '#ffc107'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Stock Out by Reason'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                        precision: 0
+                    },
+                    title: {
+                        display: true,
+                        text: 'Count'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Reason'
+                    }
+                }
+            }
+        }
+    });
+    {% endif %}
+});
+</script>
+{% endblock %}
