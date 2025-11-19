@@ -70,11 +70,26 @@ WSGI_APPLICATION = "myproject.wsgi.application"
 # -------------------------------
 # DATABASE (SQLite)
 # -------------------------------
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('postgresql://raise_database_user:FFwsFP3Blwllo1amBMcvZJnxwj0jbYSn@dpg-d4dkauf5r7bs73b1qqm0-a/raise_database')
-    )
-}
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    # Running on Render
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    # Running locally
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
 
 # -------------------------------
 # PASSWORD VALIDATION

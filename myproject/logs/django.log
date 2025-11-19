@@ -6659,3 +6659,132 @@ INFO 2025-11-17 00:44:47,174 basehttp "GET /api/messages/ HTTP/1.1" 200 35
 INFO 2025-11-17 00:44:47,187 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
 INFO 2025-11-17 00:46:34,271 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
 INFO 2025-11-17 00:46:36,847 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 20:30:45,934 autoreload Watching for file changes with StatReloader
+ERROR 2025-11-19 20:31:04,249 log Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 244, in _get_session
+    return self._session_cache
+           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SessionStore' object has no attribute '_session_cache'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\views.py", line 10, in landing_page
+    return render(request, 'landing.html')
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 169, in render
+    with context.bind_template(self):
+         ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Program Files\Python313\Lib\contextlib.py", line 141, in __enter__
+    return next(self.gen)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\template\context.py", line 259, in bind_template
+    context = processor(self.request)
+  File "C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\context_processors.py", line 9, in notifications_context
+    if request.user.is_authenticated:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\__init__.py", line 304, in get_user
+    user_id = _get_user_session_key(request)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\__init__.py", line 95, in _get_user_session_key
+    return get_user_model()._meta.pk.to_python(request.session[SESSION_KEY])
+                                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 55, in __getitem__
+    return self._session[key]
+           ^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\base.py", line 249, in _get_session
+    self._session_cache = self.load()
+                          ~~~~~~~~~^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\db.py", line 55, in load
+    s = self._get_session_from_db()
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\contrib\sessions\backends\db.py", line 34, in _get_session_from_db
+    return self.model.objects.get(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        session_key=self.session_key, expire_date__gt=timezone.now()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1610, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 766, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ~~~~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases or bool(combinator),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 85, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 74, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ~~~~~~~~~~~~~~~^
+        with_col_aliases=with_col_aliases,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 316, in get_select
+    sql, params = self.compile(col)
+                  ~~~~~~~~~~~~^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 577, in compile
+    sql, params = node.as_sql(self, self.connection)
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\expressions.py", line 1322, in as_sql
+    sql = ".".join(map(compiler.quote_name_unless_alias, identifiers))
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 568, in quote_name_unless_alias
+    r = self.connection.ops.quote_name(name)
+  File "C:\Users\comaa\AppData\Roaming\Python\Python313\site-packages\django\db\backends\dummy\base.py", line 20, in complain
+    raise ImproperlyConfigured(
+    ...<3 lines>...
+    )
+django.core.exceptions.ImproperlyConfigured: settings.DATABASES is improperly configured. Please supply the ENGINE value. Check settings documentation for more details.
+ERROR 2025-11-19 20:31:04,496 basehttp "GET / HTTP/1.1" 500 205843
+WARNING 2025-11-19 20:31:08,949 log Not Found: /favicon.ico
+WARNING 2025-11-19 20:31:08,978 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+INFO 2025-11-19 20:40:01,393 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 20:45:05,681 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myproject\settings.py changed, reloading.
+INFO 2025-11-19 20:45:20,790 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-19 20:45:29,956 base Session data corrupted
+INFO 2025-11-19 20:45:33,137 basehttp "GET / HTTP/1.1" 200 28960
+INFO 2025-11-19 20:45:35,242 basehttp "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-11-19 20:45:35,761 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 20:46:29,530 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myproject\settings.py changed, reloading.
+INFO 2025-11-19 20:47:29,638 autoreload Watching for file changes with StatReloader
