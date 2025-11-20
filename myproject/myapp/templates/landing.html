@@ -467,6 +467,18 @@
       .cta-section {
         padding: 50px 0;
       }
+      
+      /* Center benefit icons on mobile */
+      .benefit-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      
+      .benefit-icon {
+        margin-right: 0 !important;
+        margin-bottom: 1rem;
+      }
     }
     
     @media (max-width: 575.98px) {
@@ -625,13 +637,11 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-3">
+        <ul class="navbar-nav ms-3 ms-auto">
           <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
           <li class="nav-item"><a class="nav-link" href="#video">Video</a></li>
-        </ul>
-        <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
           <li class="nav-item"><a class="nav-link btn btn-primary px-3 ms-2" href="{% url 'signup' %}">Sign Up</a></li>
         </ul>

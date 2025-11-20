@@ -34,6 +34,8 @@
       max-width: 800px;
       width: 100%;
       margin: 0 auto;
+      max-height: 90vh;
+      overflow-y: auto;
     }
     
     .logo-container {
@@ -107,6 +109,37 @@
     
     .required-field {
       color: var(--red);
+    }
+    
+    /* Scrollbar styling */
+    .signup-card::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .signup-card::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .signup-card::-webkit-scrollbar-thumb {
+      background: var(--yellow);
+      border-radius: 10px;
+    }
+    
+    .signup-card::-webkit-scrollbar-thumb:hover {
+      background: #e6ab1f;
+    }
+    
+    /* Mobile responsiveness for scrollable form */
+    @media (max-width: 768px) {
+      .signup-card {
+        max-height: 85vh;
+        padding: 1.5rem;
+      }
+      
+      body {
+        padding: 10px;
+      }
     }
   </style>
 </head>

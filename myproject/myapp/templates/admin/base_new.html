@@ -186,16 +186,60 @@
       color: #721c24;
     }
     
+    /* Mobile sidebar toggle button */
+    .mobile-sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1060;
+      background: #000000;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .mobile-sidebar-toggle:hover {
+      background: #333333;
+      transform: scale(1.1);
+    }
+    
+    .mobile-sidebar-toggle i {
+      font-size: 1.2rem;
+    }
+    
     /* Mobile responsiveness */
     @media (max-width: 767.98px) {
       .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
+        position: fixed;
+        width: 280px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1050;
+      }
+      
+      .sidebar.show {
+        transform: translateX(0);
       }
       
       .main-content {
         margin-left: 0;
+        padding-top: 80px;
+      }
+      
+      .mobile-sidebar-toggle {
+        display: flex;
       }
     }
     
@@ -226,10 +270,15 @@
   </style>
 </head>
 <body>
+  <!-- Mobile Sidebar Toggle Button -->
+  <button class="mobile-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <i class="bi bi-list"></i>
+  </button>
+
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <nav class="col-md-2 d-md-block sidebar p-0">
+      <nav class="col-md-2 d-md-block sidebar p-0" id="sidebar">
         <div class="pt-3">
           <div class="logo-container">
             <img src="{% static 'img/raise_logo.png' %}" alt="Raise Logo" class="img-fluid mb-2">
@@ -297,6 +346,38 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mobile Sidebar Toggle
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      const sidebar = document.getElementById('sidebar');
+      
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          sidebar.classList.toggle('show');
+        });
+        
+        // Close sidebar when clicking on a link
+        const navLinks = sidebar.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            if (window.innerWidth <= 767) {
+              sidebar.classList.remove('show');
+            }
+          });
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+          if (window.innerWidth <= 767) {
+            if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+              sidebar.classList.remove('show');
+            }
+          }
+        });
+      }
+    });
+  </script>
   {% block extra_js %}{% endblock %}
 </body>
 </html>

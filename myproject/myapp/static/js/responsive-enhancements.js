@@ -59,13 +59,6 @@ class ResponsiveManager {
         this.handleOrientationChange();
       }, 100);
     });
-
-    // Device motion for mobile optimizations
-    if (window.DeviceMotionEvent) {
-      window.addEventListener('devicemotion', (e) => {
-        this.handleDeviceMotion(e);
-      });
-    }
   }
 
   handleResize() {

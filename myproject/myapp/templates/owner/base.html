@@ -190,6 +190,63 @@
     .card-header {
       border-bottom: 2px solid var(--yellow);
     }
+    
+    /* Mobile sidebar toggle button */
+    .mobile-sidebar-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1060;
+      background: #000000;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .mobile-sidebar-toggle:hover {
+      background: #333333;
+      transform: scale(1.1);
+    }
+    
+    .mobile-sidebar-toggle:active {
+      transform: scale(0.95);
+    }
+    
+    .mobile-sidebar-toggle i {
+      font-size: 1.2rem;
+    }
+    
+    /* Top-right notification/message buttons positioning */
+    .d-flex.gap-2.align-items-center {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1055;
+      gap: 0.5rem !important;
+    }
+    
+    @media (max-width: 767.98px) {
+      .mobile-sidebar-toggle {
+        display: flex;
+      }
+      
+      .main-content {
+        padding-top: 80px;
+      }
+      
+      .d-flex.gap-2.align-items-center {
+        top: 20px;
+        right: 20px;
+      }
+    }
   </style>
 </head>
 <body>
