@@ -6788,3 +6788,451 @@ INFO 2025-11-19 20:45:35,242 basehttp "GET /static/css/style.css HTTP/1.1" 304 0
 INFO 2025-11-19 20:45:35,761 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
 INFO 2025-11-19 20:46:29,530 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myproject\settings.py changed, reloading.
 INFO 2025-11-19 20:47:29,638 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 20:59:25,690 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-19 20:59:39,274 base Session data corrupted
+INFO 2025-11-19 20:59:44,210 basehttp "GET / HTTP/1.1" 200 28778
+WARNING 2025-11-19 21:02:52,251 base Session data corrupted
+INFO 2025-11-19 21:02:52,573 basehttp "GET / HTTP/1.1" 200 28836
+INFO 2025-11-19 21:02:56,662 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 21:02:56,719 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+INFO 2025-11-19 21:02:56,917 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 17415
+WARNING 2025-11-19 21:02:59,788 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:02:59,819 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:15:07,138 base Session data corrupted
+INFO 2025-11-19 21:15:07,362 basehttp "GET / HTTP/1.1" 200 29896
+WARNING 2025-11-19 21:15:35,798 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:15:36,374 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:19:30,983 base Session data corrupted
+INFO 2025-11-19 21:19:31,374 basehttp "GET / HTTP/1.1" 200 30319
+INFO 2025-11-19 21:19:34,074 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 21:19:34,148 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 17415
+INFO 2025-11-19 21:19:34,748 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+WARNING 2025-11-19 21:19:44,556 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:19:44,572 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:22:13,869 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:22:15,984 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:24:33,905 base Session data corrupted
+INFO 2025-11-19 21:24:34,168 basehttp "GET / HTTP/1.1" 200 30316
+INFO 2025-11-19 21:24:35,449 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 21:24:35,545 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 17415
+INFO 2025-11-19 21:24:35,593 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+WARNING 2025-11-19 21:24:42,518 base Session data corrupted
+INFO 2025-11-19 21:24:44,172 basehttp "GET / HTTP/1.1" 200 30316
+WARNING 2025-11-19 21:24:55,947 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:24:56,081 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:24:58,293 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:24:58,385 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:25:03,644 base Session data corrupted
+INFO 2025-11-19 21:25:05,817 basehttp "GET /signup/ HTTP/1.1" 200 18530
+WARNING 2025-11-19 21:25:26,496 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:25:26,577 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:27:17,732 base Session data corrupted
+INFO 2025-11-19 21:27:17,796 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-19 21:27:21,226 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:27:21,275 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:27:21,358 basehttp - Broken pipe from ('127.0.0.1', 64815)
+WARNING 2025-11-19 21:27:21,884 base Session data corrupted
+INFO 2025-11-19 21:27:22,051 basehttp "GET / HTTP/1.1" 200 30316
+WARNING 2025-11-19 21:27:27,299 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:27:27,403 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:31:54,980 base Session data corrupted
+INFO 2025-11-19 21:31:55,480 basehttp "GET / HTTP/1.1" 200 30906
+WARNING 2025-11-19 21:32:08,366 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:32:08,547 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:46:18,787 base Session data corrupted
+INFO 2025-11-19 21:46:19,740 basehttp "GET / HTTP/1.1" 200 30316
+INFO 2025-11-19 21:46:26,266 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 21:46:32,247 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+INFO 2025-11-19 21:46:26,321 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 18572
+WARNING 2025-11-19 21:46:45,623 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:46:45,746 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:46:46,631 log Not Found: /favicon.ico
+WARNING 2025-11-19 21:46:46,850 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+WARNING 2025-11-19 21:52:26,935 base Session data corrupted
+INFO 2025-11-19 21:52:27,625 basehttp "GET / HTTP/1.1" 200 30316
+INFO 2025-11-19 21:52:32,152 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 19967
+WARNING 2025-11-19 21:52:38,914 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:52:38,999 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:52:57,395 base Session data corrupted
+INFO 2025-11-19 21:52:57,674 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-19 21:53:00,417 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 21:53:02,550 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:53:02,603 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:53:16,668 base Session data corrupted
+INFO 2025-11-19 21:53:17,543 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:53:19,266 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 21:53:20,161 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:53:20,361 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:53:20,595 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:53:20,704 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 304 0
+WARNING 2025-11-19 21:53:22,399 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 21:53:22,704 basehttp "GET /static/js/notifications.js HTTP/1.1" 304 0
+WARNING 2025-11-19 21:53:23,313 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:53:26,663 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:53:27,897 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:53:27,956 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:53:28,226 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:53:34,453 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:53:35,110 basehttp "GET /owner/inventory/ HTTP/1.1" 200 13184
+WARNING 2025-11-19 21:53:37,524 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 21:53:37,676 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-19 21:53:37,732 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:53:38,014 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:53:38,545 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:53:38,647 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:53:38,979 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+WARNING 2025-11-19 21:53:43,458 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:53:43,491 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:53:43,773 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:53:43,830 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:53:44,012 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:53:44,364 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:54:51,906 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:54:52,020 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:57:02,502 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 21:57:02,602 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 21:57:09,222 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:57:11,968 basehttp "GET / HTTP/1.1" 200 30445
+INFO 2025-11-19 21:57:17,102 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:57:32,724 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-19 21:57:34,242 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:57:34,735 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+WARNING 2025-11-19 21:57:37,632 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:57:37,721 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:57:38,331 basehttp - Broken pipe from ('127.0.0.1', 52455)
+INFO 2025-11-19 21:58:35,822 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:58:54,477 basehttp "GET /sysadmin/dashboard/ HTTP/1.1" 200 15658
+WARNING 2025-11-19 21:58:58,671 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:58:58,721 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:58:58,790 basehttp - Broken pipe from ('127.0.0.1', 50090)
+INFO 2025-11-19 21:59:08,469 basehttp "GET /sysadmin/owners/ HTTP/1.1" 200 9749
+WARNING 2025-11-19 21:59:16,831 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:59:16,900 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:59:21,718 basehttp "GET /sysadmin/dashboard/ HTTP/1.1" 200 15658
+WARNING 2025-11-19 21:59:25,125 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:59:25,262 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:59:25,452 basehttp - Broken pipe from ('127.0.0.1', 60726)
+INFO 2025-11-19 21:59:27,637 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:59:32,189 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 21:59:32,208 basehttp "GET / HTTP/1.1" 200 30445
+WARNING 2025-11-19 21:59:43,939 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:59:44,421 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:59:44,477 basehttp - Broken pipe from ('127.0.0.1', 52482)
+INFO 2025-11-19 21:59:46,234 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-19 21:59:51,320 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 21:59:51,500 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 21:59:51,566 basehttp - Broken pipe from ('127.0.0.1', 64961)
+INFO 2025-11-19 22:00:42,739 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-19 22:00:45,482 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 22:00:50,291 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:00:53,232 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 22:00:53,239 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-19 22:00:53,249 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:00:53,530 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:00:53,640 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:00:54,251 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:06:29,470 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:06:29,938 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:12:08,549 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:12:08,578 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:12:09,599 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19949
+WARNING 2025-11-19 22:12:11,703 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:12:11,772 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:12:11,803 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 22:12:11,849 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 19980
+INFO 2025-11-19 22:12:11,871 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 200 8515
+INFO 2025-11-19 22:12:11,910 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 200 2025
+INFO 2025-11-19 22:12:12,249 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 200 14245
+INFO 2025-11-19 22:12:13,125 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+INFO 2025-11-19 22:12:13,738 basehttp "GET /static/js/notifications.js HTTP/1.1" 200 13195
+WARNING 2025-11-19 22:12:15,469 log Not Found: /favicon.ico
+WARNING 2025-11-19 22:12:15,547 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+INFO 2025-11-19 22:12:15,586 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:12:15,595 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:12:15,655 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:12:15,694 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:12:43,904 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:12:43,918 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:13:13,907 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:13:13,918 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:13:43,910 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:13:43,922 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:14:13,928 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:14:13,930 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:18:20,649 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:18:20,654 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:11,415 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:20:11,445 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:14,493 basehttp "GET /owner/inventory/ HTTP/1.1" 200 13184
+INFO 2025-11-19 22:20:15,348 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:20:19,304 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:20:19,316 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:20:19,390 basehttp - Broken pipe from ('127.0.0.1', 54173)
+INFO 2025-11-19 22:20:19,434 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:19,486 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:20:19,588 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:20:19,621 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:22,405 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19949
+WARNING 2025-11-19 22:20:24,522 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 22:20:24,542 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-19 22:20:24,546 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:20:24,591 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:24,691 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:20:24,719 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:20:53,130 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:20:53,144 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:24:53,267 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:24:53,372 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:24:56,096 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 22338
+INFO 2025-11-19 22:24:56,689 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 19967
+WARNING 2025-11-19 22:25:03,002 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:25:03,873 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:25:04,250 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:25:04,768 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:25:05,724 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:25:07,202 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:27:06,921 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:27:07,221 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:27:11,720 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 22314
+INFO 2025-11-19 22:27:15,906 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 200 2025
+INFO 2025-11-19 22:27:15,960 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-19 22:27:16,265 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 200 8515
+INFO 2025-11-19 22:27:16,499 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20988
+INFO 2025-11-19 22:27:16,580 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+WARNING 2025-11-19 22:27:19,476 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:27:19,658 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:27:19,718 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 200 14245
+INFO 2025-11-19 22:27:19,887 basehttp "GET /static/js/notifications.js HTTP/1.1" 200 13195
+INFO 2025-11-19 22:27:22,193 basehttp - Broken pipe from ('127.0.0.1', 59612)
+INFO 2025-11-19 22:27:25,956 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:27:27,316 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:27:27,377 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+WARNING 2025-11-19 22:27:27,435 log Not Found: /favicon.ico
+WARNING 2025-11-19 22:27:27,584 basehttp "GET /favicon.ico HTTP/1.1" 404 31379
+INFO 2025-11-19 22:27:27,900 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:27:49,874 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:27:49,876 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:22,243 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:22,254 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:32:22,567 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:22,794 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:32:29,150 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:32:29,178 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:30,377 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 20508
+INFO 2025-11-19 22:32:31,915 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 19967
+WARNING 2025-11-19 22:32:34,542 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:32:34,580 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:32:34,692 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:34,726 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:32:34,839 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:32:34,851 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:33:16,247 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:33:16,258 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:33:19,123 basehttp "GET /owner/inventory/ HTTP/1.1" 200 13184
+INFO 2025-11-19 22:33:19,513 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:33:20,967 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:33:20,974 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:33:21,031 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:33:21,186 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:33:21,241 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:33:21,266 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:36:17,853 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:36:17,899 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:36:18,248 basehttp "GET /owner/inventory/ HTTP/1.1" 200 13184
+INFO 2025-11-19 22:36:19,620 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20548
+WARNING 2025-11-19 22:36:21,945 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:36:22,042 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:36:22,277 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:36:22,365 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:36:22,445 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:36:22,607 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:36:50,320 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:36:50,331 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:06,957 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 22:37:09,158 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:37:09,297 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:37:09,332 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:37:09,344 basehttp - Broken pipe from ('127.0.0.1', 63635)
+INFO 2025-11-19 22:37:09,407 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:09,424 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:09,720 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:09,739 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:24,753 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:24,784 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:31,784 basehttp "GET /owner/inventory/ HTTP/1.1" 200 13184
+INFO 2025-11-19 22:37:32,209 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-19 22:37:33,273 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:33,755 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:34,037 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:34,318 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:34,497 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14259
+INFO 2025-11-19 22:37:35,161 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:35,170 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:35,460 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:35,488 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:36,476 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 22:37:37,669 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:37,675 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:37,831 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:37,848 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:48,079 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:37:48,758 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:37:48,785 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:37:53,335 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14259
+WARNING 2025-11-19 22:37:55,536 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:37:55,573 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:37:55,575 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:37:55,626 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:55,785 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:37:55,798 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:14,819 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:41:14,824 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:18,711 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14253
+INFO 2025-11-19 22:41:19,943 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:41:22,440 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:41:22,455 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:41:22,560 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:41:22,601 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:22,675 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:22,694 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:41:25,797 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14253
+WARNING 2025-11-19 22:41:29,949 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 22:41:30,041 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-19 22:41:30,135 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:41:30,230 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:30,809 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:41:30,870 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:56,641 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:41:56,687 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:41:58,388 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14259
+INFO 2025-11-19 22:41:59,008 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:42:02,931 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:42:03,037 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:42:03,217 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:42:03,376 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:42:03,681 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:42:03,706 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:14,665 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:14,686 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:14,952 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 14279
+INFO 2025-11-19 22:46:15,968 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20548
+WARNING 2025-11-19 22:46:19,729 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:19,749 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:19,829 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:19,851 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:19,966 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:19,999 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:32,128 basehttp "GET /owner/suppliers/ HTTP/1.1" 200 13913
+INFO 2025-11-19 22:46:32,551 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:46:34,002 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:34,032 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:34,102 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:34,149 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:34,303 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:34,383 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:37,449 basehttp "GET /owner/staff/ HTTP/1.1" 200 13286
+WARNING 2025-11-19 22:46:38,867 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:38,910 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:38,955 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:38,984 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:39,080 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:39,088 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:42,100 basehttp "GET /owner/staff/add/ HTTP/1.1" 200 16794
+INFO 2025-11-19 22:46:42,486 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:46:44,003 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:44,017 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:44,036 basehttp - Broken pipe from ('127.0.0.1', 57985)
+INFO 2025-11-19 22:46:44,118 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:44,152 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:44,464 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:44,472 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:46,255 basehttp "GET /owner/suppliers/ HTTP/1.1" 200 13913
+WARNING 2025-11-19 22:46:47,971 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:48,721 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:48,830 basehttp - Broken pipe from ('127.0.0.1', 49813)
+INFO 2025-11-19 22:46:48,989 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:49,115 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:49,309 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:49,325 basehttp "GET /owner/suppliers/add/ HTTP/1.1" 200 14078
+INFO 2025-11-19 22:46:50,173 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+WARNING 2025-11-19 22:46:51,665 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:46:51,771 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:46:51,811 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:51,813 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:46:51,935 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:46:51,947 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:47:00,844 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:47:00,860 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:47:04,286 basehttp "GET /owner/staff/ HTTP/1.1" 200 13286
+INFO 2025-11-19 22:47:05,579 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:47:07,264 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:47:07,367 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:47:07,533 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:47:07,551 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:47:07,662 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:47:07,766 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:47:13,848 basehttp "GET /owner/profile/ HTTP/1.1" 200 21213
+WARNING 2025-11-19 22:47:15,697 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:47:15,845 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:47:15,960 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:47:16,026 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:47:16,710 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:47:16,738 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:49:02,315 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:49:02,488 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:53:01,254 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:53:01,441 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:53:02,308 basehttp "GET /owner/profile/ HTTP/1.1" 200 21213
+INFO 2025-11-19 22:53:03,630 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20899
+WARNING 2025-11-19 22:53:07,838 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:53:07,857 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:53:07,954 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:53:08,015 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:53:08,132 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:53:08,169 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:55:19,508 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:55:19,085 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:55:19,739 basehttp "GET /owner/profile/ HTTP/1.1" 200 21213
+INFO 2025-11-19 22:55:20,590 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20919
+WARNING 2025-11-19 22:55:25,346 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:55:25,442 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:55:25,548 basehttp - Broken pipe from ('127.0.0.1', 50202)
+INFO 2025-11-19 22:55:26,008 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:55:26,171 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:55:26,386 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:55:26,464 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:55:57,761 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:55:57,775 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:56:02,610 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 22:56:04,313 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20548
+WARNING 2025-11-19 22:56:06,464 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-19 22:56:06,508 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+WARNING 2025-11-19 22:56:06,521 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:56:06,617 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:56:06,781 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:56:06,795 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:58:54,789 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:58:54,898 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:58:56,749 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 22:58:59,307 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20936
+WARNING 2025-11-19 22:59:02,198 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:59:02,228 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:59:02,278 basehttp - Broken pipe from ('127.0.0.1', 52424)
+INFO 2025-11-19 22:59:02,341 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:59:02,415 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:59:02,525 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 22:59:02,535 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 22:59:16,684 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-19 22:59:17,840 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 22:59:17,908 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 22:59:17,943 basehttp - Broken pipe from ('127.0.0.1', 53578)
+INFO 2025-11-19 23:01:24,705 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 23:01:24,767 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 23:01:27,077 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19920
+INFO 2025-11-19 23:01:28,693 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 20973
+WARNING 2025-11-19 23:01:34,484 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-19 23:01:34,515 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31490
+INFO 2025-11-19 23:01:34,602 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 23:01:34,687 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-19 23:01:34,816 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-19 23:01:34,841 basehttp "GET /api/messages/ HTTP/1.1" 200 35

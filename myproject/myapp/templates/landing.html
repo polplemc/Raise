@@ -625,6 +625,12 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-3">
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
+          <li class="nav-item"><a class="nav-link" href="#video">Video</a></li>
+        </ul>
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
           <li class="nav-item"><a class="nav-link btn btn-primary px-3 ms-2" href="{% url 'signup' %}">Sign Up</a></li>
@@ -639,11 +645,11 @@
   <!-- Hero -->
   <section class="hero d-flex align-items-center">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-7 hero-content">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-lg-8 hero-content text-center">
           <h1 class="fw-bold mb-4">Empowering Rural Sari-Sari Stores</h1>
           <p class="lead mb-4">Transform your store management with our intuitive inventory system. Connect with suppliers, track stock levels, and grow your business — all from your mobile device.</p>
-          <div class="d-flex flex-wrap gap-3 mb-4">
+          <div class="d-flex flex-wrap gap-3 mb-4 justify-content-center">
             <a href="{% url 'signup' %}" class="btn btn-lg btn-primary">
               <i class="bi bi-box-arrow-in-right me-2"></i>Get Started
             </a>
@@ -651,9 +657,6 @@
               <i class="bi bi-play-circle me-2"></i>Learn More
             </a>
           </div>
-        </div>
-        <div class="col-lg-5 d-none d-lg-block text-center">
-          <i class="bi bi-shop-window" style="font-size: 20rem; color: var(--yellow); opacity: 0.2;"></i>
         </div>
       </div>
     </div>
@@ -781,7 +784,7 @@
   </section>
 
   <!-- Testimonials Section -->
-  <section class="testimonials-section">
+  <section id="testimonials" class="testimonials-section">
     <div class="container">
       <div class="text-center mb-5">
         <h2 class="section-title">What Store Owners Say</h2>
@@ -822,6 +825,23 @@
                 <p>Store Owner, Cavite</p>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advertisement Video Section -->
+  <section id="video" class="video-section" style="padding: 80px 0; background-color: var(--white);">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="section-title">See Raise in Action</h2>
+        <p class="section-subtitle">Watch how Raise transforms store management</p>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/DZlMVuyTSBE?si=IANe1UqlQA6n2IrZ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         </div>
       </div>
