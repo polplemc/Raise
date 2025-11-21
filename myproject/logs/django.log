@@ -8222,3 +8222,37 @@ INFO 2025-11-21 23:34:53,816 basehttp "GET / HTTP/1.1" 200 30670
 INFO 2025-11-21 23:35:00,032 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
 INFO 2025-11-21 23:35:12,908 basehttp "GET /api/messages/ HTTP/1.1" 200 173
 INFO 2025-11-21 23:35:12,989 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:45:34,527 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 23:47:11,419 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2025-11-21 23:47:24,045 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 23:47:57,614 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:48:01,889 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19683
+INFO 2025-11-21 23:48:14,444 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:48:14,943 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:48:15,031 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:48:15,194 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:48:50,588 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:48:52,499 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:17,326 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:51:17,521 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:17,935 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19683
+INFO 2025-11-21 23:51:21,798 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-21 23:51:21,810 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 21456
+INFO 2025-11-21 23:51:21,816 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 200 8515
+INFO 2025-11-21 23:51:21,888 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 200 2025
+INFO 2025-11-21 23:51:22,393 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+INFO 2025-11-21 23:51:22,497 basehttp "GET /static/js/notifications.js HTTP/1.1" 200 14052
+INFO 2025-11-21 23:51:22,737 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 200 14048
+INFO 2025-11-21 23:51:24,684 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:51:24,750 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:51:24,825 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:24,867 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+WARNING 2025-11-21 23:51:30,191 log Not Found: /favicon.ico
+WARNING 2025-11-21 23:51:30,193 basehttp "GET /favicon.ico HTTP/1.1" 404 32380
+INFO 2025-11-21 23:51:35,991 basehttp "GET /notifications/ HTTP/1.1" 200 21852
+INFO 2025-11-21 23:51:36,864 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:51:36,881 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:37,137 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:51:37,215 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:41,666 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:51:41,701 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
