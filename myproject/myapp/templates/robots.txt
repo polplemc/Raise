@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://raise-i8gm.onrender.com/sitemap.xml
