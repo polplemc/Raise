@@ -132,7 +132,7 @@ img {
     top: 20px;
     left: 20px;
     z-index: 1060;
-    background: #007bff;
+    background: #000000;
     color: white;
     border: none;
     border-radius: 50%;
@@ -143,11 +143,16 @@ img {
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     transition: all 0.3s ease;
+    cursor: pointer;
   }
   
   .mobile-sidebar-toggle:hover {
-    background: #0056b3;
+    background: #333333;
     transform: scale(1.1);
+  }
+  
+  .mobile-sidebar-toggle:active {
+    transform: scale(0.95);
   }
   
   .mobile-sidebar-toggle i {
@@ -162,11 +167,33 @@ img {
   
   .stat-card {
     padding: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    text-align: center;
   }
   
   .stat-card .icon {
     font-size: 2rem;
+  }
+  
+  .stat-card h6 {
+    font-size: 0.75rem;
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .stat-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+  }
+  
+  /* Dashboard grid for mobile */
+  .row-cols-1.row-cols-md-5 {
+    --bs-columns: 1;
+  }
+  
+  .row-cols-1.row-cols-md-5 > * {
+    flex: 0 0 100%;
   }
   
   /* Forms */
@@ -254,6 +281,173 @@ img {
   .popup-notification {
     padding: 15px;
     font-size: 0.85rem;
+  }
+  
+  /* Mobile Navbar Styles */
+  .navbar {
+    padding: 0.5rem 0 !important;
+  }
+  
+  .navbar-brand img {
+    height: 30px !important;
+  }
+  
+  .navbar-toggler {
+    padding: 0.25rem 0.5rem;
+    border: none;
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 191, 49, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+  
+  .navbar-collapse {
+    background-color: var(--white);
+    border-radius: 0 0 8px 8px;
+    padding: 1rem 0;
+    margin-top: 0.5rem;
+  }
+  
+  .navbar-nav {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.95rem;
+    color: var(--black) !important;
+    border-bottom: 1px solid #e9ecef;
+  }
+  
+  .navbar-nav .nav-link:last-child {
+    border-bottom: none;
+  }
+  
+  .navbar-nav .btn {
+    margin: 0.5rem 1rem;
+    width: calc(100% - 2rem);
+  }
+  
+  /* Mobile Content Centering */
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  [class*='col-'] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  
+  /* Center text content */
+  .hero-content,
+  .section-title,
+  .section-subtitle,
+  .feature-card,
+  .benefit-item,
+  .testimonial-card,
+  .pricing-card {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Center feature cards */
+  .feature-card {
+    text-align: center;
+  }
+  
+  .feature-icon {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Center benefit items */
+  .benefit-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .benefit-icon {
+    margin-right: 0 !important;
+    margin-bottom: 1rem;
+  }
+  
+  /* Center testimonial cards */
+  .testimonial-card {
+    text-align: center;
+  }
+  
+  .testimonial-author {
+    justify-content: center;
+  }
+  
+  /* Center pricing cards */
+  .pricing-card {
+    text-align: center;
+  }
+  
+  /* Center video section */
+  .video-section {
+    text-align: center;
+  }
+  
+  /* Center buttons */
+  .d-flex.flex-wrap.gap-3.mb-4 {
+    justify-content: center !important;
+  }
+  
+  /* Fix button layout on mobile */
+  .d-flex.justify-content-between.align-items-center {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+  
+  .d-flex.justify-content-between.align-items-center > div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .d-flex.justify-content-between.align-items-center .btn {
+    width: 100%;
+    margin-right: 0 !important;
+    margin-bottom: 0.5rem;
+  }
+  
+  .d-flex.justify-content-between.align-items-center .btn:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Fix notification and message buttons on mobile */
+  .d-flex.gap-2.align-items-center {
+    position: fixed;
+    top: 80px;
+    right: 15px;
+    z-index: 1050;
+    gap: 0.5rem !important;
+    flex-direction: row;
+  }
+  
+  .d-flex.gap-2.align-items-center .dropdown {
+    display: flex;
+  }
+  
+  .d-flex.gap-2.align-items-center .btn-link {
+    padding: 0.5rem !important;
+    font-size: 1.5rem;
   }
 }
 

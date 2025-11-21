@@ -7,7 +7,7 @@ class StaticViewSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        # Use the actual name of your homepage URL pattern
+        # Replace 'landing' with your actual homepage URL name if different
         return ["landing"]
 
     def location(self, item):
