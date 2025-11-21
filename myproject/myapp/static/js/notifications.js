@@ -116,10 +116,12 @@ class RealTimeNotifications {
     }
 
     updateNotificationBadge(count) {
+        const displayCount = count > 99 ? '99+' : count;
+
         const badges = document.querySelectorAll('#notificationDropdown .badge');
         badges.forEach(badge => {
             if (count > 0) {
-                badge.textContent = count > 99 ? '99+' : count;
+                badge.textContent = displayCount;
                 badge.style.display = 'inline-block';
             } else {
                 badge.style.display = 'none';
@@ -131,13 +133,25 @@ class RealTimeNotifications {
         if (countElement) {
             countElement.textContent = count;
         }
+
+        // Update sidebar "Notifications" label as Notifications(1)
+        const sidebarLabels = document.querySelectorAll('.sidebar-notification-label');
+        sidebarLabels.forEach(label => {
+            if (count > 0) {
+                label.textContent = `Notifications(${displayCount})`;
+            } else {
+                label.textContent = 'Notifications';
+            }
+        });
     }
 
     updateMessageBadge(count) {
+        const displayCount = count > 99 ? '99+' : count;
+
         const badges = document.querySelectorAll('#messageDropdown .badge');
         badges.forEach(badge => {
             if (count > 0) {
-                badge.textContent = count > 99 ? '99+' : count;
+                badge.textContent = displayCount;
                 badge.style.display = 'inline-block';
             } else {
                 badge.style.display = 'none';
@@ -149,6 +163,16 @@ class RealTimeNotifications {
         if (countElement) {
             countElement.textContent = count;
         }
+
+        // Update sidebar "Messages" label as Messages(1)
+        const sidebarLabels = document.querySelectorAll('.sidebar-message-label');
+        sidebarLabels.forEach(label => {
+            if (count > 0) {
+                label.textContent = `Messages(${displayCount})`;
+            } else {
+                label.textContent = 'Messages';
+            }
+        });
     }
 
     updateNotificationDropdown(notifications) {

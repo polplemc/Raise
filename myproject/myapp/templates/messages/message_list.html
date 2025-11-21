@@ -22,7 +22,7 @@
 </div>
 
 <!-- Conversations List -->
-<div class="card">
+<div class="card mb-4">
   <div class="card-header">
     <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Your Conversations</h5>
   </div>
@@ -82,8 +82,51 @@
       <div class="text-center py-5">
         <i class="bi bi-envelope-slash text-muted" style="font-size: 4rem;"></i>
         <h5 class="text-muted mt-3">No conversations yet</h5>
-        <p class="text-muted">Messages will appear here when you communicate with {% if request.user.profile.role == 'owner' %}suppliers{% else %}store owners{% endif %} about orders.</p>
+        <p class="text-muted">Start a conversation with your connected {% if request.user.profile.role == 'owner' %}suppliers{% else %}store owners{% endif %} below.</p>
       </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Connected Contacts (start new conversation) -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">
+      <i class="bi bi-people"></i>
+      {% if request.user.profile.role == 'owner' %}
+        Connected Suppliers
+      {% elif request.user.profile.role == 'supplier' %}
+        Connected Store Owners
+      {% else %}
+        Connected Contacts
+      {% endif %}
+    </h5>
+  </div>
+  <div class="card-body">
+    {% if contacts %}
+      <div class="list-group list-group-flush">
+        {% for contact in contacts %}
+          <div class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <div class="fw-bold">{{ contact.label }}</div>
+              <small class="text-muted">@{{ contact.user.username }}</small>
+            </div>
+            <a href="{% url 'start_conversation' contact.user.id %}" class="btn btn-sm btn-outline-primary">
+              <i class="bi bi-chat-dots"></i> Message
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-muted mb-0 text-center">
+        {% if request.user.profile.role == 'owner' %}
+          You don't have any connected suppliers yet. Send connection requests from the Suppliers section.
+        {% elif request.user.profile.role == 'supplier' %}
+          You don't have any connected store owners yet. Accept connection requests from the Connection Requests page.
+        {% else %}
+          No connected contacts available.
+        {% endif %}
+      </p>
     {% endif %}
   </div>
 </div>

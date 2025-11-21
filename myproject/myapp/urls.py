@@ -141,8 +141,11 @@ urlpatterns = [
     path('notifications/mark-all-read/', notification_views.mark_all_notifications_read, name='mark_all_notifications_read'),
     path('notifications/<int:pk>/delete/', notification_views.delete_notification, name='delete_notification'),
     path('api/notifications/', notification_views.get_notifications_json, name='get_notifications_json'),
+    path('api/messages/', notification_views.get_messages_json, name='get_messages_json'),
     
     path('messages/', notification_views.message_list, name='message_list'),
     path('messages/conversation/<int:pk>/', notification_views.conversation_detail, name='conversation_detail'),
+    path('messages/conversation/<int:pk>/delete/', notification_views.delete_conversation, name='delete_conversation'),
+    path('messages/start/<int:user_id>/', notification_views.start_conversation, name='start_conversation'),
     path('messages/order/<int:order_id>/', notification_views.send_message_to_order, name='send_message_to_order'),
 ]

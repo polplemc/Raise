@@ -7954,3 +7954,271 @@ INFO 2025-11-21 21:35:59,199 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 20
 INFO 2025-11-21 21:36:20,463 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
 INFO 2025-11-21 21:36:28,037 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
 INFO 2025-11-21 21:36:30,545 basehttp "GET /sysadmin/approved-users/ HTTP/1.1" 200 23447
+INFO 2025-11-21 21:43:49,438 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 21:44:02,814 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:44:03,082 basehttp "GET / HTTP/1.1" 200 30670
+INFO 2025-11-21 21:44:09,670 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 21:44:20,755 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:44:20,987 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15517
+INFO 2025-11-21 21:44:22,607 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:44:22,822 log Not Found: /api/messages/
+WARNING 2025-11-21 21:44:22,907 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:44:23,301 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:44:23,322 log Not Found: /api/messages/
+WARNING 2025-11-21 21:44:23,365 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 21:44:33,562 log Not Found: /api/messages/
+WARNING 2025-11-21 21:44:33,569 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:44:33,615 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:47:01,933 log Not Found: /api/messages/
+WARNING 2025-11-21 21:47:01,943 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:47:02,021 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:47:03,825 basehttp "GET /supplier/inventory/ HTTP/1.1" 200 18585
+WARNING 2025-11-21 21:47:04,779 log Not Found: /api/messages/
+WARNING 2025-11-21 21:47:04,827 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:47:04,988 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:47:05,512 log Not Found: /api/messages/
+INFO 2025-11-21 21:47:05,550 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:47:05,576 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 22:01:55,812 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\urls.py changed, reloading.
+INFO 2025-11-21 22:02:34,484 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:13:09,094 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2025-11-21 22:13:48,996 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 22:14:03,056 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 22:14:04,511 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15885
+INFO 2025-11-21 22:14:07,049 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:07,170 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:09,175 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:09,210 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:10,327 basehttp "GET /notifications/ HTTP/1.1" 200 13374
+INFO 2025-11-21 22:14:11,568 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:11,688 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:11,934 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:12,124 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:13,603 basehttp "GET /messages/ HTTP/1.1" 200 12274
+INFO 2025-11-21 22:14:14,279 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:14,366 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:14,550 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:14,656 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:35,656 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:37,171 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:38,790 basehttp "GET /notifications/ HTTP/1.1" 200 13374
+INFO 2025-11-21 22:14:41,050 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:43,840 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:44,963 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:45,429 basehttp "GET /messages/ HTTP/1.1" 200 12274
+INFO 2025-11-21 22:14:45,877 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:52,477 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:52,479 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:14:52,869 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:14:52,915 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:21:25,518 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:21:25,527 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:27:05,331 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\notification_views.py changed, reloading.
+INFO 2025-11-21 22:27:41,953 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:29:06,720 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\urls.py changed, reloading.
+INFO 2025-11-21 22:29:24,173 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:33:33,993 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:33:34,159 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:33:36,401 basehttp "GET /messages/ HTTP/1.1" 200 12274
+INFO 2025-11-21 22:33:39,738 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:33:40,008 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:33:40,405 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:33:40,438 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:34:18,660 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\urls.py changed, reloading.
+INFO 2025-11-21 22:34:38,923 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:39:24,212 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\notification_views.py changed, reloading.
+INFO 2025-11-21 22:40:02,042 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:40:57,095 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\urls.py changed, reloading.
+INFO 2025-11-21 22:41:22,384 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:46:14,914 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:46:15,028 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:46:15,705 basehttp "GET /messages/ HTTP/1.1" 200 12274
+INFO 2025-11-21 22:46:17,417 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:46:17,429 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:46:17,528 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:46:17,552 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:50:43,647 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:50:43,667 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:54:42,955 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\notification_views.py changed, reloading.
+INFO 2025-11-21 22:55:24,550 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:55:59,739 autoreload C:\Users\comaa\Desktop\Raise\Raise\myproject\myapp\urls.py changed, reloading.
+INFO 2025-11-21 22:56:35,956 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 22:59:29,451 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:59:29,467 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:59:29,908 basehttp "GET /messages/ HTTP/1.1" 200 13037
+INFO 2025-11-21 22:59:32,355 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:59:32,362 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:59:32,451 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:59:32,456 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:59:36,987 basehttp "GET /messages/start/2/ HTTP/1.1" 200 9594
+INFO 2025-11-21 22:59:54,270 basehttp "POST /messages/start/2/ HTTP/1.1" 302 0
+INFO 2025-11-21 22:59:54,562 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 16995
+INFO 2025-11-21 22:59:55,876 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:59:55,881 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 22:59:56,126 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 22:59:56,132 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 23:00:01,596 basehttp "GET /messages/ HTTP/1.1" 200 14440
+INFO 2025-11-21 23:00:02,192 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 23:00:02,227 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 23:00:02,308 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 23:00:02,335 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 23:00:05,691 basehttp "GET /messages/start/2/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:00:05,899 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 16995
+INFO 2025-11-21 23:00:06,466 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 23:00:06,476 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 23:00:06,583 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 23:00:06,620 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 23:00:09,066 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:00:09,128 basehttp "GET / HTTP/1.1" 200 30670
+INFO 2025-11-21 23:00:13,101 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 23:00:24,316 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:00:24,544 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19955
+INFO 2025-11-21 23:00:25,638 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:26,077 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:00:26,270 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:26,451 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:00:28,046 basehttp "GET /messages/ HTTP/1.1" 200 16127
+INFO 2025-11-21 23:00:28,797 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:28,876 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:00:28,968 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:29,379 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:00:31,468 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 18658
+INFO 2025-11-21 23:00:32,045 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:32,060 basehttp "GET /api/messages/ HTTP/1.1" 200 174
+INFO 2025-11-21 23:00:32,130 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:00:32,149 basehttp "GET /api/messages/ HTTP/1.1" 200 174
+INFO 2025-11-21 23:13:40,427 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:13:40,490 basehttp "GET /api/messages/ HTTP/1.1" 200 174
+INFO 2025-11-21 23:13:47,971 basehttp "POST /messages/conversation/1/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:13:50,079 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 19328
+INFO 2025-11-21 23:13:52,928 basehttp "GET /api/messages/ HTTP/1.1" 200 174
+INFO 2025-11-21 23:13:53,068 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:13:53,192 basehttp "GET /api/messages/ HTTP/1.1" 200 174
+INFO 2025-11-21 23:13:53,258 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:13:58,166 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:13:58,311 basehttp "GET / HTTP/1.1" 200 30758
+INFO 2025-11-21 23:14:05,864 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 23:14:15,010 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:14:15,501 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 16078
+INFO 2025-11-21 23:14:16,556 basehttp "GET /api/messages/ HTTP/1.1" 200 176
+INFO 2025-11-21 23:14:16,639 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:16,766 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:16,769 basehttp "GET /api/messages/ HTTP/1.1" 200 176
+INFO 2025-11-21 23:14:19,290 basehttp "GET /messages/ HTTP/1.1" 200 14662
+INFO 2025-11-21 23:14:19,927 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:19,970 basehttp "GET /api/messages/ HTTP/1.1" 200 176
+INFO 2025-11-21 23:14:20,079 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:20,139 basehttp "GET /api/messages/ HTTP/1.1" 200 176
+INFO 2025-11-21 23:14:23,253 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 17671
+INFO 2025-11-21 23:14:23,876 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:23,941 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:14:23,957 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:14:24,088 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:14:58,819 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:15:03,534 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:17:42,461 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:17:42,725 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:17:44,483 basehttp "GET /notifications/ HTTP/1.1" 200 16939
+INFO 2025-11-21 23:17:49,344 basehttp "GET /api/notifications/ HTTP/1.1" 200 245
+INFO 2025-11-21 23:17:50,128 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:17:53,761 basehttp "GET /notifications/2/read/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:17:53,774 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:17:55,207 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:17:56,382 basehttp "GET /notifications/ HTTP/1.1" 200 16196
+INFO 2025-11-21 23:17:57,542 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:17:58,911 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:17:59,309 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:18:00,289 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:06,126 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:06,133 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:07,803 basehttp "GET /messages/ HTTP/1.1" 200 14709
+INFO 2025-11-21 23:22:08,989 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:09,038 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:09,272 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:09,290 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:11,429 basehttp "GET /messages/start/2/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:22:11,659 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 17869
+INFO 2025-11-21 23:22:12,461 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:12,467 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:12,559 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:12,584 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:42,338 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:42,375 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:49,091 basehttp "POST /messages/conversation/1/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:22:49,337 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 18381
+INFO 2025-11-21 23:22:51,439 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:51,469 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:51,690 basehttp "GET /api/notifications/ HTTP/1.1" 200 244
+INFO 2025-11-21 23:22:51,701 basehttp "GET /api/messages/ HTTP/1.1" 200 175
+INFO 2025-11-21 23:22:52,050 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:22:52,152 basehttp "GET / HTTP/1.1" 200 30758
+INFO 2025-11-21 23:22:59,879 basehttp "GET /signup/ HTTP/1.1" 200 19211
+INFO 2025-11-21 23:23:03,600 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 23:23:16,719 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:23:16,954 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 20346
+INFO 2025-11-21 23:23:18,606 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:23:18,845 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:18,856 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:23:18,957 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:20,731 basehttp "GET /messages/ HTTP/1.1" 200 16554
+INFO 2025-11-21 23:23:21,576 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:23:21,725 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:21,755 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:23:21,844 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:27,309 basehttp "GET /notifications/ HTTP/1.1" 200 22117
+INFO 2025-11-21 23:23:28,120 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:23:28,276 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:28,537 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:23:28,557 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:41,892 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:41,940 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:29:42,672 basehttp "GET /messages/ HTTP/1.1" 200 16288
+INFO 2025-11-21 23:29:44,188 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2025-11-21 23:29:45,206 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 304 0
+INFO 2025-11-21 23:29:46,046 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:29:46,060 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:46,328 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:46,401 basehttp "GET /api/messages/ HTTP/1.1" 200 211
+INFO 2025-11-21 23:29:49,188 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 19778
+INFO 2025-11-21 23:29:51,841 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:52,159 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:29:52,185 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:52,353 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:29:57,412 basehttp "POST /messages/conversation/1/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:29:57,791 basehttp "GET /messages/conversation/1/ HTTP/1.1" 200 20252
+INFO 2025-11-21 23:29:59,038 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:59,121 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:29:59,439 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-21 23:29:59,482 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2025-11-21 23:30:05,443 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:30:05,704 basehttp "GET / HTTP/1.1" 200 30758
+INFO 2025-11-21 23:30:12,883 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 23:30:22,683 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:30:22,939 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 16010
+INFO 2025-11-21 23:30:29,114 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:30:31,962 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:30:33,754 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:30:35,090 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:31:37,570 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:31:39,631 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:31:40,940 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 16010
+INFO 2025-11-21 23:31:55,429 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:31:55,814 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:32:04,644 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:32:19,440 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:32:24,997 basehttp "GET /messages/ HTTP/1.1" 200 14591
+INFO 2025-11-21 23:33:07,369 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:33:08,200 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:33:15,410 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:33:21,505 basehttp - Broken pipe from ('127.0.0.1', 52492)
+INFO 2025-11-21 23:33:27,213 basehttp - Broken pipe from ('127.0.0.1', 56599)
+INFO 2025-11-21 23:33:27,730 basehttp - Broken pipe from ('127.0.0.1', 63441)
+INFO 2025-11-21 23:33:27,977 basehttp "GET /notifications/ HTTP/1.1" 200 19642
+INFO 2025-11-21 23:34:01,870 basehttp - Broken pipe from ('127.0.0.1', 53147)
+INFO 2025-11-21 23:34:02,650 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:34:48,842 basehttp - Broken pipe from ('127.0.0.1', 50968)
+INFO 2025-11-21 23:34:48,960 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 23:34:53,816 basehttp "GET / HTTP/1.1" 200 30670
+INFO 2025-11-21 23:35:00,032 basehttp "GET /api/notifications/ HTTP/1.1" 200 448
+INFO 2025-11-21 23:35:12,908 basehttp "GET /api/messages/ HTTP/1.1" 200 173
+INFO 2025-11-21 23:35:12,989 basehttp "GET /api/messages/ HTTP/1.1" 200 173

@@ -247,6 +247,18 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link {% if 'notifications' in request.path %}active{% endif %}" href="{% url 'notification_list' %}">
+                <i class="bi bi-bell"></i>
+                <span class="sidebar-notification-label"> Notifications</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'messages' in request.path %}active{% endif %}" href="{% url 'message_list' %}">
+                <i class="bi bi-envelope"></i>
+                <span class="sidebar-message-label"> Messages</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link {% if 'profile' in request.path %}active{% endif %}" href="{% url 'staff_profile' %}">
                 <i class="bi bi-person-circle"></i> Profile
               </a>

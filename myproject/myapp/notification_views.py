@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.core.paginator import Paginator
 
-from .models import Notification, Message, Conversation, SupplierOrder, User
+from .models import Notification, Message, Conversation, SupplierOrder, User, Supplier
 from .forms import MessageForm, QuickMessageForm
 from .notifications import create_notification, notify_new_message, get_unread_notification_count, get_unread_message_count
 
@@ -133,42 +133,64 @@ def get_notifications_json(request):
 
 @login_required
 def message_list(request):
-    """List all conversations for the current user"""
+    """List all conversations for the current user and show connected contacts"""
     # Get all conversations where user is either user1 or user2
     conversations = Conversation.objects.filter(
         Q(user1=request.user) | Q(user2=request.user)
     ).select_related('user1', 'user2', 'related_order')
-    
-    # Add unread count to each conversation
+
+    # Build conversation summary data
     conversation_data = []
     for conv in conversations:
         other_user = conv.get_other_user(request.user)
         unread_count = conv.get_unread_count(request.user)
         last_message = Message.objects.filter(
-            Q(sender=conv.user1, recipient=conv.user2) |
-            Q(sender=conv.user2, recipient=conv.user1)
+            Q(sender=conv.user1, recipient=conv.user2)
+            | Q(sender=conv.user2, recipient=conv.user1)
         ).order_by('-created_at').first()
-        
+
         conversation_data.append({
             'conversation': conv,
             'other_user': other_user,
             'unread_count': unread_count,
             'last_message': last_message,
         })
-    
-    # Determine base template based on user role
+
+    # Determine base template and connected contacts based on user role
     role = request.user.profile.role
+    contacts = []
+
     if role == 'owner':
         base_template = 'owner/base.html'
+        owner_connections = Supplier.objects.filter(
+            owner=request.user,
+            supplier_profile__isnull=False,
+            supplier_profile__user__isnull=False,
+        ).select_related('supplier_profile__user')
+        for conn in owner_connections:
+            contacts.append({
+                'user': conn.supplier_profile.user,
+                'label': conn.name or conn.supplier_profile.business_name,
+            })
     elif role == 'supplier':
         base_template = 'supplier/base.html'
+        if hasattr(request.user, 'supplier_profile'):
+            owner_connections = Supplier.objects.filter(
+                supplier_profile=request.user.supplier_profile,
+            ).select_related('owner')
+            for conn in owner_connections:
+                contacts.append({
+                    'user': conn.owner,
+                    'label': conn.owner.first_name or conn.owner.username,
+                })
     else:
         base_template = 'staff/base.html'
-    
+
     context = {
         'conversations': conversation_data,
         'total_unread': get_unread_message_count(request.user),
         'base_template': base_template,
+        'contacts': contacts,
     }
     return render(request, 'messages/message_list.html', context)
 
@@ -292,6 +314,27 @@ def send_message_to_order(request, order_id):
 def start_conversation(request, user_id):
     """Start a new conversation with a user"""
     other_user = get_object_or_404(User, pk=user_id)
+    user_profile = request.user.profile
+    role = user_profile.role
+
+    allowed = None
+    if role == 'owner':
+        owner_connections = Supplier.objects.filter(
+            owner=request.user,
+            supplier_profile__isnull=False,
+            supplier_profile__user__isnull=False,
+        ).select_related('supplier_profile__user')
+        allowed = {s.supplier_profile.user for s in owner_connections}
+    elif role == 'supplier':
+        if hasattr(request.user, 'supplier_profile'):
+            owner_connections = Supplier.objects.filter(
+                supplier_profile=request.user.supplier_profile,
+            ).select_related('owner')
+            allowed = {s.owner for s in owner_connections}
+
+    if allowed is not None and other_user not in allowed:
+        django_messages.error(request, 'You can only message users you are connected with.')
+        return redirect('message_list')
     
     # Check if conversation already exists
     existing_conv = Conversation.objects.filter(
@@ -331,6 +374,26 @@ def start_conversation(request, user_id):
         'form': form,
     }
     return render(request, 'messages/start_conversation.html', context)
+
+
+@login_required
+def delete_conversation(request, pk):
+    conversation = get_object_or_404(
+        Conversation,
+        Q(user1=request.user) | Q(user2=request.user),
+        pk=pk,
+    )
+
+    if request.method == 'POST':
+        Message.objects.filter(
+            Q(sender=conversation.user1, recipient=conversation.user2)
+            | Q(sender=conversation.user2, recipient=conversation.user1)
+        ).delete()
+        conversation.delete()
+        django_messages.success(request, 'Conversation deleted.')
+        return redirect('message_list')
+
+    return redirect('conversation_detail', pk=pk)
 
 
 @login_required

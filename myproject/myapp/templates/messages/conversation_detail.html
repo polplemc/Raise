@@ -89,9 +89,17 @@
       </p>
     {% endif %}
   </div>
-  <a href="{% url 'message_list' %}" class="btn btn-outline-dark">
-    <i class="bi bi-arrow-left"></i> Back to Messages
-  </a>
+  <div class="d-flex gap-2">
+    <a href="{% url 'message_list' %}" class="btn btn-outline-dark">
+      <i class="bi bi-arrow-left"></i> Back to Messages
+    </a>
+    <form method="post" action="{% url 'delete_conversation' conversation.id %}" onsubmit="return confirm('Delete this entire conversation? This cannot be undone.');">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-outline-danger">
+        <i class="bi bi-trash"></i> Delete Conversation
+      </button>
+    </form>
+  </div>
 </div>
 
 <div class="row">
