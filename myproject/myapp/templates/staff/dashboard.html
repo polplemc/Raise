@@ -9,33 +9,11 @@
     <p class="text-muted mb-0">Managing inventory for {{ business_owner.first_name }}'s store</p>
   </div>
   <div class="d-flex gap-2 align-items-center">
-    <!-- Notifications Dropdown -->
-    <div class="dropdown">
-      <a class="btn btn-link position-relative p-2" href="#" id="notificationDropdownDesktop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="bi bi-bell fs-4 text-dark"></i>
-        {% if unread_notifications_count > 0 %}
-          <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
-            {{ unread_notifications_count }}
-          </span>
-        {% endif %}
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdownDesktop" style="width: 320px; max-height: 400px; overflow-y: auto;">
-        <li><h6 class="dropdown-header">Notifications</h6></li>
-        <li><hr class="dropdown-divider"></li>
-        <li>
-          <a class="dropdown-item text-center" href="{% url 'notification_list' %}">
-            <i class="bi bi-list"></i> View All Notifications
-          </a>
-        </li>
-      </ul>
-    </div>
-    
     <div class="staff-badge">
       <i class="bi bi-person-badge"></i> Staff
     </div>
   </div>
 </div>
-
 
 <div class="row">
   <div class="col-md-8">

@@ -7733,3 +7733,224 @@ INFO 2025-11-20 22:07:23,008 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
 INFO 2025-11-20 22:07:23,615 basehttp "GET /api/messages/ HTTP/1.1" 200 35
 INFO 2025-11-20 22:07:25,681 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
 INFO 2025-11-20 22:07:25,847 basehttp "GET /api/messages/ HTTP/1.1" 200 35
+INFO 2025-11-21 20:43:13,427 autoreload Watching for file changes with StatReloader
+INFO 2025-11-21 20:43:27,329 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2025-11-21 20:43:28,793 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-21 20:43:36,324 log Not Found: /favicon.ico
+WARNING 2025-11-21 20:43:36,380 basehttp "GET /favicon.ico HTTP/1.1" 404 31508
+WARNING 2025-11-21 20:43:51,110 log Not Found: /favicon.ico
+WARNING 2025-11-21 20:43:51,280 basehttp "GET /favicon.ico HTTP/1.1" 404 31508
+WARNING 2025-11-21 20:44:58,414 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:44:58,439 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:45:01,286 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-21 20:45:07,289 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:45:07,327 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:45:15,172 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 20:45:15,399 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 17031
+INFO 2025-11-21 20:45:17,116 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 304 0
+WARNING 2025-11-21 20:45:17,968 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+INFO 2025-11-21 20:45:17,980 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 304 0
+WARNING 2025-11-21 20:45:18,148 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 20:45:19,966 log Not Found: /api/messages/
+WARNING 2025-11-21 20:45:20,332 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 20:45:20,515 log Not Found: /api/messages/
+INFO 2025-11-21 20:45:20,517 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 20:45:21,517 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 20:45:21,540 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 20:54:48,366 log Not Found: /api/messages/
+WARNING 2025-11-21 20:54:49,176 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 20:54:54,904 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 20:55:03,387 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15517
+WARNING 2025-11-21 20:55:18,408 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:55:19,916 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:55:20,835 basehttp - Broken pipe from ('127.0.0.1', 49170)
+WARNING 2025-11-21 20:55:22,353 log Not Found: /api/messages/
+WARNING 2025-11-21 20:55:23,048 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 20:55:23,989 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 20:55:26,809 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 20:55:26,912 log Not Found: /api/messages/
+WARNING 2025-11-21 20:55:27,094 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 20:55:36,483 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 20:55:40,422 basehttp "GET / HTTP/1.1" 200 30670
+WARNING 2025-11-21 20:56:32,851 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:56:33,784 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:57:23,350 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-21 20:57:33,128 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:57:33,325 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:57:33,455 basehttp - Broken pipe from ('127.0.0.1', 54354)
+INFO 2025-11-21 20:57:55,996 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 20:58:00,834 basehttp "GET /sysadmin/dashboard/ HTTP/1.1" 200 18128
+WARNING 2025-11-21 20:58:10,111 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 20:58:10,189 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 20:58:10,464 basehttp - Broken pipe from ('127.0.0.1', 55230)
+INFO 2025-11-21 21:00:15,434 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:00:15,567 basehttp "GET / HTTP/1.1" 200 30670
+WARNING 2025-11-21 21:00:20,211 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:00:20,456 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:00:23,416 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-21 21:00:25,359 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:00:25,399 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:00:25,489 basehttp - Broken pipe from ('127.0.0.1', 64903)
+INFO 2025-11-21 21:00:32,180 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:00:32,744 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15517
+WARNING 2025-11-21 21:00:35,144 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:00:35,392 log Not Found: /api/messages/
+WARNING 2025-11-21 21:00:35,393 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:00:35,403 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:00:35,612 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:00:35,927 basehttp - Broken pipe from ('127.0.0.1', 52571)
+WARNING 2025-11-21 21:00:36,513 log Not Found: /api/messages/
+INFO 2025-11-21 21:00:36,527 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:00:36,546 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 21:05:17,922 log Not Found: /api/messages/
+WARNING 2025-11-21 21:05:17,988 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:05:18,137 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:05:19,396 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15560
+WARNING 2025-11-21 21:05:21,144 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:05:21,212 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:05:22,989 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 200 8515
+INFO 2025-11-21 21:05:22,993 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 200 2025
+INFO 2025-11-21 21:05:23,024 basehttp "GET /static/css/style.css HTTP/1.1" 200 6690
+INFO 2025-11-21 21:05:23,127 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 200 21456
+INFO 2025-11-21 21:05:23,452 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+INFO 2025-11-21 21:05:24,461 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 200 14048
+INFO 2025-11-21 21:05:24,674 basehttp "GET /static/js/notifications.js HTTP/1.1" 200 13195
+WARNING 2025-11-21 21:05:26,844 log Not Found: /api/messages/
+WARNING 2025-11-21 21:05:26,847 log Not Found: /favicon.ico
+WARNING 2025-11-21 21:05:26,898 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 21:05:27,125 basehttp "GET /favicon.ico HTTP/1.1" 404 31508
+WARNING 2025-11-21 21:05:27,226 log Not Found: /api/messages/
+INFO 2025-11-21 21:05:27,227 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:05:27,284 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:05:27,335 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:06:11,153 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:06:11,586 log Not Found: /api/messages/
+WARNING 2025-11-21 21:06:11,684 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:06:12,421 basehttp "GET /supplier/dashboard/ HTTP/1.1" 200 15560
+WARNING 2025-11-21 21:06:15,079 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:06:15,683 log Not Found: /api/messages/
+INFO 2025-11-21 21:06:15,689 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:06:15,729 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:06:15,755 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:06:16,041 basehttp - Broken pipe from ('127.0.0.1', 49955)
+WARNING 2025-11-21 21:06:16,757 log Not Found: /api/messages/
+INFO 2025-11-21 21:06:16,763 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:06:16,804 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:06:24,452 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:06:24,535 basehttp "GET / HTTP/1.1" 200 30670
+WARNING 2025-11-21 21:06:29,139 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:06:29,565 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:06:33,014 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-21 21:06:35,310 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:06:35,452 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:06:35,481 basehttp - Broken pipe from ('127.0.0.1', 61478)
+INFO 2025-11-21 21:07:09,877 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2025-11-21 21:07:11,444 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:07:11,457 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:07:17,029 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:07:18,061 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19630
+WARNING 2025-11-21 21:07:20,397 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:07:20,406 log Not Found: /api/messages/
+WARNING 2025-11-21 21:07:20,413 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:07:20,444 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:07:20,572 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:07:20,699 log Not Found: /api/messages/
+WARNING 2025-11-21 21:07:20,840 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:07:20,889 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:07:34,065 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:07:34,072 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:04,065 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:04,252 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:04,640 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:13:04,839 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19607
+WARNING 2025-11-21 21:13:09,527 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:09,714 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:09,705 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:09,750 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:10,006 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:10,026 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:10,149 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:10,395 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:13:19,147 basehttp "GET /owner/inventory/ HTTP/1.1" 200 14410
+WARNING 2025-11-21 21:13:23,650 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:23,706 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:23,826 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:23,841 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:23,942 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:24,333 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:24,432 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:24,473 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:13:24,706 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 15505
+WARNING 2025-11-21 21:13:27,532 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:27,729 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 21:13:27,704 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:27,912 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:28,107 log Not Found: /api/messages/
+INFO 2025-11-21 21:13:28,107 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:28,161 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:28,339 basehttp "GET /owner/browse-products/ HTTP/1.1" 200 18015
+INFO 2025-11-21 21:13:28,341 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:31,376 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:31,475 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+WARNING 2025-11-21 21:13:31,956 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:32,048 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:32,062 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:32,098 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:32,146 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:13:33,058 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+INFO 2025-11-21 21:13:41,457 basehttp "GET /owner/supplier-product/3/ HTTP/1.1" 200 23538
+WARNING 2025-11-21 21:13:43,589 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:44,379 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:13:44,479 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:44,526 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:44,586 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:45,185 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:45,215 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:45,327 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:46,607 basehttp "GET /owner/browse-products/ HTTP/1.1" 200 18015
+WARNING 2025-11-21 21:13:48,359 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:13:48,443 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:48,477 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+WARNING 2025-11-21 21:13:48,722 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:49,057 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:13:49,282 log Not Found: /api/messages/
+WARNING 2025-11-21 21:13:49,389 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:13:49,469 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:23:32,421 log Not Found: /api/messages/
+WARNING 2025-11-21 21:23:32,489 basehttp "GET /api/messages/ HTTP/1.1" 404 31514
+INFO 2025-11-21 21:23:32,567 basehttp "GET /api/notifications/ HTTP/1.1" 200 40
+WARNING 2025-11-21 21:23:44,787 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:23:44,845 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:23:45,020 basehttp - Broken pipe from ('127.0.0.1', 51463)
+INFO 2025-11-21 21:23:52,615 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:23:52,796 basehttp "GET / HTTP/1.1" 200 30670
+WARNING 2025-11-21 21:23:56,986 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-21 21:23:57,166 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 31619
+INFO 2025-11-21 21:23:57,168 basehttp - Broken pipe from ('127.0.0.1', 63528)
+INFO 2025-11-21 21:27:28,620 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-21 21:27:42,591 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-21 21:27:42,977 basehttp "GET /sysadmin/dashboard/ HTTP/1.1" 200 18110
+INFO 2025-11-21 21:27:46,336 basehttp "GET /sysadmin/owners/ HTTP/1.1" 200 12014
+INFO 2025-11-21 21:27:49,081 basehttp "GET /sysadmin/suppliers/ HTTP/1.1" 200 11680
+INFO 2025-11-21 21:27:50,931 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:28:32,975 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:29:04,203 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:29:42,876 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:30:40,995 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14368
+INFO 2025-11-21 21:30:48,096 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14368
+INFO 2025-11-21 21:30:48,545 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 200 18039
+WARNING 2025-11-21 21:30:49,105 log Not Found: /favicon.ico
+WARNING 2025-11-21 21:30:49,115 basehttp "GET /favicon.ico HTTP/1.1" 404 31508
+INFO 2025-11-21 21:30:54,181 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14368
+INFO 2025-11-21 21:30:56,145 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14368
+INFO 2025-11-21 21:31:27,247 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:31:58,654 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:32:30,251 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:33:01,475 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:33:41,430 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14313
+INFO 2025-11-21 21:34:57,009 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
+INFO 2025-11-21 21:35:28,330 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
+INFO 2025-11-21 21:35:59,199 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
+INFO 2025-11-21 21:36:20,463 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
+INFO 2025-11-21 21:36:28,037 basehttp "GET /sysadmin/pending-users/ HTTP/1.1" 200 14025
+INFO 2025-11-21 21:36:30,545 basehttp "GET /sysadmin/approved-users/ HTTP/1.1" 200 23447
