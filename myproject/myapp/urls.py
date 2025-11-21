@@ -1,9 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from django.views.generic import TemplateView
-from django.contrib.sitemaps.views import sitemap
 from . import views, owner_views, supplier_views, admin_views, staff_views, notification_views
-from .sitemaps import StaticViewSitemap
 
 urlpatterns = [
     path('', views.landing_page, name='landing'),
@@ -148,24 +145,4 @@ urlpatterns = [
     path('messages/', notification_views.message_list, name='message_list'),
     path('messages/conversation/<int:pk>/', notification_views.conversation_detail, name='conversation_detail'),
     path('messages/order/<int:order_id>/', notification_views.send_message_to_order, name='send_message_to_order'),
-    path('messages/start/<int:user_id>/', notification_views.start_conversation, name='start_conversation'),
-    path('api/messages/', notification_views.get_messages_json, name='get_messages_json'),
-]
-
-
-sitemaps = {
-    'static': StaticViewSitemap,
-}
-
-urlpatterns += [
-    path(
-        'google0c5ae10ed0ea9623.html',
-        TemplateView.as_view(template_name='google0c5ae10ed0ea9623.html'),
-        name='google-site-verification',
-    ),
-    path(
-        'robots.txt',
-        TemplateView.as_view(template_name='robots.txt', content_type='text/plain'),
-    ),
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 ]
