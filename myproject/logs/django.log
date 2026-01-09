@@ -8256,3 +8256,60 @@ INFO 2025-11-21 23:51:37,137 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
 INFO 2025-11-21 23:51:37,215 basehttp "GET /api/messages/ HTTP/1.1" 200 210
 INFO 2025-11-21 23:51:41,666 basehttp "GET /api/messages/ HTTP/1.1" 200 210
 INFO 2025-11-21 23:51:41,701 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2025-11-23 23:01:01,784 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 23:01:28,534 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2025-11-23 23:01:36,748 basehttp "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2025-11-23 23:01:37,011 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+WARNING 2025-11-23 23:01:56,510 log Not Found: /favicon.ico
+WARNING 2025-11-23 23:01:56,730 basehttp "GET /favicon.ico HTTP/1.1" 404 32380
+INFO 2025-11-23 23:08:59,081 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-23 23:10:57,259 basehttp "GET /signup/ HTTP/1.1" 200 19211
+INFO 2025-11-23 23:11:00,836 basehttp - Broken pipe from ('127.0.0.1', 58033)
+INFO 2025-11-23 23:15:50,892 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2025-11-23 23:15:51,457 basehttp - Broken pipe from ('127.0.0.1', 57363)
+INFO 2026-01-07 08:04:39,609 autoreload Watching for file changes with StatReloader
+INFO 2026-01-07 08:04:58,135 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2026-01-07 08:05:00,607 basehttp "GET /static/css/style.css HTTP/1.1" 304 0
+INFO 2026-01-07 08:05:01,337 basehttp "GET /static/css/responsive-design.css HTTP/1.1" 304 0
+INFO 2026-01-07 08:05:01,390 basehttp "GET /static/img/raise_logo.png HTTP/1.1" 304 0
+WARNING 2026-01-07 08:05:02,840 log Not Found: /favicon.ico
+WARNING 2026-01-07 08:05:02,887 basehttp "GET /favicon.ico HTTP/1.1" 404 32380
+INFO 2026-01-07 08:05:15,537 basehttp "GET /login/ HTTP/1.1" 200 7638
+INFO 2026-01-07 08:05:22,456 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2026-01-07 08:05:23,055 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19683
+INFO 2026-01-07 08:05:24,563 basehttp "GET /static/css/layout-fix.css HTTP/1.1" 200 2025
+INFO 2026-01-07 08:05:24,575 basehttp "GET /static/css/mobile-enhancements.css HTTP/1.1" 200 8515
+INFO 2026-01-07 08:05:24,892 basehttp "GET /static/js/responsive-enhancements.js HTTP/1.1" 200 14048
+INFO 2026-01-07 08:05:24,932 basehttp "GET /static/js/notifications.js HTTP/1.1" 200 14052
+INFO 2026-01-07 08:05:25,205 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:25,362 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:25,477 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:25,500 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:29,091 basehttp "GET /owner/inventory/ HTTP/1.1" 200 14883
+INFO 2026-01-07 08:05:29,795 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:29,883 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:30,198 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:30,290 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:30,888 basehttp "GET /owner/dashboard/ HTTP/1.1" 200 19683
+INFO 2026-01-07 08:05:32,217 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:32,230 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:32,397 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:32,466 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:34,088 basehttp "GET /owner/inventory/ HTTP/1.1" 200 14883
+INFO 2026-01-07 08:05:34,671 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:34,685 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:34,768 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:34,795 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:36,192 basehttp "GET /owner/supplier-orders/ HTTP/1.1" 200 15978
+INFO 2026-01-07 08:05:36,799 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:36,823 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:36,898 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:36,908 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:38,582 basehttp "GET /notifications/ HTTP/1.1" 200 21866
+INFO 2026-01-07 08:05:39,084 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:39,097 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:39,183 basehttp "GET /api/notifications/ HTTP/1.1" 200 486
+INFO 2026-01-07 08:05:39,209 basehttp "GET /api/messages/ HTTP/1.1" 200 210
+INFO 2026-01-07 08:05:44,180 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2026-01-07 08:05:44,487 basehttp "GET / HTTP/1.1" 200 30670
+INFO 2026-01-07 08:05:51,482 basehttp "GET /signup/ HTTP/1.1" 200 19211

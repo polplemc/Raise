@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raise - System Flowchart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .flowchart-section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        
+        .legend {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .legend h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .legend-item {
+            display: inline-block;
+            margin-right: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .color-user { background-color: #e1f5ff; border: 2px solid #01579b; }
+        .color-process { background-color: #f3e5f5; border: 2px solid #4a148c; }
+        .color-data { background-color: #e8f5e9; border: 2px solid #1b5e20; }
+        .color-decision { background-color: #fff3e0; border: 2px solid #e65100; }
+        
+        .description {
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            line-height: 1.8;
+            color: #555;
+        }
+        
+        .description h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .description ul {
+            margin-left: 20px;
+        }
+        
+        .description li {
+            margin-bottom: 8px;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            background: #e0e0e0;
+            color: #333;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-button:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Raise System Flowchart</h1>
+            <p>Supply Chain Management Platform - Complete Process Flow</p>
+        </div>
+        
+        <div class="content">
+            <!-- Main System Architecture -->
+            <div class="flowchart-section">
+                <h2 class="section-title">1. Overall System Architecture</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["🌐 Web Application<br/>Django + PostgreSQL"] --> B["👥 User Authentication<br/>& Authorization"]
+                        B --> C{User Role}
+                        C -->|Admin| D["🔧 System Admin<br/>Dashboard"]
+                        C -->|Supplier| E["📦 Supplier<br/>Dashboard"]
+                        C -->|Owner| F["🏪 Store Owner<br/>Dashboard"]
+                        C -->|Staff| G["👔 Staff<br/>Dashboard"]
+                        D --> H["Database<br/>SQLite/PostgreSQL"]
+                        E --> H
+                        F --> H
+                        G --> H
+                </div>
+                <div class="legend">
+                    <h3>Legend</h3>
+                    <div class="legend-item">
+                        <span class="legend-color color-user"></span>
+                        <span>User/Interface</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color color-process"></span>
+                        <span>Process/Action</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color color-data"></span>
+                        <span>Data/Storage</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color color-decision"></span>
+                        <span>Decision Point</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- User Registration & Approval Flow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">2. User Registration & Approval Flow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["User Signup"] --> B["Select Role<br/>Supplier/Owner/Staff"]
+                        B --> C["Submit Registration<br/>Form"]
+                        C --> D["Data Stored<br/>in Database"]
+                        D --> E{Admin<br/>Approval}
+                        E -->|Rejected| F["Send Rejection<br/>Notification"]
+                        E -->|Approved| G["User Account<br/>Activated"]
+                        F --> H["User Notified<br/>& Can Reapply"]
+                        G --> I["Access Dashboard<br/>Based on Role"]
+                </div>
+                <div class="description">
+                    <h4>Registration Process Details:</h4>
+                    <ul>
+                        <li><strong>Signup Page:</strong> Users register with email, password, and role selection</li>
+                        <li><strong>Validation:</strong> Form validation ensures required fields are completed</li>
+                        <li><strong>Admin Review:</strong> System admin reviews and approves/rejects applications</li>
+                        <li><strong>Notifications:</strong> Users receive email notifications about approval status</li>
+                        <li><strong>Account Activation:</strong> Approved users can immediately access their dashboard</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Supplier Workflow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">3. Supplier Workflow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Supplier Login"] --> B["Supplier Dashboard"]
+                        B --> C{Action}
+                        C -->|Manage Products| D["Add/Edit/Delete<br/>Products"]
+                        C -->|View Orders| E["View Incoming<br/>Orders from Owners"]
+                        C -->|Manage Buyers| F["View Connected<br/>Store Owners"]
+                        C -->|Connection Requests| G["Accept/Reject<br/>Connection Requests"]
+                        D --> H["Update Product<br/>Inventory"]
+                        E --> I["Update Order<br/>Delivery Status"]
+                        F --> J["View Buyer<br/>Details & History"]
+                        G --> K["Add/Remove<br/>Connections"]
+                        H --> L["Database Update"]
+                        I --> L
+                        J --> L
+                        K --> L
+                        L --> M["Send Notifications<br/>to Owners"]
+                </div>
+                <div class="description">
+                    <h4>Supplier Key Functions:</h4>
+                    <ul>
+                        <li><strong>Product Management:</strong> Add, edit, delete products with pricing and stock</li>
+                        <li><strong>Order Management:</strong> Receive orders from store owners and update delivery status</li>
+                        <li><strong>Connection Management:</strong> Accept/reject connection requests from store owners</li>
+                        <li><strong>Buyer Management:</strong> View and manage relationships with connected store owners</li>
+                        <li><strong>Payment Verification:</strong> Verify payment status for completed orders</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Store Owner Workflow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">4. Store Owner Workflow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Owner Login"] --> B["Owner Dashboard"]
+                        B --> C{Action}
+                        C -->|Inventory| D["View/Manage<br/>Store Inventory"]
+                        C -->|Browse Products| E["Search & Browse<br/>Supplier Products"]
+                        C -->|Place Orders| F["Add Items to Cart<br/>& Place Order"]
+                        C -->|Manage Orders| G["View Order Status<br/>& History"]
+                        C -->|Stock Out| H["Report Stock<br/>Out Items"]
+                        C -->|Staff| I["Manage Staff<br/>Members"]
+                        C -->|Suppliers| J["Manage Supplier<br/>Connections"]
+                        D --> K["Update Inventory<br/>Database"]
+                        E --> L["View Available<br/>Products"]
+                        F --> M["Create Order<br/>Record"]
+                        G --> N["Track Delivery<br/>& Payment"]
+                        H --> O["Log Stock Out<br/>Event"]
+                        I --> P["Add/Edit/Remove<br/>Staff"]
+                        J --> Q["Send Connection<br/>Requests"]
+                        K --> R["Database Update"]
+                        L --> R
+                        M --> R
+                        N --> R
+                        O --> R
+                        P --> R
+                        Q --> R
+                </div>
+                <div class="description">
+                    <h4>Store Owner Key Functions:</h4>
+                    <ul>
+                        <li><strong>Inventory Management:</strong> Track store inventory and manage stock levels</li>
+                        <li><strong>Product Browsing:</strong> Search and browse products from connected suppliers</li>
+                        <li><strong>Order Management:</strong> Place orders, track delivery, and manage payment</li>
+                        <li><strong>Stock Out Reporting:</strong> Report items that are out of stock</li>
+                        <li><strong>Staff Management:</strong> Add, edit, and manage staff members</li>
+                        <li><strong>Supplier Connections:</strong> Search for suppliers and send connection requests</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Staff Workflow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">5. Staff Member Workflow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Staff Login"] --> B["Staff Dashboard"]
+                        B --> C{Action}
+                        C -->|View Inventory| D["View Store<br/>Inventory"]
+                        C -->|Stock Out| E["Report Stock<br/>Out Items"]
+                        C -->|Orders| F["View Supplier<br/>Orders"]
+                        C -->|Profile| G["View/Edit<br/>Profile"]
+                        D --> H["Read-Only<br/>Access"]
+                        E --> I["Submit Stock Out<br/>Report"]
+                        F --> J["View Order<br/>Details"]
+                        G --> K["Update Personal<br/>Information"]
+                        H --> L["Database Query"]
+                        I --> L
+                        J --> L
+                        K --> L
+                </div>
+                <div class="description">
+                    <h4>Staff Key Functions:</h4>
+                    <ul>
+                        <li><strong>Inventory Viewing:</strong> View store inventory (read-only access)</li>
+                        <li><strong>Stock Out Reporting:</strong> Report items that are out of stock</li>
+                        <li><strong>Order Tracking:</strong> View incoming supplier orders</li>
+                        <li><strong>Profile Management:</strong> Update personal information</li>
+                        <li><strong>Limited Permissions:</strong> Staff can only access their owner's data</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Admin Workflow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">6. System Admin Workflow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Admin Login"] --> B["Admin Dashboard"]
+                        B --> C{Management}
+                        C -->|User Approval| D["Review Pending<br/>User Applications"]
+                        C -->|Owners| E["Manage Store<br/>Owners"]
+                        C -->|Suppliers| F["Manage<br/>Suppliers"]
+                        C -->|Staff| G["Manage Staff<br/>Members"]
+                        C -->|Products| H["View All<br/>Products"]
+                        C -->|Orders| I["View All<br/>Orders"]
+                        C -->|Logs| J["View Activity<br/>Logs"]
+                        D --> K{Decision}
+                        K -->|Approve| L["Activate Account"]
+                        K -->|Reject| M["Send Rejection<br/>Notification"]
+                        E --> N["Create/Edit/Delete<br/>Owner Accounts"]
+                        F --> O["Create/Edit/Delete<br/>Supplier Accounts"]
+                        G --> P["Create/Edit/Delete<br/>Staff Accounts"]
+                        H --> Q["Monitor Product<br/>Catalog"]
+                        I --> R["Monitor Order<br/>Activity"]
+                        J --> S["Audit System<br/>Activity"]
+                        L --> T["Database Update"]
+                        M --> T
+                        N --> T
+                        O --> T
+                        P --> T
+                        Q --> T
+                        R --> T
+                        S --> T
+                </div>
+                <div class="description">
+                    <h4>Admin Key Functions:</h4>
+                    <ul>
+                        <li><strong>User Approval:</strong> Review and approve/reject new user registrations</li>
+                        <li><strong>User Management:</strong> Create, edit, and delete user accounts for all roles</li>
+                        <li><strong>Product Monitoring:</strong> View and monitor all products in the system</li>
+                        <li><strong>Order Monitoring:</strong> View and track all orders across the platform</li>
+                        <li><strong>Activity Logging:</strong> Access audit logs for system monitoring</li>
+                        <li><strong>System Oversight:</strong> Ensure system integrity and compliance</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Order Processing Flow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">7. Order Processing Flow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Owner Browses<br/>Products"] --> B["Add Items<br/>to Cart"]
+                        B --> C["Review Order<br/>& Checkout"]
+                        C --> D["Select Payment<br/>Method"]
+                        D --> E["Create Order<br/>Record"]
+                        E --> F["Order Status:<br/>Pending"]
+                        F --> G["Notify Supplier<br/>of New Order"]
+                        G --> H["Supplier Receives<br/>Order"]
+                        H --> I["Supplier Prepares<br/>Order"]
+                        I --> J["Update Order Status:<br/>Processing"]
+                        J --> K["Supplier Ships<br/>Order"]
+                        K --> L["Update Order Status:<br/>Shipped"]
+                        L --> M["Owner Receives<br/>Order"]
+                        M --> N{Payment<br/>Verified?}
+                        N -->|Yes| O["Order Complete"]
+                        N -->|No| P["Owner Verifies<br/>Payment"]
+                        P --> O
+                        O --> Q["Send Completion<br/>Notification"]
+                </div>
+                <div class="description">
+                    <h4>Order Processing Steps:</h4>
+                    <ul>
+                        <li><strong>Browsing:</strong> Owner searches and browses supplier products</li>
+                        <li><strong>Cart Management:</strong> Add/remove items and adjust quantities</li>
+                        <li><strong>Checkout:</strong> Review order details and select payment method</li>
+                        <li><strong>Order Creation:</strong> System creates order record with initial status</li>
+                        <li><strong>Supplier Processing:</strong> Supplier prepares and ships the order</li>
+                        <li><strong>Delivery:</strong> Owner receives order and verifies payment</li>
+                        <li><strong>Completion:</strong> Order marked as complete and notifications sent</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Payment Flow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">8. Payment Processing Flow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["Order Created"] --> B{Payment<br/>Method}
+                        B -->|Cash on Delivery| C["Payment Due<br/>on Delivery"]
+                        B -->|GCash| D["Generate GCash<br/>Payment Link"]
+                        B -->|PayMaya| E["Generate PayMaya<br/>Payment Link"]
+                        B -->|Bank Transfer| F["Provide Bank<br/>Details"]
+                        C --> G["Owner Pays<br/>on Delivery"]
+                        D --> H["Owner Completes<br/>Payment Online"]
+                        E --> H
+                        F --> I["Owner Transfers<br/>to Bank Account"]
+                        G --> J["Supplier Verifies<br/>Payment"]
+                        H --> J
+                        I --> J
+                        J --> K{Payment<br/>Verified?}
+                        K -->|Yes| L["Mark as Paid"]
+                        K -->|No| M["Payment Pending"]
+                        L --> N["Order Complete"]
+                        M --> O["Send Payment<br/>Reminder"]
+                </div>
+                <div class="description">
+                    <h4>Payment Methods & Verification:</h4>
+                    <ul>
+                        <li><strong>Cash on Delivery (COD):</strong> Payment collected when order is delivered</li>
+                        <li><strong>GCash:</strong> Mobile payment through GCash platform</li>
+                        <li><strong>PayMaya:</strong> Online payment through PayMaya platform</li>
+                        <li><strong>Bank Transfer:</strong> Direct bank-to-bank transfer</li>
+                        <li><strong>Verification:</strong> Supplier verifies payment before marking order complete</li>
+                        <li><strong>Reminders:</strong> System sends reminders for pending payments</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Notification & Communication Flow -->
+            <div class="flowchart-section">
+                <h2 class="section-title">9. Notification & Communication Flow</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["System Event<br/>Triggered"] --> B{Event Type}
+                        B -->|Order Status| C["Send Order<br/>Notification"]
+                        B -->|Connection Request| D["Send Connection<br/>Notification"]
+                        B -->|Payment| E["Send Payment<br/>Notification"]
+                        B -->|User Approval| F["Send Approval<br/>Notification"]
+                        B -->|Message| G["Send Message<br/>Notification"]
+                        C --> H["Store in<br/>Notification DB"]
+                        D --> H
+                        E --> H
+                        F --> H
+                        G --> H
+                        H --> I["User Receives<br/>Notification"]
+                        I --> J["User Reads<br/>Notification"]
+                        J --> K["Mark as Read<br/>in Database"]
+                        K --> L["Update User<br/>Notification Count"]
+                </div>
+                <div class="description">
+                    <h4>Notification Types:</h4>
+                    <ul>
+                        <li><strong>Order Notifications:</strong> Order placed, shipped, delivered, completed</li>
+                        <li><strong>Connection Notifications:</strong> Connection requests, acceptances, rejections</li>
+                        <li><strong>Payment Notifications:</strong> Payment received, pending, failed</li>
+                        <li><strong>User Approval Notifications:</strong> Account approved or rejected</li>
+                        <li><strong>Message Notifications:</strong> New messages from other users</li>
+                        <li><strong>Real-time Updates:</strong> Notifications displayed in user dashboard</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Data Models & Relationships -->
+            <div class="flowchart-section">
+                <h2 class="section-title">10. Database Schema Overview</h2>
+                <div class="mermaid">
+                    graph TD
+                        A["User<br/>Django Auth"] --> B["UserProfile<br/>Role, Phone, Address"]
+                        A --> C["SupplierProfile<br/>Business Info"]
+                        B --> D["Inventory<br/>Store Items"]
+                        C --> E["SupplierProduct<br/>Products for Sale"]
+                        D --> F["Order<br/>Purchase Records"]
+                        E --> F
+                        F --> G["OrderItem<br/>Items in Order"]
+                        F --> H["Payment<br/>Payment Records"]
+                        B --> I["ConnectionRequest<br/>Supplier Connections"]
+                        C --> I
+                        A --> J["Notification<br/>User Notifications"]
+                        A --> K["Message<br/>User Messages"]
+                        A --> L["Conversation<br/>Message Threads"]
+                </div>
+                <div class="description">
+                    <h4>Key Data Models:</h4>
+                    <ul>
+                        <li><strong>User:</strong> Django authentication model for all users</li>
+                        <li><strong>UserProfile:</strong> Extended user info with role and contact details</li>
+                        <li><strong>SupplierProfile:</strong> Supplier-specific business information</li>
+                        <li><strong>Inventory:</strong> Store owner's inventory items</li>
+                        <li><strong>SupplierProduct:</strong> Products offered by suppliers</li>
+                        <li><strong>Order:</strong> Purchase orders from owners to suppliers</li>
+                        <li><strong>Payment:</strong> Payment records and verification status</li>
+                        <li><strong>Notification:</strong> System notifications for users</li>
+                        <li><strong>Message:</strong> Direct messages between users</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Key Features Summary -->
+            <div class="flowchart-section">
+                <h2 class="section-title">11. System Features & Capabilities</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="description">
+                        <h4>🔐 Authentication & Authorization</h4>
+                        <ul>
+                            <li>Role-based access control (RBAC)</li>
+                            <li>User registration with approval workflow</li>
+                            <li>Secure password management</li>
+                            <li>Session management</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>📦 Product & Inventory Management</h4>
+                        <ul>
+                            <li>Product catalog management</li>
+                            <li>Inventory tracking</li>
+                            <li>Stock level monitoring</li>
+                            <li>Stock out reporting</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>🛒 Order Management</h4>
+                        <ul>
+                            <li>Shopping cart functionality</li>
+                            <li>Order placement and tracking</li>
+                            <li>Order status updates</li>
+                            <li>Order history and reports</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>💳 Payment Processing</h4>
+                        <ul>
+                            <li>Multiple payment methods</li>
+                            <li>Payment verification</li>
+                            <li>Payment status tracking</li>
+                            <li>Payment reminders</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>👥 User Management</h4>
+                        <ul>
+                            <li>User profile management</li>
+                            <li>Staff member management</li>
+                            <li>Supplier connection management</li>
+                            <li>User approval workflow</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>📢 Communication & Notifications</h4>
+                        <ul>
+                            <li>Real-time notifications</li>
+                            <li>Direct messaging</li>
+                            <li>Email notifications</li>
+                            <li>Message conversations</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>📊 Analytics & Reporting</h4>
+                        <ul>
+                            <li>Order analytics</li>
+                            <li>Sales reports</li>
+                            <li>Activity logs</li>
+                            <li>Payment verification reports</li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <h4>🔧 Admin Controls</h4>
+                        <ul>
+                            <li>User management</li>
+                            <li>System monitoring</li>
+                            <li>Activity logging</li>
+                            <li>Data management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Raise - Supply Chain Management Platform | System Flowchart Documentation</p>
+            <p>Generated: November 2025 | Django 5.2.7 | PostgreSQL/SQLite</p>
+        </footer>
+    </div>
+    
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>
