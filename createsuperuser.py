@@ -10,9 +10,9 @@ from django.db.utils import IntegrityError
 
 User = get_user_model()
 
-username = "admin"
-email = "admin@example.com"
-password = "admin123"
+username = "adminapple"
+email = "raiseadmin@gmail.com"
+password = "123451113"
 
 try:
     User.objects.create_superuser(username=username, email=email, password=password)

@@ -8313,3 +8313,10 @@ INFO 2026-01-07 08:05:39,209 basehttp "GET /api/messages/ HTTP/1.1" 200 210
 INFO 2026-01-07 08:05:44,180 basehttp "GET /logout/ HTTP/1.1" 302 0
 INFO 2026-01-07 08:05:44,487 basehttp "GET / HTTP/1.1" 200 30670
 INFO 2026-01-07 08:05:51,482 basehttp "GET /signup/ HTTP/1.1" 200 19211
+INFO 2026-01-09 22:31:12,759 autoreload Watching for file changes with StatReloader
+INFO 2026-01-09 22:31:50,358 basehttp "GET / HTTP/1.1" 200 30541
+INFO 2026-01-09 22:32:06,849 basehttp "GET /login/ HTTP/1.1" 200 7638
+WARNING 2026-01-09 22:32:17,569 log Not Found: /favicon.ico
+WARNING 2026-01-09 22:32:17,609 basehttp "GET /favicon.ico HTTP/1.1" 404 32380
+INFO 2026-01-09 22:33:13,495 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2026-01-09 22:33:18,409 basehttp "GET /sysadmin/dashboard/ HTTP/1.1" 200 18144
